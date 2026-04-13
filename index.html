@@ -1,0 +1,2475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Nexace — Premium Reformer Pilates Equipment</title>
+  <meta name="description" content="Nexace crafts studio-grade reformer pilates equipment engineered for home practice. Professional quality, quiet performance, timeless design.">
+
+  <!-- Favicon (reused from original CDN) -->
+  <link rel="icon" type="image/png" href="images/nexace/logo.png">
+
+  <!-- Google Fonts: Inter (300/400/500/600/700) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+  <!-- Vendor: Flickity carousel (v2, reused as-is from nexace.com) -->
+  <link rel="stylesheet" href="vendor/flickity.css">
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — single source of truth
+       Extracted from nexace.com — see reference/extracted/tokens.md
+       ============================================================ */
+    :root {
+      /* --- Fonts --- */
+      --yr-font-body:    'Lato', system-ui, -apple-system, sans-serif;
+      --yr-font-heading: 'Lato', system-ui, -apple-system, sans-serif;
+      --yr-fw-light:     300;
+      --yr-fw-regular:   400;
+      --yr-fw-medium:    500;
+      --yr-fw-semibold:  600;
+      --yr-fw-bold:      700;
+
+      /* --- Brand Colors --- */
+      --yr-ink:          #25140c;   /* primary text — Nexace brown */
+      --yr-ink-soft:     #25140c;   /* same brown */
+      --yr-ink-muted:    #744c32;   /* light-brown — secondary text */
+      --yr-paper:        #ffffff;
+      --yr-cream:        #f7e7de;   /* pale-pink — Nexace accent */
+      --yr-cream-deep:   #f7e7de;   /* same pale-pink for brand bar */
+      --yr-taupe:        #9f8d81;
+      --yr-off-white:    #faf6f2;   /* warm off-white */
+      --yr-border:       rgba(37, 20, 12, 0.10);
+
+      /* --- Layout --- */
+      --yr-page-max:     1600px;
+      --yr-gap:          8px;
+      --yr-gap-mobile:   4px;
+
+      /* --- Radii --- */
+      --yr-r-none:       0;
+      --yr-r-sm:         6px;
+      --yr-r-pill:       100px;
+
+      /* --- Motion --- */
+      --yr-ease:         cubic-bezier(0.4, 0, 0.2, 1);
+      --yr-transition:   0.3s var(--yr-ease);
+    }
+
+    /* ============================================================
+       RESET & GLOBAL BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; }
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--yr-font-body);
+      font-weight: var(--yr-fw-regular);
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--yr-ink);
+      background: var(--yr-paper);
+    }
+    img, video {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    a { color: inherit; text-decoration: none; }
+    button {
+      font: inherit;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: inherit;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--yr-font-heading);
+      font-weight: var(--yr-fw-medium);
+      margin: 0;
+      line-height: 1.2;
+    }
+    p { margin: 0; }
+
+    /* Max-width container (use sparingly — most sections are full-bleed on this site) */
+    .yr-container {
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    @media (min-width: 750px) {
+      .yr-container { padding: 0 48px; }
+    }
+
+    /* ============================================================
+       SECTION 0a: ANNOUNCEMENT BAR (sticky top)
+       Burgundy bar with 3 rotating promo messages. Colors extracted:
+       bg #801010, text #efe6de.
+       ============================================================ */
+    .yr-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+    }
+    .yr-announce {
+      background: #801010;
+      color: var(--yr-cream);
+      padding: 10px 16px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .yr-announce__track {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      height: 20px;
+    }
+    .yr-announce__msg {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      font-size: 14px;
+      font-weight: var(--yr-fw-medium);
+      letter-spacing: 0.02em;
+      color: var(--yr-cream);
+      text-decoration: none;
+      opacity: 0;
+      transition: opacity 0.5s var(--yr-ease);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .yr-announce__msg.is-active {
+      opacity: 1;
+    }
+    @media (max-width: 989px) {
+      .yr-announce { min-height: 32px; padding: 6px 12px; }
+      .yr-announce__msg { font-size: 11px; }
+    }
+
+    /* ============================================================
+       SECTION 0b: MAIN HEADER
+       Logo left, 6 nav links center-right, cart icon far right.
+       Mobile: hamburger left, logo center, cart right.
+       ============================================================ */
+    .yr-header {
+      background: var(--yr-paper);
+      border-bottom: 1px solid var(--yr-border);
+      width: 100%;
+    }
+    .yr-header__inner {
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      gap: 24px;
+    }
+    .yr-header__logo {
+      display: flex;
+      align-items: center;
+      min-width: 140px;
+      height: 100%;
+      transition: opacity 0.4s;
+    }
+    .yr-header__logo:hover { opacity: 0.75; }
+    .yr-header__logo img {
+      display: block;
+      height: 26px;
+      width: auto;
+    }
+    .yr-header__nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex: 1;
+      justify-content: center;
+    }
+    .yr-header__nav a {
+      color: var(--yr-ink);
+      font-size: 14px;
+      font-weight: var(--yr-fw-regular);
+      text-decoration: none;
+      position: relative;
+      padding: 6px 0;
+      transition: color var(--yr-transition);
+    }
+    .yr-header__nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background: var(--yr-ink);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform var(--yr-transition);
+    }
+    .yr-header__nav a:hover::after {
+      transform: scaleX(1);
+    }
+    .yr-header__actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .yr-header__icon-btn,
+    .yr-header__burger {
+      background: none;
+      border: none;
+      padding: 6px;
+      cursor: pointer;
+      color: var(--yr-ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity var(--yr-transition);
+    }
+    .yr-header__icon-btn:hover { opacity: 0.65; }
+    .yr-header__icon-btn svg,
+    .yr-header__burger svg {
+      width: 22px;
+      height: 22px;
+    }
+    .yr-header__burger {
+      display: none;
+    }
+    @media (max-width: 989px) {
+      .yr-header__inner {
+        padding: 14px 20px;
+      }
+      .yr-header__nav {
+        display: none;
+      }
+      .yr-header__burger {
+        display: flex;
+      }
+      .yr-header__logo img {
+        height: 20px;
+      }
+    }
+
+    /* ============================================================
+       SECTION 1: HERO CAROUSEL
+       Full-bleed Flickity fade-carousel. Each slide = full-bleed image
+       + overlay text (eyebrow + title + sub + CTA). Marquee overlay
+       on bottom-right (desktop only) shows scrolling promo text.
+       ============================================================ */
+    .yr-hero {
+      position: relative;
+      width: 100%;
+      display: block;
+      overflow: clip;
+    }
+    .yr-hero__carousel {
+      width: 100%;
+      outline: none;
+    }
+    .yr-hero__slide {
+      width: 100%;
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .yr-hero__slide img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      object-fit: cover;
+    }
+    .yr-hero__img--desktop { display: block; }
+    .yr-hero__img--mobile  { display: none; }
+    .yr-hero__img--mobile {
+      display: none;
+    }
+    .yr-hero__overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      align-items: flex-end;
+      padding: 40px;
+    }
+    .yr-hero__text {
+      gap: 8px;
+      display: flex;
+      flex-direction: column;
+      min-width: 300px;
+    }
+    .yr-hero__eyebrow {
+      font-weight: var(--yr-fw-medium);
+      font-size: 14px;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .yr-hero__title {
+      font-weight: var(--yr-fw-medium);
+      font-size: 28px;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin: 0;
+    }
+    .yr-hero__sub {
+      font-weight: var(--yr-fw-light);
+      font-size: 14px;
+      margin: 0;
+    }
+    .yr-hero__cta-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+    .yr-hero__cta {
+      font-weight: var(--yr-fw-medium);
+      font-size: 12px;
+      text-decoration: underline;
+      text-underline-offset: 5px;
+      margin: 16px 0 0;
+    }
+    .yr-hero__marquee {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      z-index: 10;
+      background-color: var(--yr-ink-soft);
+      border-radius: var(--yr-r-pill);
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 400px;
+      pointer-events: none;
+    }
+    .yr-hero__marquee-track {
+      display: inline-flex;
+      animation: yr-hero-marquee 30s linear infinite;
+    }
+    .yr-hero__marquee-track span {
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: var(--yr-fw-light);
+      padding: 8px 16px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    @keyframes yr-hero-marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @media (max-width: 767px) {
+      .yr-hero__slide { height: 100vh; }
+      .yr-hero__img--desktop { display: none; }
+      .yr-hero__img--mobile  { display: block; }
+      .yr-hero__marquee      { display: none; }
+      .yr-hero__overlay      { padding: 16px; }
+      .yr-hero__text         { min-width: unset; }
+    }
+
+    /* ============================================================
+       SECTION 2: CATEGORY GRID
+       4 square cards in a row on desktop, horizontal scroll snap on mobile.
+       ============================================================ */
+    .yr-category-grid {
+      padding: 90px 40px;
+    }
+    .yr-category-grid__head {
+      margin-bottom: 40px;
+    }
+    .yr-category-grid__title {
+      color: var(--yr-ink-soft);
+      font-size: 28px;
+      font-weight: var(--yr-fw-medium);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin: 0;
+    }
+    .yr-category-grid__desc {
+      color: var(--yr-ink-soft);
+      font-weight: var(--yr-fw-light);
+      font-size: 14px;
+      margin: 16px 0 0;
+    }
+    .yr-category-grid__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .yr-category-card {
+      display: block;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      transition: transform var(--yr-transition);
+    }
+    .yr-category-card:hover {
+      transform: translateY(-4px);
+    }
+    .yr-category-card__image-wrap {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+    .yr-category-card__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .yr-category-card__label {
+      padding: 12px 0 0;
+    }
+    .yr-category-card__name {
+      color: var(--yr-ink-soft);
+      font-size: 15px;
+      font-weight: var(--yr-fw-medium);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .yr-category-card__arrow {
+      display: inline-flex;
+      align-items: center;
+    }
+    .yr-category-card__arrow svg {
+      height: 9px;
+      width: auto;
+      transform: rotate(-90deg);
+    }
+    @media (max-width: 767px) {
+      .yr-category-grid {
+        padding: 40px 0;
+      }
+      .yr-category-grid__head {
+        padding: 0 20px;
+        margin-bottom: 24px;
+      }
+      .yr-category-grid__grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px;
+        padding: 0 20px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .yr-category-grid__grid::-webkit-scrollbar { display: none; }
+      .yr-category-card {
+        flex: 0 0 280px;
+        scroll-snap-align: start;
+      }
+    }
+
+    /* ============================================================
+       SECTION 2b: PRODUCT WIDGET ("Redefine Your Routine")
+       Title + description + 2 static tabs + 4-card grid + CTA.
+       Tabs are visual only (active state on "Best Sellers").
+       ============================================================ */
+    .yr-products {
+      padding: 80px 40px;
+    }
+    .yr-products__head {
+      margin-bottom: 24px;
+    }
+    .yr-products__title {
+      color: #151515;
+      font-size: 28px;
+      font-weight: var(--yr-fw-medium);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin: 0 0 8px;
+    }
+    .yr-products__desc {
+      color: #151515;
+      font-weight: var(--yr-fw-light);
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .yr-products__controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #F3F3F3;
+    }
+    .yr-products__tabs {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .yr-products__tab {
+      background: none;
+      border: none;
+      border-bottom: 1px solid transparent;
+      padding: 0 0 6px;
+      cursor: pointer;
+      font-family: var(--yr-font-body);
+      font-size: 14px;
+      font-weight: var(--yr-fw-medium);
+      color: var(--yr-ink-muted);
+      transition: color var(--yr-transition), border-color var(--yr-transition);
+    }
+    .yr-products__tab.is-active {
+      color: var(--yr-ink-soft);
+      border-bottom-color: var(--yr-ink-soft);
+    }
+    .yr-products__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .yr-product-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      transition: transform var(--yr-transition);
+    }
+    .yr-product-card:hover {
+      transform: translateY(-4px);
+    }
+    .yr-product-card__image-wrap {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 8px;
+      background: var(--yr-off-white);
+    }
+    .yr-product-card__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .yr-product-card__title {
+      font-size: 14px;
+      font-weight: var(--yr-fw-medium);
+      color: var(--yr-ink-soft);
+      margin: 12px 0 4px;
+    }
+    .yr-product-card__price {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      font-size: 14px;
+      color: var(--yr-ink-soft);
+      margin: 0;
+    }
+    .yr-product-card__price-current {
+      font-weight: var(--yr-fw-medium);
+      color: var(--yr-ink-soft);
+    }
+    .yr-product-card__price-original {
+      font-weight: var(--yr-fw-regular);
+      color: var(--yr-ink-muted);
+      text-decoration: line-through;
+      font-size: 13px;
+    }
+    .yr-products__cta-wrap {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 32px;
+    }
+    .yr-products__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 44px;
+      padding: 0 20px;
+      border-radius: 6px;
+      border: 1px solid var(--yr-ink-soft);
+      background: rgba(255, 255, 255, 0.20);
+      backdrop-filter: blur(26px);
+      -webkit-backdrop-filter: blur(26px);
+      color: var(--yr-ink-soft);
+      font-size: 12px;
+      font-weight: var(--yr-fw-medium);
+      text-decoration: none;
+      transition: background var(--yr-transition), color var(--yr-transition);
+    }
+    .yr-products__cta:hover {
+      background: var(--yr-ink-soft);
+      color: #ffffff;
+    }
+    @media (max-width: 989px) {
+      .yr-products { padding: 50px 20px; }
+      .yr-products__title { font-size: 24px; }
+      .yr-products__grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+    @media (max-width: 480px) {
+      .yr-products__cta { width: 100%; justify-content: center; }
+    }
+
+    /* ============================================================
+       SECTION 3: HOTSPOT (static image + interactive dots)
+       Decision A2: static background image + 8 positioned dots, each
+       opens a popover. No Cylindo 3D embed, no AR button.
+       ============================================================ */
+    .yr-hotspot {
+      background: #f5f5f0;
+      padding: 80px 40px;
+    }
+    .yr-hotspot__head {
+      max-width: 570px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+    .yr-hotspot__eyebrow {
+      color: var(--yr-ink-soft);
+      font-weight: var(--yr-fw-medium);
+      font-size: 14px;
+      text-transform: uppercase;
+      margin: 0 0 12px;
+    }
+    .yr-hotspot__title {
+      color: var(--yr-ink-soft);
+      font-weight: var(--yr-fw-medium);
+      font-size: 32px;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin: 0 0 16px;
+    }
+    .yr-hotspot__sub {
+      color: var(--yr-ink-soft);
+      font-weight: var(--yr-fw-light);
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .yr-hotspot__image-wrap {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .yr-hotspot__image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .yr-hotspot__marker {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+    .yr-hotspot__marker.is-active {
+      z-index: 10;
+    }
+    .yr-hotspot__btn {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: var(--yr-fw-light);
+      color: var(--yr-ink-soft);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      transition: transform var(--yr-transition), background var(--yr-transition);
+    }
+    .yr-hotspot__btn::before {
+      content: "";
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.55);
+      animation: yr-hotspot-pulse 2s ease-out infinite;
+      z-index: -1;
+    }
+    @keyframes yr-hotspot-pulse {
+      0%   { transform: scale(0.9); opacity: 0.7; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+    .yr-hotspot__marker.is-active .yr-hotspot__btn {
+      background: var(--yr-ink-soft);
+      color: #ffffff;
+      transform: rotate(45deg);
+    }
+    .yr-hotspot__marker.is-active .yr-hotspot__btn::before {
+      animation: none;
+    }
+    .yr-hotspot__popover {
+      position: absolute;
+      left: 50%;
+      top: calc(100% + 16px);
+      transform: translateX(-50%) translateY(-4px);
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 18px 20px 20px;
+      min-width: 260px;
+      max-width: 300px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all 0.25s var(--yr-ease);
+    }
+    .yr-hotspot__marker.is-active .yr-hotspot__popover {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .yr-hotspot__popover h3 {
+      font-size: 15px;
+      font-weight: var(--yr-fw-medium);
+      color: var(--yr-ink-soft);
+      margin: 0 0 8px;
+      padding-right: 24px;
+    }
+    .yr-hotspot__popover p {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--yr-ink-muted);
+      margin: 0;
+    }
+    .yr-hotspot__close {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 22px;
+      line-height: 1;
+      color: var(--yr-ink-muted);
+      cursor: pointer;
+      padding: 4px;
+    }
+    .yr-hotspot__close:hover { color: var(--yr-ink-soft); }
+    @media (max-width: 767px) {
+      .yr-hotspot { padding: 50px 20px; }
+      .yr-hotspot__title { font-size: 24px; }
+      .yr-hotspot__btn { width: 28px; height: 28px; font-size: 18px; }
+      .yr-hotspot__popover { min-width: 220px; max-width: 260px; }
+    }
+
+    /* ============================================================
+       SECTION 4: IMAGE + ACCORDION (Meet the OnDemand App)
+       Left column: eyebrow + headline + accordion list (numbered items).
+       Right column: paired image that fades between items on click.
+       Mobile: single column, image shown inside each accordion body.
+       ============================================================ */
+    .yr-accordion {
+      display: flex;
+      gap: 60px;
+      padding: 80px 40px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    .yr-accordion__left {
+      flex: 1;
+      max-width: 500px;
+    }
+    .yr-accordion__eyebrow {
+      color: var(--yr-ink-soft);
+      font-weight: var(--yr-fw-medium);
+      font-size: 14px;
+      text-transform: uppercase;
+      margin: 0 0 12px;
+    }
+    .yr-accordion__title {
+      color: var(--yr-ink-soft);
+      font-weight: var(--yr-fw-medium);
+      font-size: 28px;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin: 0 0 32px;
+    }
+    .yr-accordion__list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .yr-accordion__item {
+      border-bottom: 1px solid var(--yr-border);
+    }
+    .yr-accordion__item:first-child {
+      border-top: 1px solid var(--yr-border);
+    }
+    .yr-accordion__summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--yr-font-heading);
+      font-size: 16px;
+      font-weight: var(--yr-fw-medium);
+      color: var(--yr-ink-soft);
+      transition: color var(--yr-transition);
+      position: relative;
+      padding-right: 32px;
+    }
+    .yr-accordion__summary::-webkit-details-marker { display: none; }
+    .yr-accordion__summary::after {
+      content: "+";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 22px;
+      font-weight: var(--yr-fw-light);
+      color: var(--yr-ink-muted);
+      transition: transform var(--yr-transition);
+      width: 20px;
+      text-align: center;
+    }
+    .yr-accordion__item[open] .yr-accordion__summary::after {
+      content: "−";
+    }
+    .yr-accordion__num {
+      font-family: var(--yr-font-body);
+      font-weight: var(--yr-fw-light);
+      font-size: 14px;
+      color: #B4B4B4;
+    }
+    .yr-accordion__body {
+      padding: 0 0 20px 38px;
+      color: var(--yr-ink-soft);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .yr-accordion__body p {
+      margin: 0 0 16px;
+    }
+    .yr-accordion__mobile-img {
+      display: none;
+      width: 100%;
+      margin-top: 12px;
+      border-radius: 8px;
+    }
+    .yr-accordion__right {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 500px;
+    }
+    .yr-accordion__image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      opacity: 0;
+      transition: opacity 0.4s var(--yr-ease);
+      pointer-events: none;
+    }
+    .yr-accordion__image.is-active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    @media (max-width: 767px) {
+      .yr-accordion {
+        flex-direction: column;
+        padding: 50px 20px;
+        gap: 32px;
+      }
+      .yr-accordion__left { max-width: 100%; }
+      .yr-accordion__right { display: none; }
+      .yr-accordion__mobile-img { display: block; }
+      .yr-accordion__title { font-size: 24px; margin-bottom: 24px; }
+      .yr-accordion__body { padding-left: 30px; }
+    }
+
+    /* ============================================================
+       SECTION 5: ABOUT US
+       Full-bleed hero-style image (desktop + mobile variants) with
+       centered overlay text and a single solid-button CTA.
+       ============================================================ */
+    .yr-about {
+      position: relative;
+      width: 100%;
+    }
+    .yr-about__image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .yr-about__image--desktop { display: block; }
+    .yr-about__image--mobile  { display: none; }
+    .yr-about__text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      gap: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      min-width: 300px;
+      padding: 0 20px;
+    }
+    .yr-about__eyebrow {
+      color: #ffffff;
+      font-weight: var(--yr-fw-light);
+      font-size: 14px;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .yr-about__title {
+      color: #ffffff;
+      font-weight: var(--yr-fw-light);
+      font-size: 28px;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin: 0;
+    }
+    .yr-about__cta {
+      display: inline-block;
+      background-color: #ffffff;
+      color: #000000;
+      font-weight: var(--yr-fw-medium);
+      font-size: 12px;
+      text-decoration: underline;
+      text-underline-offset: 5px;
+      padding: 14px 16px;
+      border-radius: var(--yr-r-sm);
+      margin-top: 16px;
+      transition: background var(--yr-transition);
+    }
+    .yr-about__cta:hover {
+      background-color: var(--yr-cream);
+    }
+    .yr-about__cta:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 3px;
+    }
+    @media (max-width: 767px) {
+      .yr-about__image--desktop { display: none; }
+      .yr-about__image--mobile  { display: block; }
+    }
+
+    /* ============================================================
+       SECTION 5b: LOVED BY (celebrity endorsements carousel)
+       Horizontal scroll-snap carousel of 9 celeb photos with name + handle.
+       ============================================================ */
+    .yr-lovedby {
+      padding: 80px 0 80px 40px;
+      background: var(--yr-paper);
+      position: relative;
+    }
+    .yr-lovedby__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-right: 40px;
+      margin-bottom: 32px;
+    }
+    .yr-lovedby__title {
+      font-family: 'Ivy Mode', 'Inter', serif;
+      font-weight: var(--yr-fw-regular);
+      font-size: 40px;
+      color: var(--yr-ink-soft);
+      margin: 0;
+      line-height: 1;
+    }
+    .yr-lovedby__nav {
+      display: flex;
+      gap: 12px;
+    }
+    .yr-lovedby__nav button {
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      color: var(--yr-ink-soft);
+      transition: opacity var(--yr-transition);
+    }
+    .yr-lovedby__nav button:hover { opacity: 0.6; }
+    .yr-lovedby__nav svg { width: 22px; height: 22px; }
+    .yr-lovedby__track {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-right: 40px;
+    }
+    .yr-lovedby__track::-webkit-scrollbar { display: none; }
+    .yr-lovedby__card {
+      flex: 0 0 calc((100% - 60px) / 4);
+      min-width: 240px;
+      max-width: 420px;
+      scroll-snap-align: start;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .yr-lovedby__image-wrap {
+      position: relative;
+      aspect-ratio: 0.77 / 1;
+      overflow: hidden;
+      border-radius: 4px;
+      background: var(--yr-off-white);
+    }
+    .yr-lovedby__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .yr-lovedby__badge {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--yr-ink-soft);
+      font-size: 10px;
+      font-weight: var(--yr-fw-medium);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      border-radius: 2px;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    .yr-lovedby__name {
+      font-size: 15px;
+      font-weight: var(--yr-fw-semibold);
+      color: var(--yr-ink-soft);
+      margin: 16px 0 4px;
+    }
+    .yr-lovedby__handle {
+      font-size: 12px;
+      font-weight: var(--yr-fw-regular);
+      color: var(--yr-ink-muted);
+      margin: 0;
+    }
+    @media (max-width: 989px) {
+      .yr-lovedby__card {
+        flex-basis: calc((100% - 40px) / 2.5);
+        min-width: 240px;
+      }
+    }
+    @media (max-width: 767px) {
+      .yr-lovedby { padding: 50px 0 50px 20px; }
+      .yr-lovedby__head { padding-right: 20px; margin-bottom: 24px; }
+      .yr-lovedby__title { font-size: 30px; }
+      .yr-lovedby__card { flex-basis: 260px; }
+    }
+
+    /* ============================================================
+       SECTION 6: CUSTOMERS REVIEWS (static cards matching Judge.me layout)
+       Title serif + prev/next arrows. 4 cards: product badge + stars +
+       optional bold title + body + author. Off-white cards on white bg.
+       ============================================================ */
+    .yr-reviews {
+      padding: 80px 0 80px 40px;
+      background: var(--yr-paper);
+      position: relative;
+    }
+    .yr-reviews__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-right: 40px;
+      margin-bottom: 32px;
+    }
+    .yr-reviews__title {
+      font-family: 'Ivy Mode', 'Inter', serif;
+      font-weight: var(--yr-fw-regular);
+      font-size: 40px;
+      color: var(--yr-ink-soft);
+      margin: 0;
+      line-height: 1;
+    }
+    .yr-reviews__nav {
+      display: flex;
+      gap: 12px;
+    }
+    .yr-reviews__nav button {
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      color: var(--yr-ink-soft);
+      transition: opacity var(--yr-transition);
+    }
+    .yr-reviews__nav button:hover { opacity: 0.6; }
+    .yr-reviews__nav svg { width: 22px; height: 22px; }
+    .yr-reviews__track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-right: 40px;
+    }
+    .yr-reviews__track::-webkit-scrollbar { display: none; }
+    .yr-review-card {
+      flex: 0 0 calc((100% - 88px) / 4);
+      min-width: 300px;
+      max-width: 440px;
+      scroll-snap-align: start;
+      background: #f6f4f0;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+    }
+    .yr-review-card__badge {
+      align-self: flex-start;
+      background: #ffffff;
+      color: var(--yr-ink-muted);
+      font-size: 10px;
+      font-weight: var(--yr-fw-medium);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      margin-bottom: 28px;
+    }
+    .yr-review-card__stars {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+      color: var(--yr-ink-soft);
+    }
+    .yr-review-card__stars svg {
+      width: 18px;
+      height: 18px;
+    }
+    .yr-review-card__title {
+      font-size: 15px;
+      font-weight: var(--yr-fw-bold);
+      color: var(--yr-ink-soft);
+      margin: 0 0 12px;
+    }
+    .yr-review-card__body {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--yr-ink-soft);
+      font-weight: var(--yr-fw-regular);
+      margin: 0 0 36px;
+      flex: 1;
+    }
+    .yr-review-card__author {
+      font-size: 13px;
+      font-weight: var(--yr-fw-regular);
+      color: var(--yr-ink-muted);
+      margin: 0;
+    }
+    @media (max-width: 989px) {
+      .yr-review-card {
+        flex-basis: calc((100% - 48px) / 2.5);
+        min-width: 300px;
+      }
+    }
+    @media (max-width: 767px) {
+      .yr-reviews { padding: 50px 0 50px 20px; }
+      .yr-reviews__head { padding-right: 20px; margin-bottom: 24px; }
+      .yr-reviews__title { font-size: 30px; }
+      .yr-review-card { flex-basis: 300px; padding: 24px 20px; }
+    }
+
+    /* ============================================================
+       SECTION 7: FOOTER BRAND BAR
+       Cream bg with YR monogram icon (32px) above a single motto line.
+       Specs extracted from reference CSS.
+       ============================================================ */
+    .yr-brand-bar {
+      background: var(--yr-cream-deep);
+      padding: 48px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+    .yr-brand-bar__logo {
+      width: auto;
+      height: 48px;
+      display: block;
+    }
+    .yr-brand-bar__motto {
+      font-family: var(--yr-font-body);
+      font-weight: var(--yr-fw-regular);
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--yr-ink-soft);
+      margin: 0;
+      text-align: center;
+    }
+
+    /* ============================================================
+       SITE FOOTER — matches reference layout 1:1
+       WHITE bg + dark text (Shopify color-scheme-1).
+       Layout: 3 menu columns on left + "STAY IN TOUCH" boxed gray panel
+       + "DOWNLOAD APP" block on the right. Below left columns: address,
+       phone with icon, 6 social icons, then 8 payment method brand tiles.
+       ============================================================ */
+    .yr-footer {
+      background: #ffffff;
+      color: #000000;
+      padding: 80px 40px 40px;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .yr-footer__inner {
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr 1.1fr minmax(320px, 0.95fr);
+      gap: 48px;
+      align-items: start;
+    }
+    .yr-footer__col h3 {
+      font-family: var(--yr-font-body);
+      font-size: 13px;
+      font-weight: var(--yr-fw-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #000000;
+      margin: 0 0 22px;
+    }
+    .yr-footer__col ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .yr-footer__col a {
+      color: #000000;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: opacity var(--yr-transition);
+    }
+    .yr-footer__col a:hover { opacity: 0.65; }
+
+    /* STAY IN TOUCH boxed gray panel with email signup form */
+    .yr-footer__newsletter {
+      background: #ebebeb;
+      padding: 35px 40px;
+      max-width: 475px;
+      align-self: start;
+    }
+    .yr-footer__newsletter h3 {
+      font-family: var(--yr-font-body);
+      font-size: 14px;
+      font-weight: var(--yr-fw-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #000000;
+      margin: 0 0 18px;
+    }
+    .yr-footer__newsletter-subtitle {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #000000;
+      margin: 0 0 22px;
+    }
+    .yr-footer__newsletter-form {
+      display: flex;
+      align-items: stretch;
+      background: #ffffff;
+      border: 1px solid #000000;
+    }
+    .yr-footer__newsletter-form input {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      border: none;
+      padding: 0 16px;
+      height: 48px;
+      font-family: inherit;
+      font-size: 13px;
+      color: #000000;
+      outline: none;
+    }
+    .yr-footer__newsletter-form input::placeholder {
+      color: rgba(0, 0, 0, 0.45);
+    }
+    .yr-footer__newsletter-form button {
+      background: #000000;
+      color: #ffffff;
+      border: none;
+      width: 56px;
+      height: 48px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--yr-transition);
+    }
+    .yr-footer__newsletter-form button:hover {
+      background: #25140c;
+    }
+    .yr-footer__newsletter-form button svg {
+      width: 18px;
+      height: 18px;
+    }
+    .yr-footer__newsletter-success {
+      margin: 12px 0 0;
+      font-size: 12px;
+      color: #25140c;
+      font-weight: var(--yr-fw-medium);
+    }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+
+    /* Below the left 3 columns — contact, socials, payments */
+    .yr-footer__meta {
+      grid-column: 1 / 4;
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .yr-footer__address {
+      font-size: 12px;
+      line-height: 1.6;
+      color: #000000;
+      margin: 0;
+    }
+    .yr-footer__phone {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #000000;
+      font-size: 13px;
+      text-decoration: none;
+    }
+    .yr-footer__phone-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      background: #000000;
+      color: #ffffff;
+    }
+    .yr-footer__phone-icon svg { width: 12px; height: 12px; }
+    .yr-footer__socials {
+      display: flex;
+      gap: 16px;
+      margin-top: 4px;
+    }
+    .yr-footer__socials a {
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000000;
+      transition: opacity var(--yr-transition);
+    }
+    .yr-footer__socials a:hover { opacity: 0.6; }
+    .yr-footer__socials svg { width: 18px; height: 18px; }
+    .yr-footer__payments {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .yr-footer__payments img {
+      height: 24px;
+      width: auto;
+      display: block;
+    }
+
+    /* Bottom copyright */
+    .yr-footer__bottom {
+      max-width: var(--yr-page-max);
+      margin: 40px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 11px;
+      color: rgba(0, 0, 0, 0.55);
+    }
+    .yr-footer__legal a {
+      color: rgba(0, 0, 0, 0.55);
+      text-decoration: none;
+      margin-left: 20px;
+      transition: color var(--yr-transition);
+    }
+    .yr-footer__legal a:hover { color: #000000; }
+
+    @media (max-width: 989px) {
+      .yr-footer { padding: 60px 20px 30px; }
+      .yr-footer__inner {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px 24px;
+      }
+      .yr-footer__newsletter { max-width: 100%; }
+      .yr-footer__meta { grid-column: 1 / -1; }
+    }
+    @media (max-width: 560px) {
+      .yr-footer__inner { grid-template-columns: 1fr; }
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- ============================================================
+       SECTION 0a + 0b: TOPBAR (announcement bar + main header)
+       Both are sticky-wrapped together.
+       Content editing guide:
+         [ANNOUNCE] array of 3 rotating promo messages
+         [LOGO]     header logo image src
+         [NAV]      6 top-level nav links (add/remove <a> to change)
+         [CART]     cart icon / link
+       ============================================================ -->
+  <div class="yr-topbar">
+    <!-- [ANNOUNCE] rotating promo bar — add/remove .yr-announce__msg items -->
+    <div class="yr-announce" data-section="announce">
+      <div class="yr-announce__track">
+        <a class="yr-announce__msg" href="#products">Free Shipping on All Reformers →</a>
+        <a class="yr-announce__msg" href="#products">5-Year Warranty on NX901 Series →</a>
+        <a class="yr-announce__msg" href="#about">30-Day Home Trial →</a>
+      </div>
+    </div>
+
+    <header class="yr-header" data-section="header">
+      <div class="yr-header__inner">
+        <!-- [LOGO] -->
+        <a class="yr-header__logo" href="#home" aria-label="Nexace home">
+          <img src="images/nexace/logo.png" alt="Nexace">
+        </a>
+
+        <!-- [NAV] Desktop nav — 6 top-level links -->
+        <nav class="yr-header__nav" aria-label="Primary">
+          <a href="#products">Reformers</a>
+          <a href="#about">Our Story</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="yr-header__actions">
+          <!-- [CART] -->
+          <button class="yr-header__icon-btn" aria-label="Cart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+          </button>
+          <!-- [ACCOUNT] -->
+          <button class="yr-header__icon-btn" aria-label="Account">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </button>
+          <!-- [SEARCH] -->
+          <button class="yr-header__icon-btn" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+          <!-- Mobile burger -->
+          <button class="yr-header__burger" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <line x1="3" y1="7" x2="21" y2="7"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="17" x2="21" y2="17"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <main>
+    <!-- ============================================================
+         SECTION 1: HERO CAROUSEL
+         Content editing guide:
+           [MARQUEE]   scrolling promo texts (desktop only)
+           [SLIDE N]   carousel slides — copy .yr-hero__slide block to add more
+             [IMAGE-D] desktop image URL
+             [IMAGE-M] mobile  image URL
+             [EYEBROW] uppercase label above title
+             [TITLE]   main headline
+             [SUB]     supporting sub text
+             [CTA]     call-to-action text + href
+         ============================================================ -->
+    <section class="yr-hero" data-section="hero">
+      <!-- [MARQUEE] duplicate the 3 messages twice for seamless loop -->
+      <div class="yr-hero__marquee">
+        <div class="yr-hero__marquee-track">
+          <span>Save $300 on Reformers</span>
+          <span>Free Reformer Delivery*</span>
+          <span>$150 Accessory Voucher</span>
+          <span>Save $300 on Reformers</span>
+          <span>Free Reformer Delivery*</span>
+          <span>$150 Accessory Voucher</span>
+        </div>
+      </div>
+
+      <div class="yr-hero__carousel" id="yr-hero-carousel">
+        <!-- [SLIDE 1] Hero -->
+        <div class="yr-hero__slide">
+          <!-- [IMAGE-D] -->
+          <img class="yr-hero__img--desktop"
+               src="images/nexace/hero-1.jpg"
+               alt="Nexace Reformer">
+          <!-- [IMAGE-M] -->
+          <img class="yr-hero__img--mobile"
+               src="images/nexace/hero-1.jpg"
+               alt="Nexace Reformer">
+          <div class="yr-hero__overlay">
+            <div class="yr-hero__text">
+              <!-- [EYEBROW] -->
+              <p class="yr-hero__eyebrow" style="color:#f7e7de">STUDIO-GRADE, AT HOME</p>
+              <!-- [TITLE] -->
+              <h2 class="yr-hero__title" style="color:#f7e7de">The NX901 Classic Reformer</h2>
+              <!-- [SUB] -->
+              <p class="yr-hero__sub" style="color:#f7e7de">Aircraft-grade aluminum rails, five color-coded springs, 200+ exercises. Built to last decades, quiet enough for any room.</p>
+              <div class="yr-hero__cta-wrap">
+                <!-- [CTA] -->
+                <a class="yr-hero__cta" href="#products" style="color:#f7e7de">SHOP NX901 CLASSIC</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- [SLIDE 2] NX901 Classic -->
+        <div class="yr-hero__slide">
+          <!-- [IMAGE-D] -->
+          <img class="yr-hero__img--desktop"
+               src="images/nexace/lifestyle-1.jpg"
+               alt="NX901 Classic Reformer">
+          <!-- [IMAGE-M] -->
+          <img class="yr-hero__img--mobile"
+               src="images/nexace/lifestyle-1.jpg"
+               alt="NX901 Classic Reformer">
+          <div class="yr-hero__overlay">
+            <div class="yr-hero__text">
+              <!-- [EYEBROW] -->
+              <p class="yr-hero__eyebrow" style="color:#ffffff">COMPACT. FOLDABLE. QUIET.</p>
+              <!-- [TITLE] -->
+              <h2 class="yr-hero__title" style="color:#ffffff">NX901-MI Mini Reformer</h2>
+              <!-- [SUB] -->
+              <p class="yr-hero__sub" style="color:#ffffff">Our compact foldable reformer with whisper-quiet operation and an elegant beige finish. Made for small spaces and daily practice.</p>
+              <div class="yr-hero__cta-wrap">
+                <!-- [CTA] -->
+                <a class="yr-hero__cta" href="#products" style="color:#ffffff">EXPLORE NX901-MI</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- [ADD MORE SLIDES HERE] Copy the .yr-hero__slide block above -->
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 2b: PRODUCT WIDGET ("Redefine Your Routine")
+         Content editing guide:
+           [TITLE]   section heading
+           [DESC]    description
+           [TABS]    visual tabs (add/remove <button>s)
+           [CARDS]   4-card product grid — duplicate .yr-product-card to add more
+           [CTA]     "Shop All" button text + href
+         ============================================================ -->
+    <section class="yr-products" data-section="products">
+      <div class="yr-products__head">
+        <!-- [TITLE] -->
+        <h2 class="yr-products__title">The Reformer Collection</h2>
+        <!-- [DESC] -->
+        <p class="yr-products__desc">Three purpose-built reformers — studio-grade engineering, home-ready design. Every model ships with free delivery, white-glove setup, and a 5-year warranty.</p>
+      </div>
+
+      <!-- [CARDS] 3 reformers — copy a .yr-product-card to add more variants -->
+      <div class="yr-products__grid">
+        <!-- [CARD 1] NX901 Classic Reformer -->
+        <a class="yr-product-card" href="#products">
+          <div class="yr-product-card__image-wrap">
+            <img class="yr-product-card__image" loading="lazy"
+                 src="images/nexace/product-classic.jpg"
+                 alt="NX901 Classic Reformer">
+          </div>
+          <p class="yr-product-card__title">NX901 Classic Reformer</p>
+          <p class="yr-product-card__price">
+            <span class="yr-product-card__price-current">$3,200</span>
+            <span class="yr-product-card__price-original">$3,800</span>
+          </p>
+        </a>
+
+        <!-- [CARD 2] NX901-MI Mini Reformer -->
+        <a class="yr-product-card" href="#products">
+          <div class="yr-product-card__image-wrap">
+            <img class="yr-product-card__image" loading="lazy"
+                 src="images/nexace/product-mini.jpg"
+                 alt="NX901-MI Mini Reformer">
+          </div>
+          <p class="yr-product-card__title">NX901-MI Mini Reformer</p>
+          <p class="yr-product-card__price">
+            <span class="yr-product-card__price-current">$2,800</span>
+            <span class="yr-product-card__price-original">$3,400</span>
+          </p>
+        </a>
+
+        <!-- [CARD 3] NX901-T Tower Reformer -->
+        <a class="yr-product-card" href="#products">
+          <div class="yr-product-card__image-wrap">
+            <img class="yr-product-card__image" loading="lazy"
+                 src="images/nexace/product-tower.jpg"
+                 alt="NX901-T Tower Reformer">
+          </div>
+          <p class="yr-product-card__title">NX901-T Tower Reformer</p>
+          <p class="yr-product-card__price">
+            <span class="yr-product-card__price-current">$4,200</span>
+            <span class="yr-product-card__price-original">$4,800</span>
+          </p>
+        </a>
+      </div>
+
+            <div class="yr-products__cta-wrap">
+        <!-- [CTA] -->
+        <a class="yr-products__cta" href="#about">
+          Compare Models
+          <svg viewBox="0 0 14 10" width="14" height="10" aria-hidden="true">
+            <path d="M8.54.81a.5.5 0 01.82-.16l4 4a.5.5 0 010 .7l-4 4a.5.5 0 11-.71-.7L11.8 5.5H1a.5.5 0 010-1h10.79L8.65 1.35a.5.5 0 01-.11-.54z" fill="currentColor"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 3: HOTSPOT — static image + 8 interactive dots
+         A2 decision: no Cylindo 3D, no AR button. Pure CSS + JS.
+         Content editing guide:
+           [HEAD]     eyebrow / title / subtext
+           [IMAGE]    main product image URL
+           [MARKERS]  8 .yr-hotspot__marker items
+             left/top: % coords on image
+             h3:       feature title
+             p:        feature description
+         ============================================================ -->
+    <section class="yr-hotspot" data-section="hotspot" aria-label="NX901 Classic anatomy">
+      <!-- [HEAD] -->
+      <div class="yr-hotspot__head">
+        <p class="yr-hotspot__eyebrow">MEET</p>
+        <h2 class="yr-hotspot__title">THE NX901 CLASSIC</h2>
+        <p class="yr-hotspot__sub">Aircraft-grade aluminum rails, German-manufactured springs, marine-grade upholstery. Every component chosen for decades of studio-grade performance at home.</p>
+      </div>
+
+      <div class="yr-hotspot__image-wrap">
+        <!-- [IMAGE] -->
+        <img class="yr-hotspot__image"
+             src="images/nexace/hotspot-mi.png"
+             alt="NX901-MI with interactive hotspots"
+             loading="lazy">
+
+        <!-- [MARKER 1] Telescopic Legs — 50% / 60% -->
+        <div class="yr-hotspot__marker" style="left:30%;top:72%">
+          <button class="yr-hotspot__btn" aria-label="Show details for Telescopic Legs">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">×</button>
+            <h3>Telescopic Legs</h3>
+            <p>Adjustable legs allow the frame to be lifted to a height of up to 36cm (14.17inch).</p>
+          </div>
+        </div>
+
+        <!-- [MARKER 2] Quality Timber Frame — 78% / 52% -->
+        <div class="yr-hotspot__marker" style="left:52%;top:85%">
+          <button class="yr-hotspot__btn" aria-label="Show details for Quality Timber Frame">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">×</button>
+            <h3>Quality Timber Frame</h3>
+            <p>Solid Maple timber frame for the perfect combination of aesthetics and quality.</p>
+          </div>
+        </div>
+
+        <!-- [MARKER 3] Multi-Position Foot Bar — 86% / 38% -->
+        <div class="yr-hotspot__marker" style="left:35%;top:82%">
+          <button class="yr-hotspot__btn" aria-label="Show details for Multi-Position Foot Bar">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">×</button>
+            <h3>Multi-Position Foot Bar</h3>
+            <p>Easily adjustable and high grip, five-position foot bar.</p>
+          </div>
+        </div>
+
+        <!-- [MARKER 4] Studio Grade Springs — 68% / 65% -->
+        <div class="yr-hotspot__marker" style="left:70%;top:50%">
+          <button class="yr-hotspot__btn" aria-label="Show details for Studio Grade Springs">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">×</button>
+            <h3>Studio Grade Springs</h3>
+            <p>Complete any movement with five German-manufactured springs: 2× heavy [red], 2× medium [blue], and 1 light [yellow].</p>
+          </div>
+        </div>
+
+        <!-- [MARKER 5] Adjustable Head Rest — 24% / 50% -->
+        <div class="yr-hotspot__marker" style="left:58%;top:48%">
+          <button class="yr-hotspot__btn" aria-label="Show details for Adjustable Head Rest">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">×</button>
+            <h3>Adjustable Head Rest</h3>
+            <p>Padded, three-position head rest to support the head and neck throughout your flow.</p>
+          </div>
+        </div>
+
+        <!-- [MARKER 6] Padded Carriage — 45% / 50% -->
+        <div class="yr-hotspot__marker" style="left:48%;top:58%">
+          <button class="yr-hotspot__btn" aria-label="Show details for Padded Carriage">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">×</button>
+            <h3>Padded Carriage</h3>
+            <p>Premium, padded carriage to support your spine and provide a luxurious level of comfort.</p>
+          </div>
+        </div>
+
+        <!-- [MARKER 7] Double Loop Straps — 16% / 40% -->
+        <div class="yr-hotspot__marker" style="left:78%;top:30%">
+          <button class="yr-hotspot__btn" aria-label="Show details for Double Loop Straps">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">×</button>
+            <h3>Double Loop Straps</h3>
+            <p>Featuring plush fluffy cotton padding and a premium ribbon cotton weave for hand or foot use.</p>
+          </div>
+        </div>
+
+        <!-- [MARKER 8] Marine-Grade Upholstery — 55% / 62% -->
+        <div class="yr-hotspot__marker" style="left:42%;top:65%">
+          <button class="yr-hotspot__btn" aria-label="Show details for Marine-Grade Upholstery">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">×</button>
+            <h3>Marine-Grade Upholstery</h3>
+            <p>Durable, marine-grade upholstery provides a water resistant and high-quality finish for easy maintenance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 4: IMAGE + ACCORDION (Meet the OnDemand App)
+         Click an accordion item → its paired image fades in on the right.
+         Content editing guide:
+           [EYEBROW] uppercase label
+           [TITLE]   section headline
+           [ITEMS]   5 .yr-accordion__item (details/summary)
+             [NUM]   2-digit index (01-05)
+             [TITLE] item heading
+             [BODY]  description paragraph
+             [IMG]   paired image (also used as mobile-inline)
+         ============================================================ -->
+    <section class="yr-accordion" data-section="accordion" aria-label="Designed for every room">
+      <div class="yr-accordion__left">
+        <!-- [EYEBROW] -->
+        <p class="yr-accordion__eyebrow">AT HOME, IN ANY SPACE</p>
+        <!-- [TITLE] -->
+        <h2 class="yr-accordion__title">Designed for every room</h2>
+
+        <div class="yr-accordion__list" role="list">
+          <!-- [ITEM 1] -->
+          <details class="yr-accordion__item" data-idx="0" open>
+            <summary class="yr-accordion__summary">
+              <span class="yr-accordion__num">01</span>
+              <span>The Living Room</span>
+            </summary>
+            <div class="yr-accordion__body">
+              <p>Integrate your reformer as a considered object in your main space. The clean lines and walnut finish sit naturally alongside your other furniture.</p>
+              <img class="yr-accordion__mobile-img"
+                   src="images/nexace/room-1.jpg"
+                   alt="The Living Room" loading="lazy">
+            </div>
+          </details>
+
+          <!-- [ITEM 2] -->
+          <details class="yr-accordion__item" data-idx="1">
+            <summary class="yr-accordion__summary">
+              <span class="yr-accordion__num">02</span>
+              <span>The Bedroom Corner</span>
+            </summary>
+            <div class="yr-accordion__body">
+              <p>A quiet corner for morning practice. The NX901-MI folds away against the wall when you're not using it — perfect for smaller spaces.</p>
+              <img class="yr-accordion__mobile-img"
+                   src="images/nexace/room-2.jpg"
+                   alt="The Bedroom Corner" loading="lazy">
+            </div>
+          </details>
+
+          <!-- [ITEM 3] -->
+          <details class="yr-accordion__item" data-idx="2">
+            <summary class="yr-accordion__summary">
+              <span class="yr-accordion__num">03</span>
+              <span>The Home Studio</span>
+            </summary>
+            <div class="yr-accordion__body">
+              <p>A dedicated wellness zone: one reformer, a wall mirror, natural light. Everything you need for a daily studio-grade practice.</p>
+              <img class="yr-accordion__mobile-img"
+                   src="images/nexace/room-3.jpg"
+                   alt="The Home Studio" loading="lazy">
+            </div>
+          </details>
+
+          <!-- [ITEM 4] -->
+          <details class="yr-accordion__item" data-idx="3">
+            <summary class="yr-accordion__summary">
+              <span class="yr-accordion__num">04</span>
+              <span>The Loft</span>
+            </summary>
+            <div class="yr-accordion__body">
+              <p>Complement minimalist open-plan interiors. The reformer becomes part of the architecture rather than hidden away.</p>
+              <img class="yr-accordion__mobile-img"
+                   src="images/nexace/room-4.jpg"
+                   alt="The Loft" loading="lazy">
+            </div>
+          </details>
+
+          <!-- [ITEM 5] -->
+          <details class="yr-accordion__item" data-idx="4">
+            <summary class="yr-accordion__summary">
+              <span class="yr-accordion__num">05</span>
+              <span>The Garden Room</span>
+            </summary>
+            <div class="yr-accordion__body">
+              <p>Natural light, fresh air, unbroken focus. Place the reformer near a window and let the outside become part of your practice.</p>
+              <img class="yr-accordion__mobile-img"
+                   src="images/nexace/room-5.jpg"
+                   alt="The Garden Room" loading="lazy">
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="yr-accordion__right" aria-hidden="true">
+        <img class="yr-accordion__image is-active" data-idx="0"
+             src="images/nexace/room-1.jpg" alt="">
+        <img class="yr-accordion__image" data-idx="1"
+             src="images/nexace/room-2.jpg" alt="">
+        <img class="yr-accordion__image" data-idx="2"
+             src="images/nexace/room-3.jpg" alt="">
+        <img class="yr-accordion__image" data-idx="3"
+             src="images/nexace/room-4.jpg" alt="">
+        <img class="yr-accordion__image" data-idx="4"
+             src="images/nexace/room-5.jpg" alt="">
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 5b: LOVED BY — "We Are Loved By" celebrity endorsements
+         Horizontal scroll-snap carousel. 9 cards; each: photo + name + @handle.
+         Content editing guide:
+           [TITLE]   heading
+           [CARDS]   add/remove .yr-lovedby__card items
+             [IMG]   photo URL
+             [NAME]  display name
+             [HANDLE] @handle
+         ============================================================ -->
+    <section class="yr-lovedby" data-section="lovedby" aria-label="We Are Loved By">
+      <div class="yr-lovedby__head">
+        <!-- [TITLE] -->
+        <h2 class="yr-lovedby__title">We Are Loved By</h2>
+        <!-- Prev/Next navigation -->
+        <div class="yr-lovedby__nav">
+          <button type="button" data-dir="-1" aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button type="button" data-dir="1" aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="yr-lovedby__track">
+        <a class="yr-lovedby__card" href="https://instagram.com/sofiabennett" target="_blank" rel="noopener">
+          <div class="yr-lovedby__image-wrap">
+            <img class="yr-lovedby__img" loading="lazy"
+                 src="images/nexace/celeb-1.jpg"
+                 alt="Sofia Bennett">
+                      <span class="yr-lovedby__badge">NX901 CLASSIC</span>
+          </div>
+          <h3 class="yr-lovedby__name">Sofia Bennett</h3>
+          <p class="yr-lovedby__handle">@sofiabennett</p>
+        </a>
+
+        <a class="yr-lovedby__card" href="https://instagram.com/ameliafisher" target="_blank" rel="noopener">
+          <div class="yr-lovedby__image-wrap">
+            <img class="yr-lovedby__img" loading="lazy"
+                 src="images/nexace/celeb-2.jpg"
+                 alt="Amelia Fisher">
+                      <span class="yr-lovedby__badge">NX901-MI MINI</span>
+          </div>
+          <h3 class="yr-lovedby__name">Amelia Fisher</h3>
+          <p class="yr-lovedby__handle">@ameliafisher</p>
+        </a>
+
+        <a class="yr-lovedby__card" href="https://instagram.com/oliviahayes" target="_blank" rel="noopener">
+          <div class="yr-lovedby__image-wrap">
+            <img class="yr-lovedby__img" loading="lazy"
+                 src="images/nexace/celeb-3.jpg"
+                 alt="Olivia Hayes">
+                      <span class="yr-lovedby__badge">NX901-T TOWER</span>
+          </div>
+          <h3 class="yr-lovedby__name">Olivia Hayes</h3>
+          <p class="yr-lovedby__handle">@oliviahayes</p>
+        </a>
+
+        <a class="yr-lovedby__card" href="https://instagram.com/isabellabrooks" target="_blank" rel="noopener">
+          <div class="yr-lovedby__image-wrap">
+            <img class="yr-lovedby__img" loading="lazy"
+                 src="images/nexace/celeb-4.jpg"
+                 alt="Isabella Brooks">
+                      <span class="yr-lovedby__badge">NX901 CLASSIC</span>
+          </div>
+          <h3 class="yr-lovedby__name">Isabella Brooks</h3>
+          <p class="yr-lovedby__handle">@isabellabrooks</p>
+        </a>
+
+        <a class="yr-lovedby__card" href="https://instagram.com/charlottereed" target="_blank" rel="noopener">
+          <div class="yr-lovedby__image-wrap">
+            <img class="yr-lovedby__img" loading="lazy"
+                 src="images/nexace/celeb-5.jpg"
+                 alt="Charlotte Reed">
+                      <span class="yr-lovedby__badge">NX901-MI MINI</span>
+          </div>
+          <h3 class="yr-lovedby__name">Charlotte Reed</h3>
+          <p class="yr-lovedby__handle">@charlottereed</p>
+        </a>
+
+        <a class="yr-lovedby__card" href="https://instagram.com/miasinclair" target="_blank" rel="noopener">
+          <div class="yr-lovedby__image-wrap">
+            <img class="yr-lovedby__img" loading="lazy"
+                 src="images/nexace/celeb-6.jpg"
+                 alt="Mia Sinclair">
+                      <span class="yr-lovedby__badge">NX901-T TOWER</span>
+          </div>
+          <h3 class="yr-lovedby__name">Mia Sinclair</h3>
+          <p class="yr-lovedby__handle">@miasinclair</p>
+        </a>
+
+        <a class="yr-lovedby__card" href="https://instagram.com/emmawhitfield" target="_blank" rel="noopener">
+          <div class="yr-lovedby__image-wrap">
+            <img class="yr-lovedby__img" loading="lazy"
+                 src="images/nexace/celeb-7.jpg"
+                 alt="Emma Whitfield">
+                      <span class="yr-lovedby__badge">NX901 CLASSIC</span>
+          </div>
+          <h3 class="yr-lovedby__name">Emma Whitfield</h3>
+          <p class="yr-lovedby__handle">@emmawhitfield</p>
+        </a>
+
+        <a class="yr-lovedby__card" href="https://instagram.com/lilycarter" target="_blank" rel="noopener">
+          <div class="yr-lovedby__image-wrap">
+            <img class="yr-lovedby__img" loading="lazy"
+                 src="images/nexace/celeb-8.jpg"
+                 alt="Lily Carter">
+                      <span class="yr-lovedby__badge">NX901-MI MINI</span>
+          </div>
+          <h3 class="yr-lovedby__name">Lily Carter</h3>
+          <p class="yr-lovedby__handle">@lilycarter</p>
+        </a>
+
+        <a class="yr-lovedby__card" href="https://instagram.com/gracemonroe" target="_blank" rel="noopener">
+          <div class="yr-lovedby__image-wrap">
+            <img class="yr-lovedby__img" loading="lazy"
+                 src="images/nexace/celeb-9.jpg"
+                 alt="Grace Monroe">
+                      <span class="yr-lovedby__badge">NX901-T TOWER</span>
+          </div>
+          <h3 class="yr-lovedby__name">Grace Monroe</h3>
+          <p class="yr-lovedby__handle">@gracemonroe</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 5: ABOUT US
+         Content editing guide:
+           [IMAGE-D] desktop background image URL
+           [IMAGE-M] mobile  background image URL
+           [EYEBROW] uppercase label
+           [TITLE]   main headline (supports multi-line)
+           [CTA]     button text + href
+         ============================================================ -->
+    <section class="yr-about" data-section="about" aria-label="About Nexace">
+      <!-- [IMAGE-D] -->
+      <img class="yr-about__image yr-about__image--desktop"
+           src="images/nexace/about-desktop.jpg"
+           alt="Nexace — engineered for daily practice">
+      <!-- [IMAGE-M] -->
+      <img class="yr-about__image yr-about__image--mobile"
+           src="images/nexace/about-mobile.jpg"
+           alt="Nexace — engineered for daily practice">
+      <div class="yr-about__text">
+        <!-- [EYEBROW] -->
+        <p class="yr-about__eyebrow">OUR STORY</p>
+        <!-- [TITLE] -->
+        <h2 class="yr-about__title">Studio-grade Pilates, reimagined for the home.</h2>
+        <!-- [CTA] -->
+        <a class="yr-about__cta" href="#about" aria-label="Read our story">Our Story</a>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 6: CUSTOMERS REVIEWS (static cards matching reference)
+         Title + prev/next arrow nav + scroll-snap card carousel.
+         Content editing guide:
+           [TITLE]     section heading
+           [CARDS]     review cards — each has:
+             [BADGE]   product model tag (THE STUDIO, THE ORIGINAL, etc.)
+             [STARS]   always 5 filled stars
+             [TITLE]?  optional bold heading (omit for bodies without a title)
+             [BODY]    review text
+             [AUTHOR]  reviewer name
+         ============================================================ -->
+    <section class="yr-reviews" data-section="reviews">
+      <div class="yr-reviews__head">
+        <!-- [TITLE] -->
+        <h2 class="yr-reviews__title">Customers Reviews</h2>
+        <div class="yr-reviews__nav">
+          <button type="button" data-dir="-1" aria-label="Previous review">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button type="button" data-dir="1" aria-label="Next review">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="yr-reviews__track">
+        <article class="yr-review-card">
+          <span class="yr-review-card__badge">NX901-T TOWER</span>
+          <div class="yr-review-card__stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+          </div>
+          <p class="yr-review-card__body">The NX901-T exceeded every expectation. The maple frame is gorgeous, the springs feel exactly like my studio's, and setup was effortless. I practice every morning now — highly recommend.</p>
+          <p class="yr-review-card__author">Jessica Hartman</p>
+        </article>
+        <article class="yr-review-card">
+          <span class="yr-review-card__badge">NX901 CLASSIC</span>
+          <div class="yr-review-card__stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+          </div>
+          <h3 class="yr-review-card__title">Classic feel, home convenience</h3>
+          <p class="yr-review-card__body">From first contact to delivery, Nexace was flawless. The Classic reformer is whisper-quiet, the motion app classes are genuinely great, and having studio-quality at home has changed my week.</p>
+          <p class="yr-review-card__author">Daniel Chen</p>
+        </article>
+        <article class="yr-review-card">
+          <span class="yr-review-card__badge">NX901 CLASSIC</span>
+          <div class="yr-review-card__stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+          </div>
+          <h3 class="yr-review-card__title">Studio-grade for real</h3>
+          <p class="yr-review-card__body">I've done reformer pilates in studios for over a decade and was nervous about buying my own. The Nexace Classic is every bit as good as the commercial machines I'm used to. Build quality, feel, silence of the carriage — all studio-grade. The app classes are a massive bonus...</p>
+          <p class="yr-review-card__author">Kimberly Rossi</p>
+        </article>
+        <article class="yr-review-card">
+          <span class="yr-review-card__badge">NX901-T TOWER</span>
+          <div class="yr-review-card__stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+          </div>
+          <h3 class="yr-review-card__title">Love my NX901-T</h3>
+          <p class="yr-review-card__body">In love with my NX901-T. Great quality and easy to assemble. Communication was great from purchase to delivery. App classes span every level and goal. So glad I can practice whenever I want.</p>
+          <p class="yr-review-card__author">Diane Fox</p>
+        </article>
+        <article class="yr-review-card">
+          <span class="yr-review-card__badge">NX901 CLASSIC</span>
+          <div class="yr-review-card__stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+          </div>
+          <h3 class="yr-review-card__title">Best purchase of the year</h3>
+          <p class="yr-review-card__body">Best purchase of the year. The Nexace team's delivery was exceptional, the machine is beautifully quiet, and the Motion app keeps me on track every morning.</p>
+          <p class="yr-review-card__author">Emma Thornton</p>
+        </article>
+        <article class="yr-review-card">
+          <span class="yr-review-card__badge">NX901-MI MINI</span>
+          <div class="yr-review-card__stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+          </div>
+          <p class="yr-review-card__body">Exactly what I hoped for — studio quality in my own home. The walnut finish is stunning and the springs feel smooth and perfectly balanced. Highly recommend.</p>
+          <p class="yr-review-card__author">Sarah Lin</p>
+        </article>
+        <article class="yr-review-card">
+          <span class="yr-review-card__badge">NX901-T TOWER</span>
+          <div class="yr-review-card__stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+          </div>
+          <h3 class="yr-review-card__title">Perfect for small spaces</h3>
+          <p class="yr-review-card__body">I live in a small apartment and was worried about fit. The NX901-MI folding design is genius — I tuck it against the wall when I'm done. Motion app classes are excellent.</p>
+          <p class="yr-review-card__author">Mia Ramirez</p>
+        </article>
+        <article class="yr-review-card">
+          <span class="yr-review-card__badge">NX901 CLASSIC</span>
+          <div class="yr-review-card__stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .5l2.3 4.9 5.3.7-3.9 3.7.9 5.3L8 12.5l-4.7 2.6.9-5.3L.3 6.1l5.3-.7z"/></svg>
+          </div>
+          <p class="yr-review-card__body">I bought the NX901 Classic for my home studio. My clients love it, and after six months of daily use it looks and feels brand new. Truly commercial-grade build quality.</p>
+          <p class="yr-review-card__author">Olivia Park</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 7: FOOTER BRAND BAR
+         Single-line cream bar with brand motto.
+         [MOTTO] — edit the text inline.
+         ============================================================ -->
+    <section class="yr-brand-bar" data-section="brand-bar">
+      <!-- [LOGO] YR favicon monogram -->
+      <img class="yr-brand-bar__logo"
+           src="images/nexace/logo.png"
+           alt="Nexace logo">
+      <!-- [MOTTO] -->
+      <p class="yr-brand-bar__motto">Move with precision. Train with confidence. Live with intention.</p>
+    </section>
+  </main>
+
+  <!-- ============================================================
+       SITE FOOTER — WHITE bg + dark text, matches reference
+       Structure:
+         [TOP GRID 4-col]  3 menu columns + STAY IN TOUCH panel + apps
+         [META row]        address + phone + socials + payment icons
+         [BOTTOM]          copyright + legal links
+       ============================================================ -->
+  <footer class="yr-footer">
+    <div class="yr-footer__inner">
+
+      <!-- [COL 1] Customer Care -->
+      <div class="yr-footer__col">
+        <h3>Customer Care</h3>
+        <ul>
+          <li><a href="https://support.nexace.com/hc/en-us/requests/new">Contact</a></li>
+          <li><a href="/pages/shipping-returns">Shipping &amp; Returns</a></li>
+          <li><a href="https://support.nexace.com/hc/en-us/">FAQ</a></li>
+          <li><a href="/pages/sizing-guide">Size Guide</a></li>
+          <li><a href="/products/gift-card">Gift Vouchers</a></li>
+          <li><a href="/pages/home-warranty">Warranty</a></li>
+          <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+          <li><a href="/policies/terms-of-service">Terms of Service</a></li>
+          <li><a href="/pages/accessibility-statement">Accessibility Statement</a></li>
+          <li><a href="/pages/terms-and-conditions">Terms &amp; Conditions</a></li>
+          <li><a href="/pages/showroom-appointments">Showroom Appointments</a></li>
+          <li><a href="/pages/reformerpro-account-deletion">ReformerPro Account Deletion</a></li>
+        </ul>
+      </div>
+
+      <!-- [COL 2] Our Brand -->
+      <div class="yr-footer__col">
+        <h3>Our Brand</h3>
+        <ul>
+          <li><a href="/pages/our-story">Our Story</a></li>
+          <li><a href="/pages/press">Press</a></li>
+          <li><a href="/blogs/news">Journal</a></li>
+          <li><a href="/pages/careers">Careers</a></li>
+        </ul>
+      </div>
+
+      <!-- [COL 3] Commercial -->
+      <div class="yr-footer__col">
+        <h3>Commercial</h3>
+        <ul>
+          <li><a href="/pages/commercial-promo-t-cs">Promo Terms &amp; Conditions</a></li>
+          <li><a href="/pages/commercial-warranty">Warranty</a></li>
+          <li><a href="/pages/showroom-appointments">Showroom Appointments</a></li>
+        </ul>
+      </div>
+
+      <!-- [STAY IN TOUCH] boxed gray panel — email signup form -->
+      <div class="yr-footer__newsletter">
+        <h3>Stay in Touch</h3>
+        <p class="yr-footer__newsletter-subtitle">Join the list for launch updates, studio content, and early access to new releases.</p>
+        <form class="yr-footer__newsletter-form"
+              onsubmit="event.preventDefault(); this.reset(); this.querySelector('.yr-footer__newsletter-success').hidden = false;">
+          <label for="yr-newsletter-email" class="visually-hidden">Email address</label>
+          <input id="yr-newsletter-email" type="email" name="email" placeholder="Your email address" required autocomplete="email">
+          <button type="submit" aria-label="Subscribe">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </form>
+        <p class="yr-footer__newsletter-success" hidden>Thanks — you're on the list.</p>
+      </div>
+
+      <!-- [META] address + phone + socials + payments (spans 3 cols under menus) -->
+      <div class="yr-footer__meta">
+        <p class="yr-footer__address">Nexace Design Studio<br>168 Craft Lane, Suite 4A<br>Melbourne, VIC 3000, Australia</p>
+
+        <a class="yr-footer__phone" href="tel:+61390001234">
+          <span class="yr-footer__phone-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </span>
+          +61 (3) 9000 1234
+        </a>
+
+        <!-- [SOCIAL] 6 icons: Instagram, Facebook, TikTok, Pinterest, YouTube, LinkedIn -->
+        <div class="yr-footer__socials">
+          <a href="https://www.instagram.com/nexace" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="https://www.facebook.com/nexace" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.5v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6V12h2.9l-.5 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@nexacepilates" target="_blank" rel="noopener" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 6.2a6 6 0 0 1-3.6-1.2 6 6 0 0 1-2.3-4.1h-3.3v14.7a3 3 0 1 1-3-3v-3.3a6.3 6.3 0 1 0 6.3 6.3V9.9a9.2 9.2 0 0 0 5.9 2V8.5h-.1z"/></svg>
+          </a>
+          <a href="https://www.pinterest.com/nexace" target="_blank" rel="noopener" aria-label="Pinterest">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0a12 12 0 0 0-4.4 23.2c-.1-1-.2-2.4 0-3.5l1.5-6.4s-.4-.8-.4-1.9c0-1.8 1-3.2 2.4-3.2 1.1 0 1.6.8 1.6 1.8 0 1.1-.7 2.8-1.1 4.3-.3 1.3.6 2.3 1.9 2.3 2.3 0 4.1-2.4 4.1-5.9 0-3.1-2.2-5.3-5.4-5.3-3.7 0-5.8 2.8-5.8 5.6 0 1.1.4 2.3 1 3-.1.1-.1.2-.2.5l-.3 1.3c0 .2-.2.3-.4.2-1.4-.7-2.3-2.7-2.3-4.4 0-3.6 2.6-6.9 7.5-6.9 3.9 0 7 2.8 7 6.6 0 3.9-2.5 7.1-5.9 7.1-1.2 0-2.3-.6-2.6-1.3l-.7 2.7c-.3 1-1 2.3-1.4 3.1A12 12 0 1 0 12 0z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/channel/nexace" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M18.16 5.87c.34 1.309.34 4.08.34 4.08s0 2.771-.34 4.08a2.125 2.125 0 0 1-1.53 1.53c-1.309.34-6.63.34-6.63.34s-5.321 0-6.63-.34a2.125 2.125 0 0 1-1.53-1.53c-.34-1.309-.34-4.08-.34-4.08s0-2.771.34-4.08a2.173 2.173 0 0 1 1.53-1.53C4.679 4 10 4 10 4s5.321 0 6.63.34a2.173 2.173 0 0 1 1.53 1.53ZM8.3 12.5l4.42-2.55L8.3 7.4v5.1Z"/></svg>
+          </a>
+          <a href="https://linkedin.com/company/nexace" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.35V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .78 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+
+        <!-- [PAYMENTS] 8 brand tiles matching reference: Amazon, AmEx, Apple Pay, Google Pay, Mastercard, PayPal, Shop Pay, Visa -->
+        <div class="yr-footer__payments">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/81bb8da86a7c0c2d5c3e.svg" alt="Amazon"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#111;font-weight:700;font-size:10px;border-radius:3px',textContent:'AMAZON'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.american_express-wwwwww.svg" alt="American Express"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#016fd0;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'AMEX'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.apple_pay-wwwwww.svg" alt="Apple Pay"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#000;font-weight:700;font-size:10px;border-radius:3px',textContent:'APPLE PAY'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.google_pay-wwwwww.svg" alt="Google Pay"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#5f6368;font-weight:700;font-size:10px;border-radius:3px',textContent:'G PAY'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.master-wwwwww.svg" alt="Mastercard"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#eb001b;font-weight:700;font-size:10px;border-radius:3px',textContent:'MC'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.paypal-wwwwww.svg" alt="PayPal"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#003087;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'PAYPAL'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.shopify_pay-wwwwww.svg" alt="Shop Pay"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#5a31f4;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'SHOP'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.visa-wwwwww.svg" alt="Visa"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#1a1f71;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'VISA'}))">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="yr-footer__bottom">
+      <span>&copy; 2026 Nexace</span>
+      <div class="yr-footer__legal">
+        <a href="/policies/privacy-policy">Privacy Policy</a>
+        <a href="/policies/terms-of-service">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <!-- ============================================================
+       VENDOR: Flickity carousel library (reused as-is from nexace.com)
+       ============================================================ -->
+  <script src="vendor/flickity.pkgd.min.js"></script>
+
+  <script>
+    /* ============================================================
+       SECTION 1: HERO CAROUSEL — Flickity init
+       Config verbatim from reference/original.html (line ~4845)
+       ============================================================ */
+    (function initHero() {
+      var el = document.getElementById('yr-hero-carousel');
+      if (!el) return;
+      var flk = new Flickity(el, {
+        autoPlay: 10000,
+        prevNextButtons: false,
+        pageDots: false,
+        wrapAround: true,
+        draggable: true,
+        pauseAutoPlayOnHover: false,
+        setGallerySize: true,
+        adaptiveHeight: false,
+        imagesLoaded: true
+      });
+      // Resize once all images fully loaded, then again on window load
+      window.addEventListener('load', function() { flk.resize(); });
+    })();
+
+    /* ============================================================
+       SECTION 3: HOTSPOT — click marker to toggle popover
+       One marker open at a time. Click × close or click outside closes.
+       ============================================================ */
+    (function initHotspots() {
+      var markers = document.querySelectorAll('.yr-hotspot__marker');
+      if (!markers.length) return;
+
+      function closeAll() {
+        markers.forEach(function(m) { m.classList.remove('is-active'); });
+      }
+
+      markers.forEach(function(marker) {
+        var btn   = marker.querySelector('.yr-hotspot__btn');
+        var close = marker.querySelector('.yr-hotspot__close');
+        if (btn) {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var wasActive = marker.classList.contains('is-active');
+            closeAll();
+            if (!wasActive) marker.classList.add('is-active');
+          });
+        }
+        if (close) {
+          close.addEventListener('click', function(e) {
+            e.stopPropagation();
+            marker.classList.remove('is-active');
+          });
+        }
+      });
+
+      // Click outside any marker closes all
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.yr-hotspot__marker')) closeAll();
+      });
+      // Escape closes all
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeAll();
+      });
+    })();
+
+    /* ============================================================
+       SECTION 4: ACCORDION — click item switches paired desktop image
+       <details> handles open/close natively; we sync image on 'toggle'.
+       Only one item open at a time.
+       ============================================================ */
+    (function initAccordion() {
+      var items  = document.querySelectorAll('.yr-accordion__item');
+      var images = document.querySelectorAll('.yr-accordion__image');
+      if (!items.length) return;
+
+      items.forEach(function(item) {
+        item.addEventListener('toggle', function() {
+          if (!item.open) return;
+          // Close other items (single-open behavior)
+          items.forEach(function(other) {
+            if (other !== item && other.open) other.open = false;
+          });
+          // Switch active image
+          var idx = item.getAttribute('data-idx');
+          images.forEach(function(img) {
+            img.classList.toggle('is-active', img.getAttribute('data-idx') === idx);
+          });
+        });
+      });
+    })();
+
+    /* ============================================================
+       SECTION 0a: ANNOUNCEMENT BAR — simple fade rotator
+       Cycles through .yr-announce__msg children every 3 seconds.
+       ============================================================ */
+    (function initAnnounce() {
+      var items = document.querySelectorAll('.yr-announce__msg');
+      if (!items.length) return;
+      items[0].classList.add('is-active');
+      if (items.length < 2) return;
+      var i = 0;
+      setInterval(function() {
+        items[i].classList.remove('is-active');
+        i = (i + 1) % items.length;
+        items[i].classList.add('is-active');
+      }, 3000);
+    })();
+
+    /* ============================================================
+       SECTION 5b + 6: SCROLL-SNAP NAV — shared prev/next arrow buttons
+       Any `.yr-*__nav button` with data-dir scrolls its nearest
+       sibling `.yr-*__track` by one card width.
+       ============================================================ */
+    (function initScrollNav() {
+      var pairs = [
+        { navSel: '.yr-lovedby__nav', trackSel: '.yr-lovedby__track', cardSel: '.yr-lovedby__card' },
+        { navSel: '.yr-reviews__nav', trackSel: '.yr-reviews__track', cardSel: '.yr-review-card' }
+      ];
+      pairs.forEach(function(p) {
+        var nav = document.querySelector(p.navSel);
+        var track = document.querySelector(p.trackSel);
+        if (!nav || !track) return;
+        nav.querySelectorAll('button').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var dir = parseInt(btn.getAttribute('data-dir') || '1', 10);
+            var card = track.querySelector(p.cardSel);
+            var gap = parseFloat(getComputedStyle(track).gap || '16');
+            var step = (card ? card.offsetWidth : 300) + gap;
+            track.scrollBy({ left: dir * step, behavior: 'smooth' });
+          });
+        });
+      });
+    })();
+
+    /* ============================================================
+       SECTION 5: ABOUT US — no JS needed (static content)
+       ============================================================ */
+  </script>
+</body>
+</html>
