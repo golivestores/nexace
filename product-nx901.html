@@ -1,0 +1,2408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NX901 Classic Reformer — Nexace</title>
+  <meta name="description" content="The NX901 Classic Reformer by Nexace. Studio-grade pilates equipment engineered for home practice. Solid wood frame, silent rail system, 5-level spring resistance.">
+
+  <link rel="icon" type="image/png" href="images/nexace/logo.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — same as index.html
+       ============================================================ */
+    :root {
+      --yr-font-body:    'Lato', system-ui, -apple-system, sans-serif;
+      --yr-font-heading: 'Lato', system-ui, -apple-system, sans-serif;
+      --yr-fw-light:     300;
+      --yr-fw-regular:   400;
+      --yr-fw-medium:    500;
+      --yr-fw-semibold:  600;
+      --yr-fw-bold:      700;
+
+      --yr-ink:          #25140c;
+      --yr-ink-soft:     #25140c;
+      --yr-ink-muted:    #744c32;
+      --yr-paper:        #ffffff;
+      --yr-cream:        #f7e7de;
+      --yr-cream-deep:   #f7e7de;
+      --yr-taupe:        #9f8d81;
+      --yr-off-white:    #faf6f2;
+      --yr-border:       rgba(37, 20, 12, 0.10);
+
+      --yr-page-max:     1600px;
+      --yr-gap:          8px;
+      --yr-r-none:       0;
+      --yr-r-sm:         6px;
+      --yr-r-pill:       100px;
+
+      --yr-ease:         cubic-bezier(0.4, 0, 0.2, 1);
+      --yr-transition:   0.3s var(--yr-ease);
+    }
+
+    /* ============================================================
+       RESET & GLOBAL BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; }
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--yr-font-body);
+      font-weight: var(--yr-fw-regular);
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--yr-ink);
+      background: var(--yr-paper);
+    }
+    img, video { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button {
+      font: inherit;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: inherit;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--yr-font-heading);
+      font-weight: var(--yr-fw-medium);
+      margin: 0;
+      line-height: 1.2;
+    }
+    p { margin: 0; }
+    .visually-hidden {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+
+    /* ============================================================
+       ANNOUNCEMENT BAR
+       ============================================================ */
+    .yr-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+    }
+    .yr-announce {
+      background: #801010;
+      color: var(--yr-cream);
+      padding: 10px 16px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .yr-announce__track {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      height: 20px;
+    }
+    .yr-announce__msg {
+      position: absolute;
+      left: 0; right: 0; top: 0;
+      font-size: 14px;
+      font-weight: var(--yr-fw-medium);
+      letter-spacing: 0.02em;
+      color: var(--yr-cream);
+      text-decoration: none;
+      opacity: 0;
+      transition: opacity 0.5s var(--yr-ease);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .yr-announce__msg.is-active { opacity: 1; }
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
+    .yr-header {
+      background: var(--yr-paper);
+      border-bottom: 1px solid var(--yr-border);
+      width: 100%;
+    }
+    .yr-header__inner {
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      gap: 24px;
+    }
+    .yr-header__logo {
+      display: flex;
+      align-items: center;
+      min-width: 140px;
+      height: 100%;
+      transition: opacity 0.4s;
+    }
+    .yr-header__logo:hover { opacity: 0.75; }
+    .yr-header__logo img { display: block; height: 26px; width: auto; }
+    .yr-header__nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .yr-header__nav a {
+      font-size: 13px;
+      font-weight: var(--yr-fw-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--yr-ink);
+      text-decoration: none;
+      position: relative;
+      padding: 4px 0;
+    }
+    .yr-header__nav a::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 1.5px;
+      background: var(--yr-ink);
+      transform: scaleX(0);
+      transition: transform var(--yr-transition);
+    }
+    .yr-header__nav a:hover::after { transform: scaleX(1); }
+    .yr-header__actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .yr-header__icon-btn,
+    .yr-header__burger {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      color: var(--yr-ink);
+      cursor: pointer;
+      background: none;
+      border: none;
+      transition: opacity var(--yr-transition);
+    }
+    .yr-header__icon-btn:hover { opacity: 0.65; }
+    .yr-header__icon-btn svg,
+    .yr-header__burger svg { width: 22px; height: 22px; }
+    .yr-header__burger { display: none; }
+
+    @media (max-width: 989px) {
+      .yr-announce { min-height: 32px; padding: 6px 12px; }
+      .yr-announce__msg { font-size: 11px; }
+      .yr-header__inner { padding: 14px 20px; }
+      .yr-header__nav { display: none; }
+      .yr-header__burger { display: flex; }
+      .yr-header__logo img { height: 22px; }
+    }
+
+    /* ============================================================
+       SECTION 1: PRODUCT HERO — two-column layout
+       ============================================================ */
+    .pdp-hero {
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+      padding: 40px 48px 80px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    /* --- Gallery --- */
+    .pdp-gallery {
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+    }
+    .pdp-gallery__thumbs {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .pdp-gallery__thumb {
+      width: 80px;
+      height: 80px;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      background: var(--yr-off-white);
+      transition: border-color var(--yr-transition), opacity var(--yr-transition);
+      padding: 0;
+    }
+    .pdp-gallery__thumb:hover { opacity: 0.75; }
+    .pdp-gallery__thumb.is-active {
+      border-color: var(--yr-ink);
+    }
+    .pdp-gallery__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .pdp-gallery__main {
+      flex: 1;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: var(--yr-off-white);
+      border-radius: var(--yr-r-sm);
+      position: relative;
+    }
+    .pdp-gallery__main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.4s var(--yr-ease);
+      position: absolute;
+      top: 0; left: 0;
+    }
+    .pdp-gallery__main img.is-active { opacity: 1; }
+
+    /* --- Product Info --- */
+    .pdp-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding-top: 8px;
+    }
+    .pdp-info__brand {
+      font-size: 12px;
+      font-weight: var(--yr-fw-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--yr-ink-muted);
+      margin-bottom: 10px;
+    }
+    .pdp-info__title {
+      font-size: 36px;
+      font-weight: var(--yr-fw-light);
+      line-height: 1.15;
+      color: var(--yr-ink);
+      margin-bottom: 20px;
+    }
+    .pdp-info__rating {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .pdp-info__stars {
+      display: flex;
+      gap: 2px;
+      color: #d4a853;
+    }
+    .pdp-info__stars svg { width: 16px; height: 16px; }
+    .pdp-info__rating-text {
+      font-size: 13px;
+      color: var(--yr-ink-muted);
+    }
+    .pdp-info__price {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .pdp-info__price-current {
+      font-size: 32px;
+      font-weight: var(--yr-fw-bold);
+      color: var(--yr-ink);
+    }
+    .pdp-info__price-original {
+      font-size: 18px;
+      color: var(--yr-taupe);
+      text-decoration: line-through;
+    }
+    .pdp-info__price-badge {
+      display: inline-block;
+      background: #801010;
+      color: #fff;
+      font-size: 11px;
+      font-weight: var(--yr-fw-bold);
+      letter-spacing: 0.06em;
+      padding: 4px 10px;
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+    .pdp-info__desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--yr-ink-muted);
+      margin: 16px 0 28px;
+    }
+
+    /* Tabs */
+    .pdp-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--yr-border);
+      margin-bottom: 20px;
+    }
+    .pdp-tabs__btn {
+      padding: 12px 20px;
+      font-size: 12px;
+      font-weight: var(--yr-fw-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--yr-taupe);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: color var(--yr-transition), border-color var(--yr-transition);
+    }
+    .pdp-tabs__btn:hover { color: var(--yr-ink); }
+    .pdp-tabs__btn.is-active {
+      color: var(--yr-ink);
+      border-bottom-color: var(--yr-ink);
+    }
+    .pdp-tab-panel {
+      display: none;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--yr-ink-muted);
+      margin-bottom: 28px;
+    }
+    .pdp-tab-panel.is-active { display: block; }
+    .pdp-tab-panel ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+    .pdp-tab-panel li {
+      margin-bottom: 6px;
+    }
+
+    /* Add to Cart */
+    .pdp-info__atc {
+      width: 100%;
+      padding: 18px 32px;
+      background: var(--yr-ink);
+      color: var(--yr-cream);
+      font-size: 14px;
+      font-weight: var(--yr-fw-bold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background var(--yr-transition);
+      margin-bottom: 24px;
+    }
+    .pdp-info__atc:hover { background: #3d2518; }
+
+    /* Trust badges */
+    .pdp-trust {
+      display: flex;
+      gap: 24px;
+      padding-top: 4px;
+    }
+    .pdp-trust__item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--yr-ink-muted);
+      letter-spacing: 0.02em;
+    }
+    .pdp-trust__icon {
+      width: 20px;
+      height: 20px;
+      color: var(--yr-ink);
+      flex-shrink: 0;
+    }
+
+    /* Mobile: stack */
+    @media (max-width: 989px) {
+      .pdp-hero {
+        grid-template-columns: 1fr;
+        padding: 24px 20px 60px;
+        gap: 32px;
+      }
+      .pdp-info__title { font-size: 28px; }
+      .pdp-info__price-current { font-size: 26px; }
+      .pdp-gallery { flex-direction: column-reverse; }
+      .pdp-gallery__thumbs { flex-direction: row; }
+      .pdp-gallery__thumb { width: 60px; height: 60px; }
+      .pdp-trust { flex-wrap: wrap; gap: 16px; }
+    }
+
+    /* ============================================================
+       SECTION 2: FEATURE ICONS BAR
+       ============================================================ */
+    .pdp-features {
+      background: var(--yr-off-white);
+      padding: 64px 48px;
+    }
+    .pdp-features__grid {
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 32px;
+    }
+    .pdp-feature {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 14px;
+      transition: transform var(--yr-transition);
+    }
+    .pdp-feature:hover {
+      transform: translateY(-4px);
+    }
+    .pdp-feature:hover .pdp-feature__icon {
+      color: #801010;
+    }
+    .pdp-feature__icon {
+      width: 44px;
+      height: 44px;
+      color: var(--yr-ink);
+      transition: color var(--yr-transition);
+    }
+    .pdp-feature__label {
+      font-size: 13px;
+      font-weight: var(--yr-fw-medium);
+      color: var(--yr-ink);
+      line-height: 1.4;
+    }
+    @media (max-width: 989px) {
+      .pdp-features { padding: 48px 20px; }
+      .pdp-features__grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px 20px;
+      }
+    }
+    @media (max-width: 480px) {
+      .pdp-features__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* ============================================================
+       SECTION 2b: HOTSPOT (from index.html)
+       ============================================================ */
+    .yr-hotspot {
+      background: #f5f5f0;
+      padding: 80px 40px;
+    }
+    .yr-hotspot__head {
+      max-width: 570px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+    .yr-hotspot__eyebrow {
+      color: var(--yr-ink-soft);
+      font-weight: var(--yr-fw-medium);
+      font-size: 14px;
+      text-transform: uppercase;
+      margin: 0 0 12px;
+    }
+    .yr-hotspot__title {
+      color: var(--yr-ink-soft);
+      font-weight: var(--yr-fw-medium);
+      font-size: 32px;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin: 0 0 16px;
+    }
+    .yr-hotspot__sub {
+      color: var(--yr-ink-soft);
+      font-weight: var(--yr-fw-light);
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .yr-hotspot__image-wrap {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .yr-hotspot__image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .yr-hotspot__marker {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+    .yr-hotspot__marker.is-active { z-index: 10; }
+    .yr-hotspot__btn {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: var(--yr-fw-light);
+      color: var(--yr-ink-soft);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      transition: transform var(--yr-transition), background var(--yr-transition);
+    }
+    .yr-hotspot__btn::before {
+      content: "";
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.55);
+      animation: yr-hotspot-pulse 2s ease-out infinite;
+      z-index: -1;
+    }
+    @keyframes yr-hotspot-pulse {
+      0%   { transform: scale(0.9); opacity: 0.7; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+    .yr-hotspot__marker.is-active .yr-hotspot__btn {
+      background: var(--yr-ink-soft);
+      color: #ffffff;
+      transform: rotate(45deg);
+    }
+    .yr-hotspot__marker.is-active .yr-hotspot__btn::before { animation: none; }
+    .yr-hotspot__popover-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .yr-hotspot__popover {
+      position: absolute;
+      left: 50%;
+      top: calc(100% + 16px);
+      transform: translateX(-50%) translateY(-4px);
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 18px 20px 20px;
+      min-width: 280px;
+      max-width: 320px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all 0.25s var(--yr-ease);
+    }
+    .yr-hotspot__marker.is-active .yr-hotspot__popover {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .yr-hotspot__popover h3 {
+      font-size: 15px;
+      font-weight: var(--yr-fw-medium);
+      color: var(--yr-ink-soft);
+      margin: 0 0 8px;
+      padding-right: 24px;
+    }
+    .yr-hotspot__popover p {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--yr-ink-muted);
+      margin: 0;
+    }
+    .yr-hotspot__close {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 22px;
+      line-height: 1;
+      color: var(--yr-ink-muted);
+      cursor: pointer;
+      padding: 4px;
+    }
+    .yr-hotspot__close:hover { color: var(--yr-ink-soft); }
+    @media (max-width: 767px) {
+      .yr-hotspot { padding: 50px 20px; }
+      .yr-hotspot__title { font-size: 24px; }
+      .yr-hotspot__btn { width: 28px; height: 28px; font-size: 18px; }
+      .yr-hotspot__popover { min-width: 220px; max-width: 260px; }
+    }
+
+    /* ============================================================
+       SCROLL REVEAL ANIMATIONS
+       ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s var(--yr-ease), transform 0.7s var(--yr-ease);
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: opacity 0.7s var(--yr-ease), transform 0.7s var(--yr-ease);
+    }
+    .reveal-left.is-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: opacity 0.7s var(--yr-ease), transform 0.7s var(--yr-ease);
+    }
+    .reveal-right.is-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.92);
+      transition: opacity 0.7s var(--yr-ease), transform 0.7s var(--yr-ease);
+    }
+    .reveal-scale.is-visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+    /* Stagger children */
+    .stagger-children > * {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s var(--yr-ease), transform 0.5s var(--yr-ease);
+    }
+    .stagger-children.is-visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: translateY(0); }
+    .stagger-children.is-visible > *:nth-child(2) { transition-delay: 0.08s; opacity: 1; transform: translateY(0); }
+    .stagger-children.is-visible > *:nth-child(3) { transition-delay: 0.16s; opacity: 1; transform: translateY(0); }
+    .stagger-children.is-visible > *:nth-child(4) { transition-delay: 0.24s; opacity: 1; transform: translateY(0); }
+    .stagger-children.is-visible > *:nth-child(5) { transition-delay: 0.32s; opacity: 1; transform: translateY(0); }
+    .stagger-children.is-visible > *:nth-child(6) { transition-delay: 0.40s; opacity: 1; transform: translateY(0); }
+
+    /* ============================================================
+       SECTION 3: IMMERSIVE EXPERIENCE
+       ============================================================ */
+    .pdp-experience {
+      position: relative;
+      width: 100%;
+      min-height: 520px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pdp-experience__bg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .pdp-experience__overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to right,
+        rgba(37, 20, 12, 0.55) 0%,
+        rgba(37, 20, 12, 0.25) 50%,
+        rgba(37, 20, 12, 0.05) 100%
+      );
+    }
+    .pdp-experience__content {
+      position: relative;
+      z-index: 1;
+      max-width: var(--yr-page-max);
+      width: 100%;
+      padding: 80px 48px;
+    }
+    .pdp-experience__eyebrow {
+      font-size: 11px;
+      font-weight: var(--yr-fw-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--yr-cream);
+      margin-bottom: 16px;
+    }
+    .pdp-experience__title {
+      font-size: 48px;
+      font-weight: var(--yr-fw-light);
+      color: #ffffff;
+      line-height: 1.1;
+      max-width: 520px;
+      margin-bottom: 16px;
+    }
+    .pdp-experience__sub {
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 440px;
+      margin-bottom: 32px;
+    }
+    .pdp-experience__cta {
+      display: inline-block;
+      padding: 14px 36px;
+      background: var(--yr-cream);
+      color: var(--yr-ink);
+      font-size: 12px;
+      font-weight: var(--yr-fw-bold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background var(--yr-transition), color var(--yr-transition);
+    }
+    .pdp-experience__cta:hover {
+      background: #ffffff;
+    }
+    @media (max-width: 989px) {
+      .pdp-experience { min-height: 420px; }
+      .pdp-experience__content { padding: 48px 20px; }
+      .pdp-experience__title { font-size: 32px; }
+    }
+
+    /* ============================================================
+       SECTION 3b: SWIPE CARDS
+       ============================================================ */
+    .pdp-swipe {
+      padding: 80px 0 80px 40px;
+      background: var(--yr-paper);
+    }
+    .pdp-swipe__head {
+      flex: 1;
+    }
+    .pdp-swipe__eyebrow {
+      font-size: 11px;
+      font-weight: var(--yr-fw-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--yr-ink-muted);
+      margin-bottom: 10px;
+    }
+    .pdp-swipe__title {
+      font-size: 32px;
+      font-weight: var(--yr-fw-light);
+      color: var(--yr-ink);
+      line-height: 1.15;
+    }
+    .pdp-swipe__head-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding-right: 40px;
+      margin-bottom: 36px;
+    }
+    .pdp-swipe__nav {
+      display: flex;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .pdp-swipe__nav button {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--yr-border);
+      background: var(--yr-paper);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--yr-ink);
+      transition: background var(--yr-transition), border-color var(--yr-transition);
+    }
+    .pdp-swipe__nav button:hover {
+      background: var(--yr-off-white);
+      border-color: var(--yr-ink);
+    }
+    .pdp-swipe__nav svg { width: 20px; height: 20px; }
+    .pdp-swipe__track {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-right: 40px;
+    }
+    .pdp-swipe__track::-webkit-scrollbar { display: none; }
+    .pdp-swipe-card {
+      flex: 0 0 calc((100% - 60px) / 3.3);
+      min-width: 320px;
+      scroll-snap-align: start;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 3 / 4;
+      background: #f5f5f0;
+      transition: transform var(--yr-transition);
+    }
+    .pdp-swipe-card:hover { transform: translateY(-4px); }
+    .pdp-swipe-card__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .pdp-swipe-card__overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.35) 0%,
+        rgba(0, 0, 0, 0) 50%
+      );
+      pointer-events: none;
+    }
+    .pdp-swipe-card__text {
+      position: absolute;
+      top: 0; left: 0;
+      padding: 28px 28px;
+      font-size: 16px;
+      font-weight: var(--yr-fw-medium);
+      line-height: 1.5;
+      color: #ffffff;
+      max-width: 320px;
+    }
+    .pdp-swipe__dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 28px;
+      padding-right: 40px;
+    }
+    .pdp-swipe__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--yr-border);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: background var(--yr-transition), transform var(--yr-transition);
+    }
+    .pdp-swipe__dot.is-active {
+      background: var(--yr-ink);
+      transform: scale(1.3);
+    }
+    @media (max-width: 767px) {
+      .pdp-swipe { padding: 50px 0 50px 20px; }
+      .pdp-swipe__head { padding-right: 20px; }
+      .pdp-swipe__title { font-size: 26px; }
+      .pdp-swipe-card { flex: 0 0 75vw; min-width: 280px; }
+      .pdp-swipe__dots { padding-right: 20px; }
+    }
+
+    /* ============================================================
+       SECTION 3c: COMPARE REFORMERS
+       ============================================================ */
+    .pdp-compare {
+      background: var(--yr-off-white);
+      padding: 100px 48px;
+    }
+    .pdp-compare__inner {
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+    }
+    .pdp-compare__head {
+      margin-bottom: 16px;
+    }
+    .pdp-compare__title {
+      font-size: 40px;
+      font-weight: var(--yr-fw-light);
+      color: var(--yr-ink);
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .pdp-compare__sub {
+      font-size: 15px;
+      color: var(--yr-ink-muted);
+      line-height: 1.6;
+    }
+    .pdp-compare__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 48px;
+    }
+    .pdp-compare-card {
+      background: var(--yr-paper);
+      border: 1px solid var(--yr-border);
+      border-radius: var(--yr-r-sm);
+      overflow: hidden;
+      transition: transform var(--yr-transition), box-shadow var(--yr-transition);
+    }
+    .pdp-compare-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(37, 20, 12, 0.08);
+    }
+    .pdp-compare-card.is-current {
+      border-color: var(--yr-ink);
+      border-width: 2px;
+    }
+    .pdp-compare-card__img-wrap {
+      background: #f0ece8;
+      padding: 40px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+    }
+    .pdp-compare-card__img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .pdp-compare-card__body {
+      padding: 28px 32px 36px;
+    }
+    .pdp-compare-card__header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .pdp-compare-card__name {
+      font-size: 20px;
+      font-weight: var(--yr-fw-bold);
+      color: var(--yr-ink);
+    }
+    .pdp-compare-card__price {
+      font-size: 20px;
+      font-weight: var(--yr-fw-bold);
+      color: var(--yr-ink);
+    }
+    .pdp-compare-card__badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: var(--yr-fw-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--yr-paper);
+      background: var(--yr-ink);
+      padding: 3px 8px;
+      border-radius: 2px;
+      margin-left: 8px;
+    }
+    .pdp-compare-card__specs {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .pdp-compare-card__spec {
+      padding: 18px 0;
+      border-top: 1px solid var(--yr-border);
+    }
+    .pdp-compare-card__spec-label {
+      font-size: 14px;
+      font-weight: var(--yr-fw-bold);
+      color: var(--yr-ink);
+      margin-bottom: 5px;
+    }
+    .pdp-compare-card__spec-value {
+      font-size: 14px;
+      color: var(--yr-ink-muted);
+      line-height: 1.6;
+    }
+    .pdp-compare-card__cta {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 16px;
+      margin-top: 28px;
+      font-size: 12px;
+      font-weight: var(--yr-fw-bold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--yr-ink);
+      color: var(--yr-ink);
+      background: transparent;
+      transition: background var(--yr-transition), color var(--yr-transition);
+    }
+    .pdp-compare-card__cta:hover {
+      background: var(--yr-ink);
+      color: var(--yr-cream);
+    }
+    .pdp-compare-card.is-current .pdp-compare-card__cta {
+      background: var(--yr-ink);
+      color: var(--yr-cream);
+    }
+    .pdp-compare-card.is-current .pdp-compare-card__cta:hover {
+      background: #3d2518;
+    }
+    @media (max-width: 989px) {
+      .pdp-compare { padding: 60px 20px; }
+      .pdp-compare__title { font-size: 26px; }
+      .pdp-compare__grid { grid-template-columns: 1fr; gap: 20px; }
+    }
+
+    /* ============================================================
+       SECTION 4: PURCHASE GUARANTEES — 3 cards
+       ============================================================ */
+    .pdp-guarantees {
+      padding: 80px 48px;
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+    }
+    .pdp-guarantees__title {
+      font-size: 32px;
+      font-weight: var(--yr-fw-light);
+      color: var(--yr-ink);
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .pdp-guarantees__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .pdp-guarantee-card {
+      background: var(--yr-paper);
+      border: 1px solid var(--yr-border);
+      border-radius: var(--yr-r-sm);
+      padding: 40px 32px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      transition: transform var(--yr-transition), box-shadow var(--yr-transition);
+    }
+    .pdp-guarantee-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 32px rgba(37, 20, 12, 0.10);
+    }
+    .pdp-guarantee-card__icon {
+      width: 48px;
+      height: 48px;
+      color: var(--yr-ink);
+    }
+    .pdp-guarantee-card__title {
+      font-size: 18px;
+      font-weight: var(--yr-fw-bold);
+      color: var(--yr-ink);
+    }
+    .pdp-guarantee-card__desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--yr-ink-muted);
+    }
+    @media (max-width: 989px) {
+      .pdp-guarantees { padding: 60px 20px; }
+      .pdp-guarantees__title { font-size: 26px; }
+    }
+    @media (max-width: 767px) {
+      .pdp-guarantees__grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .pdp-guarantee-card { padding: 28px 24px; }
+    }
+
+    /* ============================================================
+       SECTION 5: CUSTOMER REVIEWS
+       (reused from index.html Section 6)
+       ============================================================ */
+    .yr-reviews {
+      padding: 80px 0 80px 40px;
+      background: var(--yr-paper);
+      position: relative;
+    }
+    .yr-reviews__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-right: 40px;
+      margin-bottom: 32px;
+    }
+    .yr-reviews__title {
+      font-family: var(--yr-font-heading);
+      font-weight: var(--yr-fw-light);
+      font-size: 40px;
+      color: var(--yr-ink-soft);
+      margin: 0;
+      line-height: 1;
+    }
+    .yr-reviews__nav {
+      display: flex;
+      gap: 12px;
+    }
+    .yr-reviews__nav button {
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      color: var(--yr-ink-soft);
+      transition: opacity var(--yr-transition);
+    }
+    .yr-reviews__nav button:hover { opacity: 0.6; }
+    .yr-reviews__nav svg { width: 22px; height: 22px; }
+    .yr-reviews__track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-right: 40px;
+    }
+    .yr-reviews__track::-webkit-scrollbar { display: none; }
+    .yr-review-card {
+      flex: 0 0 calc((100% - 88px) / 4);
+      min-width: 300px;
+      max-width: 440px;
+      scroll-snap-align: start;
+      background: #f6f4f0;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--yr-transition), box-shadow var(--yr-transition);
+    }
+    .yr-review-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(37, 20, 12, 0.08);
+    }
+    .yr-review-card__badge {
+      align-self: flex-start;
+      background: #ffffff;
+      color: var(--yr-ink-muted);
+      font-size: 10px;
+      font-weight: var(--yr-fw-medium);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      margin-bottom: 28px;
+    }
+    .yr-review-card__stars {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+      color: var(--yr-ink-soft);
+    }
+    .yr-review-card__stars svg { width: 18px; height: 18px; }
+    .yr-review-card__title {
+      font-size: 15px;
+      font-weight: var(--yr-fw-bold);
+      color: var(--yr-ink-soft);
+      margin: 0 0 12px;
+    }
+    .yr-review-card__body {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--yr-ink-soft);
+      font-weight: var(--yr-fw-regular);
+      margin: 0 0 36px;
+      flex: 1;
+    }
+    .yr-review-card__author {
+      font-size: 13px;
+      font-weight: var(--yr-fw-regular);
+      color: var(--yr-ink-muted);
+      margin: 0;
+    }
+    @media (max-width: 989px) {
+      .yr-review-card {
+        flex-basis: calc((100% - 48px) / 2.5);
+        min-width: 300px;
+      }
+    }
+    @media (max-width: 767px) {
+      .yr-reviews { padding: 50px 0 50px 20px; }
+      .yr-reviews__head { padding-right: 20px; margin-bottom: 24px; }
+      .yr-reviews__title { font-size: 30px; }
+      .yr-review-card { flex-basis: 300px; padding: 24px 20px; }
+    }
+
+    /* ============================================================
+       BRAND BAR + FOOTER (reused from index.html)
+       ============================================================ */
+    .yr-brand-bar {
+      background: var(--yr-cream-deep);
+      padding: 48px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+    .yr-brand-bar__logo { width: auto; height: 48px; display: block; }
+    .yr-brand-bar__motto {
+      font-family: var(--yr-font-body);
+      font-weight: var(--yr-fw-regular);
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--yr-ink-soft);
+      margin: 0;
+      text-align: center;
+    }
+
+    .yr-footer {
+      background: #ffffff;
+      color: #000000;
+      padding: 80px 40px 40px;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .yr-footer__inner {
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr 1.1fr minmax(320px, 0.95fr);
+      gap: 48px;
+      align-items: start;
+    }
+    .yr-footer__col h3 {
+      font-family: var(--yr-font-body);
+      font-size: 13px;
+      font-weight: var(--yr-fw-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #000000;
+      margin: 0 0 22px;
+    }
+    .yr-footer__col ul {
+      list-style: none;
+      margin: 0; padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .yr-footer__col a {
+      color: #000000;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: opacity var(--yr-transition);
+    }
+    .yr-footer__col a:hover { opacity: 0.65; }
+    .yr-footer__newsletter {
+      background: #ebebeb;
+      padding: 35px 40px;
+      max-width: 475px;
+      align-self: start;
+    }
+    .yr-footer__newsletter h3 {
+      font-family: var(--yr-font-body);
+      font-size: 14px;
+      font-weight: var(--yr-fw-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #000000;
+      margin: 0 0 18px;
+    }
+    .yr-footer__newsletter-subtitle {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #000000;
+      margin: 0 0 22px;
+    }
+    .yr-footer__newsletter-form {
+      display: flex;
+      align-items: stretch;
+      background: #ffffff;
+      border: 1px solid #000000;
+    }
+    .yr-footer__newsletter-form input {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      border: none;
+      padding: 0 16px;
+      height: 48px;
+      font-family: inherit;
+      font-size: 13px;
+      color: #000000;
+      outline: none;
+    }
+    .yr-footer__newsletter-form input::placeholder { color: rgba(0, 0, 0, 0.45); }
+    .yr-footer__newsletter-form button {
+      background: #000000;
+      color: #ffffff;
+      border: none;
+      width: 56px;
+      height: 48px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--yr-transition);
+    }
+    .yr-footer__newsletter-form button:hover { background: #25140c; }
+    .yr-footer__newsletter-form button svg { width: 18px; height: 18px; }
+    .yr-footer__newsletter-success {
+      margin: 12px 0 0;
+      font-size: 12px;
+      color: #25140c;
+      font-weight: var(--yr-fw-medium);
+    }
+    .yr-footer__meta {
+      grid-column: 1 / 4;
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .yr-footer__address {
+      font-size: 12px;
+      line-height: 1.6;
+      color: #000000;
+      margin: 0;
+    }
+    .yr-footer__phone {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #000000;
+      font-size: 13px;
+      text-decoration: none;
+    }
+    .yr-footer__phone-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px; height: 24px;
+      border-radius: 4px;
+      background: #000000;
+      color: #ffffff;
+    }
+    .yr-footer__phone-icon svg { width: 12px; height: 12px; }
+    .yr-footer__socials {
+      display: flex;
+      gap: 16px;
+      margin-top: 4px;
+    }
+    .yr-footer__socials a {
+      width: 22px; height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000000;
+      transition: opacity var(--yr-transition);
+    }
+    .yr-footer__socials a:hover { opacity: 0.6; }
+    .yr-footer__socials svg { width: 18px; height: 18px; }
+    .yr-footer__payments {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .yr-footer__payments img { height: 24px; width: auto; display: block; }
+    .yr-footer__bottom {
+      max-width: var(--yr-page-max);
+      margin: 40px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 11px;
+      color: rgba(0, 0, 0, 0.55);
+    }
+    .yr-footer__legal a {
+      color: rgba(0, 0, 0, 0.55);
+      text-decoration: none;
+      margin-left: 20px;
+      transition: color var(--yr-transition);
+    }
+    .yr-footer__legal a:hover { color: #000000; }
+    @media (max-width: 989px) {
+      .yr-footer { padding: 60px 20px 30px; }
+      .yr-footer__inner {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px 24px;
+      }
+      .yr-footer__newsletter { max-width: 100%; }
+      .yr-footer__meta { grid-column: 1 / -1; }
+    }
+    @media (max-width: 560px) {
+      .yr-footer__inner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ============================================================
+       ANNOUNCEMENT BAR + HEADER
+       ============================================================ -->
+  <div class="yr-topbar">
+    <div class="yr-announce" data-section="announce">
+      <div class="yr-announce__track">
+        <a class="yr-announce__msg" href="index.html#products">Free Shipping on All Reformers</a>
+        <a class="yr-announce__msg" href="index.html#products">5-Year Warranty on NX901 Series</a>
+        <a class="yr-announce__msg" href="index.html#products">30-Day Home Trial</a>
+      </div>
+    </div>
+
+    <header class="yr-header">
+      <div class="yr-header__inner">
+        <a class="yr-header__logo" href="index.html" aria-label="Nexace home">
+          <img src="images/nexace/logo.png" alt="Nexace">
+        </a>
+        <nav class="yr-header__nav" aria-label="Primary">
+          <a href="index.html#products">Reformers</a>
+          <a href="index.html#about">Our Story</a>
+          <a href="index.html#contact">Contact</a>
+        </nav>
+        <div class="yr-header__actions">
+          <button class="yr-header__icon-btn" aria-label="Cart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+          </button>
+          <button class="yr-header__icon-btn" aria-label="Account">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </button>
+          <button class="yr-header__icon-btn" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+          <button class="yr-header__burger" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <line x1="3" y1="7" x2="21" y2="7"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="17" x2="21" y2="17"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <main>
+    <!-- ============================================================
+         SECTION 1: PRODUCT HERO
+         ============================================================ -->
+    <section class="pdp-hero">
+      <!-- Gallery -->
+      <div class="pdp-gallery">
+        <div class="pdp-gallery__thumbs">
+          <button class="pdp-gallery__thumb is-active" data-index="0">
+            <img src="NX901 1-1.png" alt="Thumbnail 1">
+          </button>
+          <button class="pdp-gallery__thumb" data-index="1">
+            <img src="NX901 1-2.png" alt="Thumbnail 2">
+          </button>
+          <button class="pdp-gallery__thumb" data-index="2">
+            <img src="有限资料图等/NX901/DSC03768-2x.jpg" alt="Thumbnail 3">
+          </button>
+          <button class="pdp-gallery__thumb" data-index="3">
+            <img src="有限资料图等/NX901/spring.jpg" alt="Thumbnail 4">
+          </button>
+        </div>
+        <div class="pdp-gallery__main">
+          <img src="NX901 1-1.png" alt="NX901 Classic Reformer — side view in use" class="is-active" data-index="0">
+          <img src="NX901 1-2.png" alt="NX901 Classic Reformer — reclining exercise" data-index="1">
+          <img src="有限资料图等/NX901/DSC03768-2x.jpg" alt="NX901 Classic Reformer — folded for storage" data-index="2">
+          <img src="有限资料图等/NX901/spring.jpg" alt="NX901 Classic Reformer — 5-color spring detail" data-index="3">
+        </div>
+      </div>
+
+      <!-- Product Info -->
+      <div class="pdp-info">
+        <p class="pdp-info__brand">Nexace</p>
+        <h1 class="pdp-info__title">NX901 Classic Reformer</h1>
+
+        <div class="pdp-info__rating">
+          <div class="pdp-info__stars">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+          </div>
+          <span class="pdp-info__rating-text">128 reviews</span>
+        </div>
+
+        <div class="pdp-info__price">
+          <span class="pdp-info__price-current">$2,899</span>
+          <span class="pdp-info__price-original">$3,499</span>
+          <span class="pdp-info__price-badge">Save $600</span>
+        </div>
+
+        <p class="pdp-info__desc">
+          Studio-grade reformer pilates equipment engineered for home practice.
+          Handcrafted solid wood frame, whisper-quiet rail system, and 5-level
+          color-coded spring resistance for every skill level.
+        </p>
+
+        <!-- Tabs: Description / Specs / Shipping -->
+        <div class="pdp-tabs">
+          <button class="pdp-tabs__btn is-active" data-tab="description">Description</button>
+          <button class="pdp-tabs__btn" data-tab="specs">Specifications</button>
+          <button class="pdp-tabs__btn" data-tab="shipping">Shipping</button>
+        </div>
+
+        <div class="pdp-tab-panel is-active" data-tab-panel="description">
+          The NX901 Classic is Nexace's flagship reformer, built with traditional mortise-and-tenon joinery and premium solid beech wood. Designed to deliver a studio-quality workout in the comfort of your home, it features an ultra-smooth aluminum rail system and high-density cushioning for comfort during extended sessions.
+        </div>
+
+        <div class="pdp-tab-panel" data-tab-panel="specs">
+          <ul>
+            <li>Dimensions: 240 × 65 × 38 cm (L × W × H)</li>
+            <li>Folded: 130 × 65 × 48 cm</li>
+            <li>Weight: 52 kg</li>
+            <li>Max load capacity: 150 kg</li>
+            <li>Frame: Solid beech wood, mortise-tenon joints</li>
+            <li>Rails: Anodized aluminum, dual-track</li>
+            <li>Springs: 5 color-coded (4 resistance levels)</li>
+            <li>Upholstery: High-density PU leather cushion</li>
+            <li>Wheels: 4 built-in transport casters</li>
+          </ul>
+        </div>
+
+        <div class="pdp-tab-panel" data-tab-panel="shipping">
+          Free shipping on all reformers within Australia. Most orders ship within 2-3 business days and arrive within 5-10 business days. Professional assembly available at checkout for $149. International shipping available — contact us for a quote.
+        </div>
+
+        <button class="pdp-info__atc">Add to Cart</button>
+
+        <div class="pdp-trust">
+          <div class="pdp-trust__item">
+            <svg class="pdp-trust__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="3" width="15" height="13" rx="2"/>
+              <path d="M16 8h4l3 3v5a2 2 0 0 1-2 2h-1"/>
+              <circle cx="5.5" cy="18.5" r="2.5"/>
+              <circle cx="18.5" cy="18.5" r="2.5"/>
+            </svg>
+            Free Shipping
+          </div>
+          <div class="pdp-trust__item">
+            <svg class="pdp-trust__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            5-Year Warranty
+          </div>
+          <div class="pdp-trust__item">
+            <svg class="pdp-trust__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            30-Day Trial
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 2: FEATURE ICONS BAR
+         ============================================================ -->
+    <section class="pdp-features">
+      <div class="pdp-features__grid stagger-children">
+        <div class="pdp-feature">
+          <svg class="pdp-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 18h20"/>
+            <path d="M4 14h16"/>
+            <path d="M6 10h12"/>
+            <circle cx="12" cy="6" r="2"/>
+          </svg>
+          <span class="pdp-feature__label">Silent Rail<br>System</span>
+        </div>
+        <div class="pdp-feature">
+          <svg class="pdp-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="18" rx="1"/>
+            <rect x="14" y="3" width="7" height="18" rx="1"/>
+            <path d="M6.5 7v4M17.5 7v4"/>
+          </svg>
+          <span class="pdp-feature__label">Solid Wood<br>Mortise-Tenon</span>
+        </div>
+        <div class="pdp-feature">
+          <svg class="pdp-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v4M12 18v4"/>
+            <path d="M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83"/>
+            <path d="M2 12h4M18 12h4"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          <span class="pdp-feature__label">5-Level Spring<br>Resistance</span>
+        </div>
+        <div class="pdp-feature">
+          <svg class="pdp-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 20h16"/>
+            <path d="M8 16V8l4-4 4 4v8"/>
+            <path d="M10 16v-4h4v4"/>
+          </svg>
+          <span class="pdp-feature__label">Foldable<br>Storage</span>
+        </div>
+        <div class="pdp-feature">
+          <svg class="pdp-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 18L18 6"/>
+            <path d="M6 6h12v12"/>
+          </svg>
+          <span class="pdp-feature__label">Supports<br>Up to 150 kg</span>
+        </div>
+        <div class="pdp-feature">
+          <svg class="pdp-feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+          <span class="pdp-feature__label">5-Year<br>Warranty</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 2b: HOTSPOT — interactive product anatomy
+         ============================================================ -->
+    <section class="yr-hotspot" data-section="hotspot" aria-label="NX901 Classic anatomy">
+      <div class="yr-hotspot__head reveal">
+        <p class="yr-hotspot__eyebrow">MEET</p>
+        <h2 class="yr-hotspot__title">THE NX901 CLASSIC</h2>
+        <p class="yr-hotspot__sub">Aircraft-grade aluminum rails, German-manufactured springs, marine-grade upholstery. Every component chosen for decades of studio-grade performance at home.</p>
+      </div>
+
+      <div class="yr-hotspot__image-wrap">
+        <img class="yr-hotspot__image"
+             src="images/nexace/hotspot-mi.png"
+             alt="NX901 Classic with interactive hotspots"
+             loading="lazy">
+
+        <div class="yr-hotspot__marker" style="left:30%;top:72%">
+          <button class="yr-hotspot__btn" aria-label="Show details for Telescopic Legs">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">&times;</button>
+            <img class="yr-hotspot__popover-img" src="有限资料图等/NX901/pilates-reformer-DSC03793-3.jpg" alt="Telescopic legs detail">
+            <h3>Telescopic Legs</h3>
+            <p>Adjustable legs allow the frame to be lifted to a height of up to 36cm (14.17inch).</p>
+          </div>
+        </div>
+
+        <div class="yr-hotspot__marker" style="left:52%;top:85%">
+          <button class="yr-hotspot__btn" aria-label="Show details for Quality Timber Frame">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">&times;</button>
+            <img class="yr-hotspot__popover-img" src="有限资料图等/NX901/solid-frame.jpg" alt="Solid timber frame">
+            <h3>Quality Timber Frame</h3>
+            <p>Solid Maple timber frame for the perfect combination of aesthetics and quality.</p>
+          </div>
+        </div>
+
+        <div class="yr-hotspot__marker" style="left:35%;top:82%">
+          <button class="yr-hotspot__btn" aria-label="Show details for Multi-Position Foot Bar">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">&times;</button>
+            <img class="yr-hotspot__popover-img" src="有限资料图等/NX901/NX901-6.jpg" alt="Multi-position foot bar">
+            <h3>Multi-Position Foot Bar</h3>
+            <p>Easily adjustable and high grip, five-position foot bar.</p>
+          </div>
+        </div>
+
+        <div class="yr-hotspot__marker" style="left:70%;top:50%">
+          <button class="yr-hotspot__btn" aria-label="Show details for Studio Grade Springs">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">&times;</button>
+            <img class="yr-hotspot__popover-img" src="有限资料图等/NX901/spring.jpg" alt="Studio grade springs">
+            <h3>Studio Grade Springs</h3>
+            <p>Complete any movement with five German-manufactured springs: 2&times; heavy [red], 2&times; medium [blue], and 1 light [yellow].</p>
+          </div>
+        </div>
+
+        <div class="yr-hotspot__marker" style="left:58%;top:48%">
+          <button class="yr-hotspot__btn" aria-label="Show details for Adjustable Head Rest">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">&times;</button>
+            <img class="yr-hotspot__popover-img" src="有限资料图等/NX901/nanda 2.jpg" alt="Adjustable head rest">
+            <h3>Adjustable Head Rest</h3>
+            <p>Padded, three-position head rest to support the head and neck throughout your flow.</p>
+          </div>
+        </div>
+
+        <div class="yr-hotspot__marker" style="left:48%;top:58%">
+          <button class="yr-hotspot__btn" aria-label="Show details for Padded Carriage">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">&times;</button>
+            <img class="yr-hotspot__popover-img" src="有限资料图等/NX901/DSC03791.jpg" alt="Padded carriage">
+            <h3>Padded Carriage</h3>
+            <p>Premium, padded carriage to support your spine and provide a luxurious level of comfort.</p>
+          </div>
+        </div>
+
+        <div class="yr-hotspot__marker" style="left:78%;top:30%">
+          <button class="yr-hotspot__btn" aria-label="Show details for Double Loop Straps">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">&times;</button>
+            <img class="yr-hotspot__popover-img" src="有限资料图等/NX901/DSC03783.jpg" alt="Double loop straps">
+            <h3>Double Loop Straps</h3>
+            <p>Featuring plush fluffy cotton padding and a premium ribbon cotton weave for hand or foot use.</p>
+          </div>
+        </div>
+
+        <div class="yr-hotspot__marker" style="left:42%;top:65%">
+          <button class="yr-hotspot__btn" aria-label="Show details for Marine-Grade Upholstery">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">&times;</button>
+            <img class="yr-hotspot__popover-img" src="有限资料图等/NX901/高级光影产品摄影 (1-4).jpg" alt="Marine-grade upholstery">
+            <h3>Marine-Grade Upholstery</h3>
+            <p>Durable, marine-grade upholstery provides a water resistant and high-quality finish for easy maintenance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 3: IMMERSIVE EXPERIENCE
+         ============================================================ -->
+    <section class="pdp-experience">
+      <img class="pdp-experience__bg" src="images/nexace/room-1.jpg" alt="NX901 reformer in a modern living room">
+      <div class="pdp-experience__overlay"></div>
+      <div class="pdp-experience__content reveal">
+        <p class="pdp-experience__eyebrow">Studio Quality, Home Comfort</p>
+        <h2 class="pdp-experience__title">Designed for Every Room</h2>
+        <p class="pdp-experience__sub">
+          The NX901 blends seamlessly into your living space with its warm wood
+          tones and minimal footprint. Fold it up in seconds and roll it away
+          when you're done.
+        </p>
+        <a href="index.html" class="pdp-experience__cta">Explore the Collection</a>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 3b: SWIPE CARDS — workout programs
+         ============================================================ -->
+    <section class="pdp-swipe">
+      <div class="pdp-swipe__head-row reveal">
+        <div class="pdp-swipe__head">
+          <p class="pdp-swipe__eyebrow">Included With Your NX901</p>
+          <h2 class="pdp-swipe__title">Train Your Way, Every Day</h2>
+        </div>
+        <div class="pdp-swipe__nav" data-swipe-nav>
+          <button aria-label="Previous" data-dir="-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button aria-label="Next" data-dir="1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="9 6 15 12 9 18"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="pdp-swipe__track" data-swipe-track>
+        <div class="pdp-swipe-card">
+          <img class="pdp-swipe-card__img" src="images/nexace/room-1.jpg" alt="Full body conditioning">
+          <div class="pdp-swipe-card__overlay"></div>
+          <p class="pdp-swipe-card__text">Full-body conditioning sessions designed for all fitness levels, from beginner to advanced.</p>
+        </div>
+        <div class="pdp-swipe-card">
+          <img class="pdp-swipe-card__img" src="images/nexace/room-3.jpg" alt="Expert-led programs">
+          <div class="pdp-swipe-card__overlay"></div>
+          <p class="pdp-swipe-card__text">Be guided by experienced and motivating Pilates instructors.</p>
+        </div>
+        <div class="pdp-swipe-card">
+          <img class="pdp-swipe-card__img" src="images/nexace/room-4.jpg" alt="Recovery programs">
+          <div class="pdp-swipe-card__overlay"></div>
+          <p class="pdp-swipe-card__text">Support injury recovery, active ageing, or pre/post natal with physio-led programs.</p>
+        </div>
+        <div class="pdp-swipe-card">
+          <img class="pdp-swipe-card__img" src="images/nexace/room-5.jpg" alt="Challenges and goals">
+          <div class="pdp-swipe-card__overlay"></div>
+          <p class="pdp-swipe-card__text">Stay motivated with weekly challenges, milestones, and progress tracking.</p>
+        </div>
+        <div class="pdp-swipe-card">
+          <img class="pdp-swipe-card__img" src="images/nexace/room-2.jpg" alt="Mindfulness and stretch">
+          <div class="pdp-swipe-card__overlay"></div>
+          <p class="pdp-swipe-card__text">Wind down with mindfulness flows and deep-stretch routines for recovery days.</p>
+        </div>
+      </div>
+      <div class="pdp-swipe__dots" data-swipe-dots></div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 3c: COMPARE REFORMERS
+         ============================================================ -->
+    <section class="pdp-compare">
+      <div class="pdp-compare__inner">
+        <div class="pdp-compare__head reveal">
+          <h2 class="pdp-compare__title">Compare Reformers</h2>
+          <p class="pdp-compare__sub">See how each model compares to help you select the right Reformer for your needs.</p>
+        </div>
+        <div class="pdp-compare__grid stagger-children">
+
+          <!-- Card 1: NX901 Classic (current) -->
+          <div class="pdp-compare-card is-current">
+            <div class="pdp-compare-card__img-wrap">
+              <img src="images/nexace/product-classic.jpg" alt="NX901 Classic Reformer">
+            </div>
+            <div class="pdp-compare-card__body">
+              <div class="pdp-compare-card__header">
+                <span class="pdp-compare-card__name">NX901 Classic<span class="pdp-compare-card__badge">Viewing</span></span>
+                <span class="pdp-compare-card__price">$2,899</span>
+              </div>
+              <ul class="pdp-compare-card__specs">
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Frame</div>
+                  <div class="pdp-compare-card__spec-value">Solid beech wood, mortise-tenon joints</div>
+                </li>
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Upholstery</div>
+                  <div class="pdp-compare-card__spec-value">High-density marine-grade PU leather, 3 colorways</div>
+                </li>
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Dimensions</div>
+                  <div class="pdp-compare-card__spec-value">240 &times; 65 &times; 38 cm (L &times; W &times; H)<br>Folded: 130 &times; 65 &times; 48 cm</div>
+                </li>
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Weight</div>
+                  <div class="pdp-compare-card__spec-value">52 kg</div>
+                </li>
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Max User Weight</div>
+                  <div class="pdp-compare-card__spec-value">150 kg</div>
+                </li>
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Storage</div>
+                  <div class="pdp-compare-card__spec-value">Folds in half, rolls away on built-in casters</div>
+                </li>
+              </ul>
+              <a href="#" class="pdp-compare-card__cta">Currently Viewing</a>
+            </div>
+          </div>
+
+          <!-- Card 2: NX901-MI Mini -->
+          <div class="pdp-compare-card">
+            <div class="pdp-compare-card__img-wrap">
+              <img src="images/nexace/product-mini.jpg" alt="NX901-MI Mini Reformer">
+            </div>
+            <div class="pdp-compare-card__body">
+              <div class="pdp-compare-card__header">
+                <span class="pdp-compare-card__name">NX901-MI Mini</span>
+                <span class="pdp-compare-card__price">$1,999</span>
+              </div>
+              <ul class="pdp-compare-card__specs">
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Frame</div>
+                  <div class="pdp-compare-card__spec-value">Solid beech wood, compact design</div>
+                </li>
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Upholstery</div>
+                  <div class="pdp-compare-card__spec-value">High-density PU leather, 2 colorways</div>
+                </li>
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Dimensions</div>
+                  <div class="pdp-compare-card__spec-value">200 &times; 60 &times; 36 cm (L &times; W &times; H)<br>Folded: 110 &times; 60 &times; 44 cm</div>
+                </li>
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Weight</div>
+                  <div class="pdp-compare-card__spec-value">38 kg</div>
+                </li>
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Max User Weight</div>
+                  <div class="pdp-compare-card__spec-value">120 kg</div>
+                </li>
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Storage</div>
+                  <div class="pdp-compare-card__spec-value">Ultra-compact fold, ideal for small spaces</div>
+                </li>
+              </ul>
+              <a href="#" class="pdp-compare-card__cta">View NX901-MI</a>
+            </div>
+          </div>
+
+          <!-- Card 3: NX901-T Tower -->
+          <div class="pdp-compare-card">
+            <div class="pdp-compare-card__img-wrap">
+              <img src="images/nexace/product-tower.jpg" alt="NX901-T Tower Reformer">
+            </div>
+            <div class="pdp-compare-card__body">
+              <div class="pdp-compare-card__header">
+                <span class="pdp-compare-card__name">NX901-T Tower</span>
+                <span class="pdp-compare-card__price">$3,999</span>
+              </div>
+              <ul class="pdp-compare-card__specs">
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Frame</div>
+                  <div class="pdp-compare-card__spec-value">Solid beech wood with integrated tower system</div>
+                </li>
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Upholstery</div>
+                  <div class="pdp-compare-card__spec-value">Premium marine-grade PU leather, 3 colorways</div>
+                </li>
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Dimensions</div>
+                  <div class="pdp-compare-card__spec-value">250 &times; 65 &times; 180 cm (L &times; W &times; H)</div>
+                </li>
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Weight</div>
+                  <div class="pdp-compare-card__spec-value">72 kg</div>
+                </li>
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Max User Weight</div>
+                  <div class="pdp-compare-card__spec-value">150 kg</div>
+                </li>
+                <li class="pdp-compare-card__spec">
+                  <div class="pdp-compare-card__spec-label">Storage</div>
+                  <div class="pdp-compare-card__spec-value">Permanent placement, designed as a beautiful home feature</div>
+                </li>
+              </ul>
+              <a href="#" class="pdp-compare-card__cta">View NX901-T</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 4: PURCHASE GUARANTEES
+         ============================================================ -->
+    <section class="pdp-guarantees">
+      <h2 class="pdp-guarantees__title reveal">Your Purchase Includes</h2>
+      <div class="pdp-guarantees__grid stagger-children">
+        <div class="pdp-guarantee-card">
+          <svg class="pdp-guarantee-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+          <h3 class="pdp-guarantee-card__title">30-Day Home Trial</h3>
+          <p class="pdp-guarantee-card__desc">
+            Try the NX901 for 30 days in your home. Not for you?
+            We'll arrange a free return and full refund.
+          </p>
+        </div>
+
+        <div class="pdp-guarantee-card">
+          <svg class="pdp-guarantee-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+          <h3 class="pdp-guarantee-card__title">5-Year Warranty</h3>
+          <p class="pdp-guarantee-card__desc">
+            Full coverage on the frame, rail system, and springs.
+            We stand behind every detail of our craftsmanship.
+          </p>
+        </div>
+
+        <div class="pdp-guarantee-card">
+          <svg class="pdp-guarantee-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="15" height="13" rx="2"/>
+            <path d="M16 8h4l3 3v5a2 2 0 0 1-2 2h-1"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+          <h3 class="pdp-guarantee-card__title">Free Shipping</h3>
+          <p class="pdp-guarantee-card__desc">
+            Complimentary delivery Australia-wide. Most orders arrive
+            within 5-10 business days. White-glove assembly available.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 5: CUSTOMER REVIEWS
+         ============================================================ -->
+    <section class="yr-reviews" data-section="reviews">
+      <div class="yr-reviews__head reveal">
+        <h2 class="yr-reviews__title">What Our Customers Say</h2>
+        <div class="yr-reviews__nav">
+          <button aria-label="Previous reviews" data-dir="-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button aria-label="Next reviews" data-dir="1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="9 6 15 12 9 18"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="yr-reviews__track">
+        <!-- Card 1 -->
+        <div class="yr-review-card">
+          <span class="yr-review-card__badge">NX901 Classic</span>
+          <div class="yr-review-card__stars">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+          </div>
+          <h3 class="yr-review-card__title">Better than my studio's equipment</h3>
+          <p class="yr-review-card__body">
+            I've been doing Pilates for 8 years and this reformer rivals the Balanced Body machines at my studio. The rail system is impossibly smooth and silent — my downstairs neighbors can't hear a thing. Worth every penny.
+          </p>
+          <p class="yr-review-card__author">Sarah M. — Sydney, NSW</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="yr-review-card">
+          <span class="yr-review-card__badge">NX901 Classic</span>
+          <div class="yr-review-card__stars">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+          </div>
+          <h3 class="yr-review-card__title">Beautiful and functional</h3>
+          <p class="yr-review-card__body">
+            The wood craftsmanship is stunning — it looks like a piece of furniture, not gym equipment. My husband was skeptical about having a reformer in the living room, but now he uses it more than I do. Folds up easily against the wall.
+          </p>
+          <p class="yr-review-card__author">Emma L. — Melbourne, VIC</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="yr-review-card">
+          <span class="yr-review-card__badge">NX901 Classic</span>
+          <div class="yr-review-card__stars">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+          </div>
+          <h3 class="yr-review-card__title">The spring system is next level</h3>
+          <p class="yr-review-card__body">
+            As a Pilates instructor I'm very particular about spring quality. The 5-color coded springs on the NX901 offer incredibly precise resistance transitions. My clients who've bought one for home love the consistency between studio and home workouts.
+          </p>
+          <p class="yr-review-card__author">Yuki T. — Brisbane, QLD</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="yr-review-card">
+          <span class="yr-review-card__badge">NX901 Classic</span>
+          <div class="yr-review-card__stars">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+          </div>
+          <h3 class="yr-review-card__title">Exceeded all expectations</h3>
+          <p class="yr-review-card__body">
+            Delivery was fast and assembly took about 40 minutes. The build quality is exceptional — solid wood, zero wobble, and the cushion is surprisingly comfortable for long sessions. Already recommended it to three friends.
+          </p>
+          <p class="yr-review-card__author">James K. — Perth, WA</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BRAND BAR
+         ============================================================ -->
+    <section class="yr-brand-bar">
+      <img class="yr-brand-bar__logo" src="images/nexace/logo.png" alt="Nexace logo">
+      <p class="yr-brand-bar__motto">Move with precision. Train with confidence. Live with intention.</p>
+    </section>
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="yr-footer">
+    <div class="yr-footer__inner">
+      <div class="yr-footer__col">
+        <h3>Customer Care</h3>
+        <ul>
+          <li><a href="https://support.nexace.com/hc/en-us/requests/new">Contact</a></li>
+          <li><a href="/pages/shipping-returns">Shipping &amp; Returns</a></li>
+          <li><a href="https://support.nexace.com/hc/en-us/">FAQ</a></li>
+          <li><a href="/pages/sizing-guide">Size Guide</a></li>
+          <li><a href="/pages/home-warranty">Warranty</a></li>
+          <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+          <li><a href="/policies/terms-of-service">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="yr-footer__col">
+        <h3>Our Brand</h3>
+        <ul>
+          <li><a href="/pages/our-story">Our Story</a></li>
+          <li><a href="/pages/press">Press</a></li>
+          <li><a href="/blogs/news">Journal</a></li>
+          <li><a href="/pages/careers">Careers</a></li>
+        </ul>
+      </div>
+      <div class="yr-footer__col">
+        <h3>Commercial</h3>
+        <ul>
+          <li><a href="/pages/commercial-promo-t-cs">Promo Terms</a></li>
+          <li><a href="/pages/commercial-warranty">Warranty</a></li>
+          <li><a href="/pages/showroom-appointments">Showroom Appointments</a></li>
+        </ul>
+      </div>
+      <div class="yr-footer__newsletter">
+        <h3>Stay in Touch</h3>
+        <p class="yr-footer__newsletter-subtitle">Join the list for launch updates, studio content, and early access to new releases.</p>
+        <form class="yr-footer__newsletter-form" onsubmit="event.preventDefault(); this.reset(); this.querySelector('.yr-footer__newsletter-success').hidden = false;">
+          <label for="yr-newsletter-email" class="visually-hidden">Email address</label>
+          <input id="yr-newsletter-email" type="email" name="email" placeholder="Your email address" required autocomplete="email">
+          <button type="submit" aria-label="Subscribe">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </form>
+        <p class="yr-footer__newsletter-success" hidden>Thanks — you're on the list.</p>
+      </div>
+      <div class="yr-footer__meta">
+        <p class="yr-footer__address">Nexace Design Studio<br>168 Craft Lane, Suite 4A<br>Melbourne, VIC 3000, Australia</p>
+        <a class="yr-footer__phone" href="tel:+61390001234">
+          <span class="yr-footer__phone-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </span>
+          +61 (3) 9000 1234
+        </a>
+        <div class="yr-footer__socials">
+          <a href="https://www.instagram.com/nexace" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="https://www.facebook.com/nexace" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.5v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6V12h2.9l-.5 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@nexacepilates" target="_blank" rel="noopener" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 6.2a6 6 0 0 1-3.6-1.2 6 6 0 0 1-2.3-4.1h-3.3v14.7a3 3 0 1 1-3-3v-3.3a6.3 6.3 0 1 0 6.3 6.3V9.9a9.2 9.2 0 0 0 5.9 2V8.5h-.1z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/channel/nexace" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M18.16 5.87c.34 1.309.34 4.08.34 4.08s0 2.771-.34 4.08a2.125 2.125 0 0 1-1.53 1.53c-1.309.34-6.63.34-6.63.34s-5.321 0-6.63-.34a2.125 2.125 0 0 1-1.53-1.53c-.34-1.309-.34-4.08-.34-4.08s0-2.771.34-4.08a2.173 2.173 0 0 1 1.53-1.53C4.679 4 10 4 10 4s5.321 0 6.63.34a2.173 2.173 0 0 1 1.53 1.53ZM8.3 12.5l4.42-2.55L8.3 7.4v5.1Z"/></svg>
+          </a>
+        </div>
+        <div class="yr-footer__payments">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.visa-wwwwww.svg" alt="Visa"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#1a1f71;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'VISA'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.master-wwwwww.svg" alt="Mastercard"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#eb001b;font-weight:700;font-size:10px;border-radius:3px',textContent:'MC'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.american_express-wwwwww.svg" alt="American Express"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#016fd0;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'AMEX'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.apple_pay-wwwwww.svg" alt="Apple Pay"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#000;font-weight:700;font-size:10px;border-radius:3px',textContent:'APPLE PAY'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.google_pay-wwwwww.svg" alt="Google Pay"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#5f6368;font-weight:700;font-size:10px;border-radius:3px',textContent:'G PAY'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.paypal-wwwwww.svg" alt="PayPal"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#003087;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'PAYPAL'}))">
+        </div>
+      </div>
+    </div>
+    <div class="yr-footer__bottom">
+      <span>&copy; 2026 Nexace</span>
+      <div class="yr-footer__legal">
+        <a href="/policies/privacy-policy">Privacy Policy</a>
+        <a href="/policies/terms-of-service">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    /* --- Announcement bar rotator --- */
+    (function () {
+      var msgs = document.querySelectorAll('.yr-announce__msg');
+      if (!msgs.length) return;
+      var i = 0;
+      msgs[0].classList.add('is-active');
+      setInterval(function () {
+        msgs[i].classList.remove('is-active');
+        i = (i + 1) % msgs.length;
+        msgs[i].classList.add('is-active');
+      }, 3500);
+    })();
+
+    /* --- Product gallery thumbnail switcher --- */
+    (function () {
+      var thumbs = document.querySelectorAll('.pdp-gallery__thumb');
+      var imgs = document.querySelectorAll('.pdp-gallery__main img');
+      if (!thumbs.length) return;
+
+      thumbs.forEach(function (thumb) {
+        thumb.addEventListener('click', function () {
+          var idx = this.getAttribute('data-index');
+
+          thumbs.forEach(function (t) { t.classList.remove('is-active'); });
+          imgs.forEach(function (img) { img.classList.remove('is-active'); });
+
+          this.classList.add('is-active');
+          var target = document.querySelector('.pdp-gallery__main img[data-index="' + idx + '"]');
+          if (target) target.classList.add('is-active');
+        });
+      });
+    })();
+
+    /* --- Tabs switcher --- */
+    (function () {
+      var btns = document.querySelectorAll('.pdp-tabs__btn');
+      var panels = document.querySelectorAll('.pdp-tab-panel');
+      if (!btns.length) return;
+
+      btns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var tab = this.getAttribute('data-tab');
+
+          btns.forEach(function (b) { b.classList.remove('is-active'); });
+          panels.forEach(function (p) { p.classList.remove('is-active'); });
+
+          this.classList.add('is-active');
+          var panel = document.querySelector('[data-tab-panel="' + tab + '"]');
+          if (panel) panel.classList.add('is-active');
+        });
+      });
+    })();
+
+    /* --- Hotspot markers --- */
+    (function () {
+      var markers = document.querySelectorAll('.yr-hotspot__marker');
+      if (!markers.length) return;
+
+      markers.forEach(function (marker) {
+        var btn = marker.querySelector('.yr-hotspot__btn');
+        var close = marker.querySelector('.yr-hotspot__close');
+
+        btn.addEventListener('click', function () {
+          var wasActive = marker.classList.contains('is-active');
+          markers.forEach(function (m) { m.classList.remove('is-active'); });
+          if (!wasActive) marker.classList.add('is-active');
+        });
+
+        if (close) {
+          close.addEventListener('click', function () {
+            marker.classList.remove('is-active');
+          });
+        }
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.yr-hotspot__marker')) {
+          markers.forEach(function (m) { m.classList.remove('is-active'); });
+        }
+      });
+    })();
+
+    /* --- Reviews scroll nav --- */
+    (function () {
+      var track = document.querySelector('.yr-reviews__track');
+      var navBtns = document.querySelectorAll('.yr-reviews__nav button');
+      if (!track || !navBtns.length) return;
+
+      navBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var dir = parseInt(this.getAttribute('data-dir'), 10);
+          var card = track.querySelector('.yr-review-card');
+          var scrollAmt = card ? card.offsetWidth + 16 : 320;
+          track.scrollBy({ left: dir * scrollAmt, behavior: 'smooth' });
+        });
+      });
+    })();
+
+    /* --- Swipe cards: arrow nav + page dots --- */
+    (function () {
+      var track = document.querySelector('[data-swipe-track]');
+      var nav = document.querySelector('[data-swipe-nav]');
+      var dotsWrap = document.querySelector('[data-swipe-dots]');
+      if (!track) return;
+
+      var cards = track.querySelectorAll('.pdp-swipe-card');
+
+      // Arrow buttons — scroll by one card width
+      if (nav) {
+        nav.addEventListener('click', function (e) {
+          var btn = e.target.closest('[data-dir]');
+          if (!btn) return;
+          var dir = parseInt(btn.getAttribute('data-dir'), 10);
+          var card = cards[0];
+          var scrollAmt = card ? card.offsetWidth + 20 : 340;
+          track.scrollBy({ left: dir * scrollAmt, behavior: 'smooth' });
+        });
+      }
+
+      // Page-based dots
+      if (dotsWrap) {
+        var pageCount = 0;
+        var dots = [];
+
+        function getPageCount() {
+          var trackW = track.offsetWidth;
+          var scrollW = track.scrollWidth;
+          if (scrollW <= trackW) return 1;
+          return Math.ceil((scrollW - trackW) / (trackW * 0.8)) + 1;
+        }
+
+        function buildDots() {
+          var n = getPageCount();
+          if (n === pageCount) return;
+          pageCount = n;
+          dotsWrap.innerHTML = '';
+          dots = [];
+          for (var i = 0; i < pageCount; i++) {
+            var dot = document.createElement('button');
+            dot.className = 'pdp-swipe__dot' + (i === 0 ? ' is-active' : '');
+            dot.setAttribute('data-page', i);
+            dotsWrap.appendChild(dot);
+            dots.push(dot);
+          }
+        }
+        buildDots();
+        window.addEventListener('resize', buildDots);
+
+        dotsWrap.addEventListener('click', function (e) {
+          var dot = e.target.closest('[data-page]');
+          if (!dot) return;
+          var page = parseInt(dot.getAttribute('data-page'), 10);
+          var max = track.scrollWidth - track.offsetWidth;
+          var target = pageCount <= 1 ? 0 : (max / (pageCount - 1)) * page;
+          track.scrollTo({ left: target, behavior: 'smooth' });
+        });
+
+        track.addEventListener('scroll', function () {
+          if (pageCount <= 1) return;
+          var max = track.scrollWidth - track.offsetWidth;
+          var pct = max > 0 ? track.scrollLeft / max : 0;
+          var active = Math.round(pct * (pageCount - 1));
+          dots.forEach(function (d, i) { d.classList.toggle('is-active', i === active); });
+        });
+      }
+    })();
+
+    /* --- Scroll reveal (IntersectionObserver) --- */
+    (function () {
+      var revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger-children');
+      if (!revealEls.length || !('IntersectionObserver' in window)) {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      revealEls.forEach(function (el) { observer.observe(el); });
+    })();
+  </script>
+</body>
+</html>

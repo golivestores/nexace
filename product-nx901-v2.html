@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NX901 Classic Reformer — Nexace</title>
+  <meta name="description" content="The NX901 Classic Reformer by Nexace. Studio-grade pilates equipment engineered for home practice.">
+
+  <link rel="icon" type="image/png" href="images/nexace/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       TOKENS
+       ============================================================ */
+    :root {
+      --ink:       #25140c;
+      --ink-muted: #744c32;
+      --paper:     #ffffff;
+      --cream:     #f7e7de;
+      --off-white: #faf6f2;
+      --taupe:     #9f8d81;
+      --border:    rgba(37,20,12,0.10);
+      --ease:      cubic-bezier(0.4,0,0.2,1);
+      --t:         0.3s var(--ease);
+      --max:       1400px;
+      --font:      'Lato', system-ui, sans-serif;
+    }
+
+    /* ============================================================
+       RESET
+       ============================================================ */
+    *,*::before,*::after{box-sizing:border-box}
+    html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+    body{margin:0;font-family:var(--font);font-size:14px;line-height:1.5;color:var(--ink);background:var(--paper)}
+    img,video{max-width:100%;height:auto;display:block}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;background:none;border:none;cursor:pointer;color:inherit;padding:0}
+    h1,h2,h3,h4,h5,h6{margin:0;line-height:1.2}
+    p,ul{margin:0}
+    ul{list-style:none;padding:0}
+
+    /* ============================================================
+       TOPBAR + HEADER
+       ============================================================ */
+    .topbar{position:sticky;top:0;z-index:100}
+    .announce{background:#801010;color:var(--cream);padding:10px 16px;text-align:center;min-height:40px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .announce__track{position:relative;width:100%;max-width:600px;height:20px}
+    .announce__msg{position:absolute;left:0;right:0;top:0;font-size:13px;font-weight:500;letter-spacing:0.02em;color:var(--cream);opacity:0;transition:opacity .5s var(--ease);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .announce__msg.is-active{opacity:1}
+    .header{background:var(--paper);border-bottom:1px solid var(--border)}
+    .header__inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;gap:24px}
+    .header__logo img{height:26px;display:block}
+    .header__logo:hover{opacity:.75}
+    .header__nav{display:flex;gap:32px}
+    .header__nav a{font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;position:relative;padding:4px 0}
+    .header__nav a::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1.5px;background:var(--ink);transform:scaleX(0);transition:transform var(--t)}
+    .header__nav a:hover::after{transform:scaleX(1)}
+    .header__actions{display:flex;gap:14px}
+    .header__icon{display:flex;align-items:center;justify-content:center;padding:4px;transition:opacity var(--t)}
+    .header__icon:hover{opacity:.6}
+    .header__icon svg{width:22px;height:22px}
+    .header__burger{display:none}
+    @media(max-width:768px){
+      .announce{min-height:32px;padding:6px 12px}
+      .announce__msg{font-size:11px}
+      .header__inner{padding:12px 16px}
+      .header__nav{display:none}
+      .header__burger{display:flex}
+    }
+
+    /* ============================================================
+       BREADCRUMB
+       ============================================================ */
+    .breadcrumb{max-width:var(--max);margin:0 auto;padding:16px 40px;font-size:12px;color:var(--taupe)}
+    .breadcrumb a{color:var(--taupe);transition:color var(--t)}
+    .breadcrumb a:hover{color:var(--ink)}
+    .breadcrumb span{margin:0 6px}
+    @media(max-width:768px){.breadcrumb{padding:12px 16px}}
+
+    /* ============================================================
+       SECTION 1: PRODUCT HERO (B52 layout)
+       Left = gallery with big image + thumbnail strip below
+       Right = product info stacked
+       ============================================================ */
+    .pdp{max-width:var(--max);margin:0 auto;padding:0 40px 60px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+    .gallery{}
+    .gallery__main{width:100%;aspect-ratio:1/1;overflow:hidden;background:var(--off-white);border-radius:8px;position:relative;margin-bottom:12px}
+    .gallery__main img{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;opacity:0;transition:opacity .4s var(--ease)}
+    .gallery__main img.is-active{opacity:1}
+    .gallery__counter{position:absolute;bottom:12px;left:12px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.04em}
+    .gallery__thumbs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+    .gallery__thumbs::-webkit-scrollbar{display:none}
+    .gallery__thumb{flex:0 0 72px;height:72px;border-radius:6px;overflow:hidden;border:2px solid transparent;cursor:pointer;background:var(--off-white);transition:border-color var(--t)}
+    .gallery__thumb:hover{opacity:.8}
+    .gallery__thumb.is-active{border-color:var(--ink)}
+    .gallery__thumb img{width:100%;height:100%;object-fit:cover}
+
+    /* Product info */
+    .info{display:flex;flex-direction:column;gap:0}
+    .info__brand{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-muted);margin-bottom:8px}
+    .info__title{font-size:32px;font-weight:900;line-height:1.15;margin-bottom:16px}
+    .info__rating{display:flex;align-items:center;gap:8px;margin-bottom:20px}
+    .info__stars{display:flex;gap:1px;color:#d4a853}
+    .info__stars svg{width:16px;height:16px}
+    .info__rating-text{font-size:13px;color:var(--ink-muted)}
+    .info__price{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+    .info__price-now{font-size:30px;font-weight:900}
+    .info__price-was{font-size:16px;color:var(--taupe);text-decoration:line-through}
+    .info__price-badge{background:#801010;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:2px;text-transform:uppercase;letter-spacing:.04em}
+    .info__installment{font-size:13px;color:var(--ink-muted);margin-bottom:20px}
+    /* Highlights strip */
+    .info__highlights{background:var(--off-white);border-radius:8px;padding:18px 20px;margin-bottom:20px;display:flex;flex-direction:column;gap:12px}
+    .info__hl{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;color:var(--ink)}
+    .info__hl svg{width:22px;height:22px;color:var(--ink-muted);flex-shrink:0}
+    .info__hr{height:1px;background:var(--border);margin:0 0 20px}
+    .info__bullets{padding:0 0 0 18px;margin:0 0 24px;display:flex;flex-direction:column;gap:10px;list-style:disc}
+    .info__bullets li{font-size:14px;line-height:1.6;color:var(--ink)}
+    .info__hr2{height:1px;background:var(--border);margin:0 0 24px}
+    .info__atc{width:100%;padding:18px;background:var(--ink);color:var(--cream);font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;border-radius:0;transition:background var(--t);margin-bottom:24px}
+    .info__atc:hover{background:#3d2518}
+    /* Trust badges — larger card style */
+    .trust{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+    .trust__item{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 8px;border:1px solid var(--border);border-radius:8px;text-align:center;transition:border-color var(--t)}
+    .trust__item:hover{border-color:var(--ink-muted)}
+    .trust__item svg{width:28px;height:28px;color:var(--ink)}
+    .trust__item span{font-size:13px;font-weight:700;color:var(--ink)}
+    /* Secure payment block */
+    .secure-pay{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--off-white);border-radius:8px;border:1px solid var(--border)}
+    .secure-pay__lock{width:20px;height:20px;color:var(--ink);flex-shrink:0}
+    .secure-pay__text{font-size:12px;font-weight:700;color:var(--ink);margin-right:auto}
+    .secure-pay__icons{display:flex;gap:6px;align-items:center}
+    .secure-pay__icons img{height:22px;width:auto}
+
+    @media(max-width:768px){
+      .pdp{grid-template-columns:1fr;padding:0 16px 40px;gap:28px}
+      .info__title{font-size:26px}
+      .info__price-now{font-size:24px}
+      .gallery__thumb{flex:0 0 56px;height:56px}
+      .trust{grid-template-columns:1fr;gap:8px}
+      .secure-pay{flex-wrap:wrap}
+    }
+
+    /* ============================================================
+       SECTION: CRAFTSMANSHIP
+       Top = text left + image right (2-col)
+       Bottom = 6 feature cards (3x2 grid)
+       ============================================================ */
+    .craft{padding:100px 40px 80px;background:var(--off-white)}
+    .craft__inner{max-width:var(--max);margin:0 auto}
+    .craft__top{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:72px}
+    .craft__text h2{font-size:30px;font-weight:900;line-height:1.25;margin-bottom:24px}
+    .craft__text p{font-size:15px;line-height:1.75;color:var(--ink-muted);margin-bottom:16px}
+    .craft__img{width:100%;border-radius:8px;object-fit:cover;aspect-ratio:4/3}
+    .craft__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px 40px}
+    .craft-card{display:flex;align-items:flex-start;gap:14px}
+    .craft-card__icon{width:36px;height:36px;flex-shrink:0;color:var(--ink-muted)}
+    .craft-card h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+    .craft-card p{font-size:13px;line-height:1.55;color:var(--ink-muted)}
+    @media(max-width:768px){
+      .craft{padding:60px 16px}
+      .craft__top{grid-template-columns:1fr;gap:32px}
+      .craft__text h2{font-size:24px}
+      .craft__grid{grid-template-columns:1fr;gap:28px}
+    }
+
+    /* ============================================================
+       SECTION: RITUAL STEPS
+       Centered intro text + 4-col image/step cards
+       ============================================================ */
+    .ritual{padding:100px 40px 80px;background:var(--paper)}
+    .ritual__inner{max-width:var(--max);margin:0 auto}
+    .ritual__intro{max-width:700px;margin:0 auto 56px;text-align:center;font-size:17px;line-height:1.75;color:var(--ink)}
+    .ritual__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+    .step-card{}
+    .step-card__img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;margin-bottom:16px}
+    .step-card__num{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--ink-muted);text-transform:uppercase;margin-bottom:6px}
+    .step-card h4{font-size:14px;font-weight:700;margin-bottom:8px}
+    .step-card p{font-size:13px;line-height:1.55;color:var(--ink-muted)}
+    @media(max-width:768px){
+      .ritual{padding:60px 16px}
+      .ritual__intro{font-size:15px;margin-bottom:40px}
+      .ritual__grid{grid-template-columns:1fr 1fr;gap:20px}
+    }
+
+    /* ============================================================
+       SECTION: HOTSPOT (from product-nx901.html)
+       ============================================================ */
+    .yr-hotspot{background:#f5f5f0;padding:80px 40px}
+    .yr-hotspot__head{max-width:570px;margin:0 auto 40px;text-align:center}
+    .yr-hotspot__eyebrow{color:var(--ink);font-weight:500;font-size:14px;text-transform:uppercase;margin:0 0 12px}
+    .yr-hotspot__title{color:var(--ink);font-weight:500;font-size:32px;letter-spacing:-.01em;line-height:1.2;margin:0 0 16px}
+    .yr-hotspot__sub{color:var(--ink);font-weight:300;font-size:15px;line-height:1.6;margin:0}
+    .yr-hotspot__image-wrap{position:relative;max-width:1200px;margin:0 auto}
+    .yr-hotspot__image{width:100%;height:auto;display:block}
+    .yr-hotspot__marker{position:absolute;transform:translate(-50%,-50%);z-index:1}
+    .yr-hotspot__marker.is-active{z-index:10}
+    .yr-hotspot__btn{position:relative;width:32px;height:32px;border-radius:50%;background:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:300;color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.15);transition:transform var(--t),background var(--t)}
+    .yr-hotspot__btn::before{content:"";position:absolute;inset:-6px;border-radius:50%;background:rgba(255,255,255,.55);animation:yr-pulse 2s ease-out infinite;z-index:-1}
+    @keyframes yr-pulse{0%{transform:scale(.9);opacity:.7}100%{transform:scale(1.8);opacity:0}}
+    .yr-hotspot__marker.is-active .yr-hotspot__btn{background:var(--ink);color:#fff;transform:rotate(45deg)}
+    .yr-hotspot__marker.is-active .yr-hotspot__btn::before{animation:none}
+    .yr-hotspot__popover-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;margin-bottom:12px;display:block}
+    .yr-hotspot__popover{position:absolute;left:50%;top:calc(100% + 16px);transform:translateX(-50%) translateY(-4px);background:#fff;border-radius:12px;padding:18px 20px 20px;min-width:280px;max-width:320px;box-shadow:0 8px 32px rgba(0,0,0,.18);opacity:0;visibility:hidden;pointer-events:none;transition:all .25s var(--ease)}
+    .yr-hotspot__marker.is-active .yr-hotspot__popover{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+    .yr-hotspot__popover h3{font-size:15px;font-weight:500;color:var(--ink);margin:0 0 8px;padding-right:24px}
+    .yr-hotspot__popover p{font-size:13px;line-height:1.5;color:var(--ink-muted);margin:0}
+    .yr-hotspot__close{position:absolute;top:8px;right:10px;background:none;border:none;font-size:22px;line-height:1;color:var(--ink-muted);cursor:pointer;padding:4px}
+    .yr-hotspot__close:hover{color:var(--ink)}
+    @media(max-width:767px){
+      .yr-hotspot{padding:50px 20px}
+      .yr-hotspot__title{font-size:24px}
+      .yr-hotspot__btn{width:28px;height:28px;font-size:18px}
+      .yr-hotspot__popover{min-width:220px;max-width:260px}
+    }
+
+    /* ============================================================
+       SECTION: CUSTOMER REVIEWS (from product-nx901.html)
+       ============================================================ */
+    .yr-reviews{padding:80px 0 80px 40px;background:var(--paper);position:relative}
+    .yr-reviews__head{display:flex;align-items:center;justify-content:space-between;padding-right:40px;margin-bottom:32px}
+    .yr-reviews__title{font-weight:300;font-size:40px;color:var(--ink);margin:0;line-height:1}
+    .yr-reviews__nav{display:flex;gap:12px}
+    .yr-reviews__nav button{background:none;border:none;padding:8px;cursor:pointer;color:var(--ink);transition:opacity var(--t)}
+    .yr-reviews__nav button:hover{opacity:.6}
+    .yr-reviews__nav svg{width:22px;height:22px}
+    .yr-reviews__track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-right:40px}
+    .yr-reviews__track::-webkit-scrollbar{display:none}
+    .yr-review-card{flex:0 0 calc((100% - 88px)/4);min-width:300px;max-width:440px;scroll-snap-align:start;background:#f6f4f0;padding:32px 28px;display:flex;flex-direction:column;transition:transform var(--t),box-shadow var(--t)}
+    .yr-review-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(37,20,12,.08)}
+    .yr-review-card__badge{align-self:flex-start;background:#fff;color:var(--ink-muted);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px;margin-bottom:28px}
+    .yr-review-card__stars{display:flex;gap:4px;margin-bottom:24px;color:var(--ink)}
+    .yr-review-card__stars svg{width:18px;height:18px}
+    .yr-review-card__title{font-size:15px;font-weight:700;color:var(--ink);margin:0 0 12px}
+    .yr-review-card__body{font-size:14px;line-height:1.6;color:var(--ink);margin:0 0 36px;flex:1}
+    .yr-review-card__author{font-size:13px;color:var(--ink-muted);margin:0}
+    @media(max-width:989px){.yr-review-card{flex-basis:calc((100% - 48px)/2.5);min-width:300px}}
+    @media(max-width:767px){
+      .yr-reviews{padding:50px 0 50px 20px}
+      .yr-reviews__head{padding-right:20px;margin-bottom:24px}
+      .yr-reviews__title{font-size:30px}
+      .yr-review-card{flex-basis:300px;padding:24px 20px}
+    }
+
+    /* ============================================================
+       SECTION: FAQ — two-column: left intro + right accordion
+       ============================================================ */
+    .faq{padding:100px 40px;background:#f0ece6}
+    .faq__inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:0.4fr 0.6fr;gap:80px;align-items:start}
+    .faq__left{}
+    .faq__eyebrow{display:flex;align-items:center;gap:14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-muted);margin-bottom:32px}
+    .faq__eyebrow::before{content:'';width:40px;height:1.5px;background:var(--ink-muted)}
+    .faq__heading{font-size:56px;font-weight:300;line-height:1.1;color:var(--ink);margin-bottom:24px}
+    .faq__heading em{font-style:italic;font-weight:300}
+    .faq__left p{font-size:15px;line-height:1.65;color:var(--ink-muted);margin-bottom:32px}
+    .faq__contact{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink);border-bottom:1.5px solid var(--ink);padding-bottom:2px;transition:opacity var(--t)}
+    .faq__contact:hover{opacity:.6}
+    .faq__right{}
+    .faq__item{border-top:1px solid rgba(37,20,12,.15)}
+    .faq__item:last-child{border-bottom:1px solid rgba(37,20,12,.15)}
+    .faq__q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:28px 0;text-align:left;font-size:17px;font-weight:400;color:var(--ink);transition:color var(--t)}
+    .faq__q:hover{color:var(--ink-muted)}
+    .faq__q svg{width:22px;height:22px;flex-shrink:0;color:var(--ink-muted);transition:transform .3s var(--ease)}
+    .faq__item.is-open .faq__q svg{transform:rotate(45deg)}
+    .faq__a{max-height:0;overflow:hidden;transition:max-height .4s var(--ease)}
+    .faq__item.is-open .faq__a{max-height:300px}
+    .faq__a p{padding:0 0 24px;font-size:14px;line-height:1.7;color:var(--ink-muted)}
+    @media(max-width:768px){
+      .faq{padding:60px 16px}
+      .faq__inner{grid-template-columns:1fr;gap:40px}
+      .faq__heading{font-size:38px}
+    }
+
+    /* ============================================================
+       BRAND BAR + FOOTER
+       ============================================================ */
+    .brand-bar{background:var(--cream);padding:48px 20px;display:flex;flex-direction:column;align-items:center;gap:20px}
+    .brand-bar img{height:48px}
+    .brand-bar p{font-size:15px;color:var(--ink);text-align:center}
+    .footer{background:#fff;color:#000;padding:80px 40px 40px;border-top:1px solid rgba(0,0,0,.06)}
+    .footer__inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr minmax(280px,1fr);gap:48px}
+    .footer__col h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:20px}
+    .footer__col ul{display:flex;flex-direction:column;gap:12px}
+    .footer__col a{font-size:12px;letter-spacing:.03em;text-transform:uppercase;transition:opacity var(--t)}
+    .footer__col a:hover{opacity:.6}
+    .footer__nl{background:#ebebeb;padding:32px;max-width:420px;align-self:start}
+    .footer__nl h3{font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.12em;margin-bottom:16px}
+    .footer__nl p{font-size:13px;line-height:1.5;margin-bottom:18px}
+    .footer__nl-form{display:flex;border:1px solid #000}
+    .footer__nl-form input{flex:1;min-width:0;border:none;padding:0 14px;height:44px;font:inherit;font-size:13px;outline:none;background:transparent}
+    .footer__nl-form button{width:52px;height:44px;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;transition:background var(--t)}
+    .footer__nl-form button:hover{background:var(--ink)}
+    .footer__nl-form button svg{width:18px;height:18px}
+    .footer__bottom{max-width:var(--max);margin:40px auto 0;padding-top:20px;border-top:1px solid rgba(0,0,0,.08);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:11px;color:rgba(0,0,0,.5)}
+    .footer__bottom a{color:rgba(0,0,0,.5);margin-left:16px;transition:color var(--t)}
+    .footer__bottom a:hover{color:#000}
+    @media(max-width:768px){
+      .footer{padding:60px 16px 30px}
+      .footer__inner{grid-template-columns:1fr 1fr;gap:32px 20px}
+      .footer__nl{max-width:100%}
+    }
+
+    /* ============================================================
+       SCROLL REVEAL
+       ============================================================ */
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+    .reveal.is-visible{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+
+<body>
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="announce">
+      <div class="announce__track">
+        <a class="announce__msg" href="index.html#products">Free Shipping on All Reformers</a>
+        <a class="announce__msg" href="index.html#products">5-Year Warranty on NX901 Series</a>
+        <a class="announce__msg" href="index.html#products">30-Day Home Trial — Risk Free</a>
+      </div>
+    </div>
+    <header class="header">
+      <div class="header__inner">
+        <a class="header__logo" href="index.html"><img src="images/nexace/logo.png" alt="Nexace"></a>
+        <nav class="header__nav">
+          <a href="index.html#products">Reformers</a>
+          <a href="index.html#about">Our Story</a>
+          <a href="index.html#contact">Contact</a>
+        </nav>
+        <div class="header__actions">
+          <button class="header__icon" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+          <button class="header__icon" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>
+          <button class="header__icon" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></button>
+          <button class="header__icon header__burger" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg></button>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <nav class="breadcrumb">
+    <a href="index.html">Home</a><span>/</span>
+    <a href="index.html#products">Reformers</a><span>/</span>
+    NX901 Classic Reformer
+  </nav>
+
+  <main>
+    <!-- ============================================================
+         SECTION 1: PRODUCT HERO
+         ============================================================ -->
+    <section class="pdp">
+      <!-- Gallery: big image + thumbnail strip below -->
+      <div class="gallery">
+        <div class="gallery__main">
+          <img src="NX901 1-1.png" alt="NX901 Classic Reformer" class="is-active" data-index="0">
+          <img src="NX901 1-2.png" alt="NX901 in use" data-index="1">
+          <img src="有限资料图等/NX901/DSC03768-2x.jpg" alt="NX901 folded" data-index="2">
+          <img src="有限资料图等/NX901/spring.jpg" alt="Spring detail" data-index="3">
+          <img src="images/nexace/room-1.jpg" alt="Room setting" data-index="4">
+          <img src="images/nexace/room-2.jpg" alt="Lifestyle" data-index="5">
+          <span class="gallery__counter">1 / 6</span>
+        </div>
+        <div class="gallery__thumbs">
+          <button class="gallery__thumb is-active" data-index="0"><img src="NX901 1-1.png" alt=""></button>
+          <button class="gallery__thumb" data-index="1"><img src="NX901 1-2.png" alt=""></button>
+          <button class="gallery__thumb" data-index="2"><img src="有限资料图等/NX901/DSC03768-2x.jpg" alt=""></button>
+          <button class="gallery__thumb" data-index="3"><img src="有限资料图等/NX901/spring.jpg" alt=""></button>
+          <button class="gallery__thumb" data-index="4"><img src="images/nexace/room-1.jpg" alt=""></button>
+          <button class="gallery__thumb" data-index="5"><img src="images/nexace/room-2.jpg" alt=""></button>
+        </div>
+      </div>
+
+      <!-- Product Info -->
+      <div class="info">
+        <p class="info__brand">Nexace</p>
+        <h1 class="info__title">NX901 Classic Reformer</h1>
+        <div class="info__rating">
+          <div class="info__stars">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+          </div>
+          <a href="#reviews" class="info__rating-text">4.8 &nbsp; 128 Reviews</a>
+        </div>
+        <div class="info__price">
+          <span class="info__price-now">$2,899</span>
+          <span class="info__price-was">$3,499</span>
+          <span class="info__price-badge">Save $600</span>
+        </div>
+        <p class="info__installment">From $241.58/mo with <strong>Affirm</strong>. <a href="#" style="text-decoration:underline">See plans</a></p>
+        <div class="info__highlights">
+          <div class="info__hl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
+            Whisper-Quiet Silent Rail System
+          </div>
+          <div class="info__hl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Solid Wood Mortise-Tenon Joinery
+          </div>
+          <div class="info__hl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Folds To 2 sq ft — Fits Any Room
+          </div>
+        </div>
+
+        <div class="info__hr"></div>
+        <ul class="info__bullets">
+          <li>Silent aluminum rail system for whisper-quiet operation</li>
+          <li>Solid wood frame with mortise-tenon joinery</li>
+          <li>5-level color-coded spring resistance system</li>
+          <li>Foldable design — stores in just 2 sq ft</li>
+          <li>200+ exercises from beginner to advanced</li>
+          <li>Professional studio-grade build quality</li>
+        </ul>
+        <div class="info__hr2"></div>
+        <button class="info__atc">Add to Cart — $2,899</button>
+        <div class="trust">
+          <div class="trust__item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5a2 2 0 0 1-2 2h-1"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <span>Free Shipping</span>
+          </div>
+          <div class="trust__item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>5-Year Warranty</span>
+          </div>
+          <div class="trust__item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>30-Day Trial</span>
+          </div>
+        </div>
+
+        <div class="secure-pay">
+          <svg class="secure-pay__lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span class="secure-pay__text">Secure Checkout</span>
+          <div class="secure-pay__icons">
+            <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.visa-wwwwww.svg" alt="Visa" onerror="this.outerHTML='<span style=\'font-size:10px;font-weight:700;padding:2px 6px;border:1px solid #ccc;border-radius:3px\'>VISA</span>'">
+            <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.master-wwwwww.svg" alt="MC" onerror="this.outerHTML='<span style=\'font-size:10px;font-weight:700;padding:2px 6px;border:1px solid #ccc;border-radius:3px\'>MC</span>'">
+            <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.american_express-wwwwww.svg" alt="Amex" onerror="this.outerHTML='<span style=\'font-size:10px;font-weight:700;padding:2px 6px;border:1px solid #ccc;border-radius:3px\'>AMEX</span>'">
+            <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.apple_pay-wwwwww.svg" alt="Apple Pay" onerror="this.outerHTML='<span style=\'font-size:10px;font-weight:700;padding:2px 6px;border:1px solid #ccc;border-radius:3px\'>Apple Pay</span>'">
+            <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.paypal-wwwwww.svg" alt="PayPal" onerror="this.outerHTML='<span style=\'font-size:10px;font-weight:700;padding:2px 6px;border:1px solid #ccc;border-radius:3px\'>PayPal</span>'">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION: CRAFTSMANSHIP
+         ============================================================ -->
+    <section class="craft reveal">
+      <div class="craft__inner">
+        <div class="craft__top">
+          <div class="craft__text">
+            <h2>Crafted for Precision.<br>Built for a Lifetime.</h2>
+            <p>We've carefully considered every aspect of the NX901 Classic Reformer to ensure it's intuitive to use and seamlessly integrates into your daily life. Our intent is to create a transformative Pilates experience — one that helps you build strength, flexibility, and mindfulness in the comfort of home.</p>
+            <p>Made with the highest quality construction to genuinely last a lifetime. With hand-finished hardwood, aircraft-grade aluminum rails, and precision-engineered springs, the NX901 is crafted from enduring materials to exceeding studio standards.</p>
+          </div>
+          <img class="craft__img" src="有限资料图等/NX901/spring.jpg" alt="NX901 craftsmanship detail — spring and wood frame">
+        </div>
+
+        <div class="craft__grid">
+          <div class="craft-card">
+            <svg class="craft-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            <div>
+              <h4>Silent Operation</h4>
+              <p>Aircraft-grade aluminum rails with precision bearings for whisper-quiet gliding at any hour.</p>
+            </div>
+          </div>
+          <div class="craft-card">
+            <svg class="craft-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            <div>
+              <h4>Mortise-Tenon Joinery</h4>
+              <p>Traditional woodworking technique — no metal brackets. Zero wobble, even under heavy use.</p>
+            </div>
+          </div>
+          <div class="craft-card">
+            <svg class="craft-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <div>
+              <h4>Sets Up In 30 Seconds</h4>
+              <p>One-touch fold to 2 sq ft with built-in casters. Unfold, practice, store — effortlessly.</p>
+            </div>
+          </div>
+          <div class="craft-card">
+            <svg class="craft-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            <div>
+              <h4>5-Level Springs</h4>
+              <p>Color-coded from extra-light to extra-heavy. Swap resistance instantly mid-workout.</p>
+            </div>
+          </div>
+          <div class="craft-card">
+            <svg class="craft-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <div>
+              <h4>200+ Exercises</h4>
+              <p>Full-body coverage for every fitness level — from gentle rehab to advanced athletic conditioning.</p>
+            </div>
+          </div>
+          <div class="craft-card">
+            <svg class="craft-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M16 8l-8 8"/><path d="M8 8h8v8"/></svg>
+            <div>
+              <h4>Studio-Grade Quality</h4>
+              <p>Identical spring tension to professional studios. No compromise on feel or durability.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION: RITUAL STEPS
+         ============================================================ -->
+    <section class="ritual reveal">
+      <div class="ritual__inner">
+        <p class="ritual__intro">It's so much more than simply a workout — it's a daily ritual. From unfolding the frame to feeling the first glide of the carriage, each step brings you into the present moment — allowing you to slow down, breathe, and reconnect with your body.</p>
+
+        <div class="ritual__grid">
+          <div class="step-card">
+            <img class="step-card__img" src="有限资料图等/NX901/DSC03768-2x.jpg" alt="Unfold the reformer">
+            <p class="step-card__num">1 / Unfold</p>
+            <h4>Set Up Your Space</h4>
+            <p>Unfold the NX901 in 30 seconds flat. The built-in casters let you position it anywhere — living room, bedroom, or a dedicated studio corner.</p>
+          </div>
+          <div class="step-card">
+            <img class="step-card__img" src="有限资料图等/NX901/spring.jpg" alt="Select springs">
+            <p class="step-card__num">2 / Select Springs</p>
+            <h4>Choose Your Resistance</h4>
+            <p>Pick from 5 color-coded springs based on your workout. Light for stretching and rehab, heavy for strength and power — or mix for balanced resistance.</p>
+          </div>
+          <div class="step-card">
+            <img class="step-card__img" src="images/nexace/room-1.jpg" alt="Practice pilates">
+            <p class="step-card__num">3 / Practice</p>
+            <h4>Move &amp; Flow</h4>
+            <p>Glide through 200+ exercises in whisper-quiet silence. The smooth carriage and precision rails make every movement feel effortless and controlled.</p>
+          </div>
+          <div class="step-card">
+            <img class="step-card__img" src="images/nexace/room-2.jpg" alt="Fold and store">
+            <p class="step-card__num">4 / Fold Away</p>
+            <h4>Store In Seconds</h4>
+            <p>When you're done, fold the NX901 back to just 2 sq ft. Roll it against a wall or into a closet — your space is yours again.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION: HOTSPOT
+         ============================================================ -->
+    <section class="yr-hotspot reveal">
+      <div class="yr-hotspot__head">
+        <p class="yr-hotspot__eyebrow">MEET</p>
+        <h2 class="yr-hotspot__title">THE NX901 CLASSIC</h2>
+        <p class="yr-hotspot__sub">Aircraft-grade aluminum rails, German-manufactured springs, marine-grade upholstery. Every component chosen for decades of studio-grade performance at home.</p>
+      </div>
+      <div class="yr-hotspot__image-wrap">
+        <img class="yr-hotspot__image" src="images/nexace/hotspot-mi.png" alt="NX901 Classic with interactive hotspots" loading="lazy">
+
+        <div class="yr-hotspot__marker" style="left:30%;top:72%">
+          <button class="yr-hotspot__btn" aria-label="Telescopic Legs">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">&times;</button>
+            <img class="yr-hotspot__popover-img" src="有限资料图等/NX901/pilates-reformer-DSC03793-3.jpg" alt="Telescopic legs">
+            <h3>Telescopic Legs</h3>
+            <p>Adjustable legs allow the frame to be lifted to a height of up to 36cm (14.17inch).</p>
+          </div>
+        </div>
+
+        <div class="yr-hotspot__marker" style="left:52%;top:85%">
+          <button class="yr-hotspot__btn" aria-label="Timber Frame">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">&times;</button>
+            <img class="yr-hotspot__popover-img" src="有限资料图等/NX901/solid-frame.jpg" alt="Solid timber frame">
+            <h3>Quality Timber Frame</h3>
+            <p>Solid Maple timber frame for the perfect combination of aesthetics and quality.</p>
+          </div>
+        </div>
+
+        <div class="yr-hotspot__marker" style="left:35%;top:82%">
+          <button class="yr-hotspot__btn" aria-label="Foot Bar">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">&times;</button>
+            <img class="yr-hotspot__popover-img" src="有限资料图等/NX901/NX901-6.jpg" alt="Multi-position foot bar">
+            <h3>Multi-Position Foot Bar</h3>
+            <p>Easily adjustable and high grip, five-position foot bar.</p>
+          </div>
+        </div>
+
+        <div class="yr-hotspot__marker" style="left:70%;top:50%">
+          <button class="yr-hotspot__btn" aria-label="Springs">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">&times;</button>
+            <img class="yr-hotspot__popover-img" src="有限资料图等/NX901/spring.jpg" alt="Studio grade springs">
+            <h3>Studio Grade Springs</h3>
+            <p>Complete any movement with five German-manufactured springs: 2&times; heavy [red], 2&times; medium [blue], and 1 light [yellow].</p>
+          </div>
+        </div>
+
+        <div class="yr-hotspot__marker" style="left:58%;top:48%">
+          <button class="yr-hotspot__btn" aria-label="Head Rest">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">&times;</button>
+            <img class="yr-hotspot__popover-img" src="有限资料图等/NX901/nanda 2.jpg" alt="Adjustable head rest">
+            <h3>Adjustable Head Rest</h3>
+            <p>Padded, three-position head rest to support the head and neck throughout your flow.</p>
+          </div>
+        </div>
+
+        <div class="yr-hotspot__marker" style="left:48%;top:58%">
+          <button class="yr-hotspot__btn" aria-label="Padded Carriage">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">&times;</button>
+            <img class="yr-hotspot__popover-img" src="有限资料图等/NX901/DSC03791.jpg" alt="Padded carriage">
+            <h3>Padded Carriage</h3>
+            <p>Premium, padded carriage to support your spine and provide a luxurious level of comfort.</p>
+          </div>
+        </div>
+
+        <div class="yr-hotspot__marker" style="left:78%;top:30%">
+          <button class="yr-hotspot__btn" aria-label="Straps">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">&times;</button>
+            <img class="yr-hotspot__popover-img" src="有限资料图等/NX901/DSC03783.jpg" alt="Double loop straps">
+            <h3>Double Loop Straps</h3>
+            <p>Featuring plush fluffy cotton padding and a premium ribbon cotton weave for hand or foot use.</p>
+          </div>
+        </div>
+
+        <div class="yr-hotspot__marker" style="left:42%;top:65%">
+          <button class="yr-hotspot__btn" aria-label="Upholstery">+</button>
+          <div class="yr-hotspot__popover" role="dialog">
+            <button class="yr-hotspot__close" aria-label="Close">&times;</button>
+            <img class="yr-hotspot__popover-img" src="有限资料图等/NX901/高级光影产品摄影 (1-4).jpg" alt="Marine-grade upholstery">
+            <h3>Marine-Grade Upholstery</h3>
+            <p>Durable, marine-grade upholstery provides a water resistant and high-quality finish for easy maintenance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION: CUSTOMER REVIEWS
+         ============================================================ -->
+    <section class="yr-reviews reveal">
+      <div class="yr-reviews__head">
+        <h2 class="yr-reviews__title">What Our Customers Say</h2>
+        <div class="yr-reviews__nav">
+          <button aria-label="Previous reviews" data-dir="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <button aria-label="Next reviews" data-dir="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="9 6 15 12 9 18"/></svg></button>
+        </div>
+      </div>
+      <div class="yr-reviews__track">
+        <div class="yr-review-card">
+          <span class="yr-review-card__badge">NX901 Classic</span>
+          <div class="yr-review-card__stars">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+          </div>
+          <h3 class="yr-review-card__title">Better than my studio's equipment</h3>
+          <p class="yr-review-card__body">I've been doing Pilates for 8 years and this reformer rivals the Balanced Body machines at my studio. The rail system is impossibly smooth and silent — my downstairs neighbors can't hear a thing. Worth every penny.</p>
+          <p class="yr-review-card__author">Sarah M. — Sydney, NSW</p>
+        </div>
+        <div class="yr-review-card">
+          <span class="yr-review-card__badge">NX901 Classic</span>
+          <div class="yr-review-card__stars">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+          </div>
+          <h3 class="yr-review-card__title">Beautiful and functional</h3>
+          <p class="yr-review-card__body">The wood craftsmanship is stunning — it looks like a piece of furniture, not gym equipment. My husband was skeptical about having a reformer in the living room, but now he uses it more than I do. Folds up easily against the wall.</p>
+          <p class="yr-review-card__author">Emma L. — Melbourne, VIC</p>
+        </div>
+        <div class="yr-review-card">
+          <span class="yr-review-card__badge">NX901 Classic</span>
+          <div class="yr-review-card__stars">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+          </div>
+          <h3 class="yr-review-card__title">The spring system is next level</h3>
+          <p class="yr-review-card__body">As a Pilates instructor I'm very particular about spring quality. The 5-color coded springs on the NX901 offer incredibly precise resistance transitions. My clients who've bought one for home love the consistency between studio and home workouts.</p>
+          <p class="yr-review-card__author">Yuki T. — Brisbane, QLD</p>
+        </div>
+        <div class="yr-review-card">
+          <span class="yr-review-card__badge">NX901 Classic</span>
+          <div class="yr-review-card__stars">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.39 4.84 5.34.78-3.87 3.77.91 5.33L10 13.27l-4.77 2.51.91-5.33L2.27 6.68l5.34-.78z"/></svg>
+          </div>
+          <h3 class="yr-review-card__title">Exceeded all expectations</h3>
+          <p class="yr-review-card__body">Delivery was fast and assembly took about 40 minutes. The build quality is exceptional — solid wood, zero wobble, and the cushion is surprisingly comfortable for long sessions. Already recommended it to three friends.</p>
+          <p class="yr-review-card__author">James K. — Perth, WA</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION: FAQ
+         ============================================================ -->
+    <section class="faq reveal">
+      <div class="faq__inner">
+        <div class="faq__left">
+          <p class="faq__eyebrow">Support</p>
+          <h2 class="faq__heading">Have a<br><em>Question?</em></h2>
+          <p>Everything you need to know about our reformers, shipping, and care. Still curious? Our team is here to help.</p>
+          <a href="#" class="faq__contact">Contact Us &rarr;</a>
+        </div>
+        <div class="faq__right">
+          <div class="faq__item">
+            <button class="faq__q"><span>What's the difference between NX901, NX901-MI, and NX901-T?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <div class="faq__a"><p>The <strong>Classic</strong> is our full-size studio reformer. The <strong>MI Mini</strong> is compact and foldable for small spaces. The <strong>Tower</strong> adds a vertical frame with pulleys and push-through bar for 300+ exercises.</p></div>
+          </div>
+          <div class="faq__item">
+            <button class="faq__q"><span>How long does shipping take?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <div class="faq__a"><p>Free standard shipping within the continental US, typically 5-7 business days. White glove delivery with in-home setup available for $199.</p></div>
+          </div>
+          <div class="faq__item">
+            <button class="faq__q"><span>Do you offer assembly service?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <div class="faq__a"><p>The NX901 requires minimal assembly — most customers are set up in under 40 minutes. White glove delivery includes full in-home assembly by our trained team.</p></div>
+          </div>
+          <div class="faq__item">
+            <button class="faq__q"><span>What is your warranty policy?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <div class="faq__a"><p>5-year structural warranty on frame, rails, and carriage. 2-year coverage on springs and upholstery. Plus a 30-day home trial — full refund with free return pickup if you're not satisfied.</p></div>
+          </div>
+          <div class="faq__item">
+            <button class="faq__q"><span>Can I try a Nexace reformer before I buy?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <div class="faq__a"><p>Yes — our 30-day home trial lets you experience the NX901 risk-free. Use it daily, and if it's not right for you, we'll arrange free return pickup. You can also visit our Melbourne showroom by appointment.</p></div>
+          </div>
+          <div class="faq__item">
+            <button class="faq__q"><span>Is the NX901 suitable for beginners?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <div class="faq__a"><p>Absolutely. The guided rail system and color-coded springs make it intuitive for first-time users. Start with the lightest spring and progress at your own pace.</p></div>
+          </div>
+          <div class="faq__item">
+            <button class="faq__q"><span>How much space do I need at home?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <div class="faq__a"><p>In use, the NX901 requires roughly 90" x 36" of floor space. When folded, it stores in just 2 sq ft and rolls on built-in casters — perfect for apartments and shared spaces.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BRAND BAR -->
+    <section class="brand-bar">
+      <img src="images/nexace/logo.png" alt="Nexace">
+      <p>Move with precision. Train with confidence. Live with intention.</p>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__col">
+        <h3>Customer Care</h3>
+        <ul>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Shipping &amp; Returns</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Warranty</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h3>Our Brand</h3>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Journal</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h3>Commercial</h3>
+        <ul>
+          <li><a href="#">Promo Terms</a></li>
+          <li><a href="#">Commercial Warranty</a></li>
+          <li><a href="#">Showroom Appointments</a></li>
+        </ul>
+      </div>
+      <div class="footer__nl">
+        <h3>Stay in Touch</h3>
+        <p>Join for launch updates, studio content, and early access to new releases.</p>
+        <form class="footer__nl-form" onsubmit="event.preventDefault();this.reset()">
+          <input type="email" placeholder="Your email address" required>
+          <button type="submit" aria-label="Subscribe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </form>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Nexace</span>
+      <div><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    /* Announcement rotator */
+    (function(){
+      var msgs=document.querySelectorAll('.announce__msg');
+      if(!msgs.length)return;
+      var i=0;msgs[0].classList.add('is-active');
+      setInterval(function(){msgs[i].classList.remove('is-active');i=(i+1)%msgs.length;msgs[i].classList.add('is-active')},3500);
+    })();
+
+    /* Gallery */
+    (function(){
+      var thumbs=document.querySelectorAll('.gallery__thumb');
+      var imgs=document.querySelectorAll('.gallery__main img');
+      var counter=document.querySelector('.gallery__counter');
+      if(!thumbs.length)return;
+      thumbs.forEach(function(t){
+        t.addEventListener('click',function(){
+          var idx=parseInt(this.getAttribute('data-index'),10);
+          thumbs.forEach(function(x){x.classList.remove('is-active')});
+          imgs.forEach(function(x){x.classList.remove('is-active')});
+          this.classList.add('is-active');
+          var target=document.querySelector('.gallery__main img[data-index="'+idx+'"]');
+          if(target)target.classList.add('is-active');
+          if(counter)counter.textContent=(idx+1)+' / '+thumbs.length;
+        });
+      });
+    })();
+
+
+    /* Hotspot markers */
+    (function(){
+      var markers=document.querySelectorAll('.yr-hotspot__marker');
+      if(!markers.length)return;
+      markers.forEach(function(m){
+        var btn=m.querySelector('.yr-hotspot__btn');
+        var close=m.querySelector('.yr-hotspot__close');
+        btn.addEventListener('click',function(){
+          var was=m.classList.contains('is-active');
+          markers.forEach(function(x){x.classList.remove('is-active')});
+          if(!was)m.classList.add('is-active');
+        });
+        if(close)close.addEventListener('click',function(){m.classList.remove('is-active')});
+      });
+      document.addEventListener('click',function(e){
+        if(!e.target.closest('.yr-hotspot__marker'))markers.forEach(function(x){x.classList.remove('is-active')});
+      });
+    })();
+
+    /* Reviews scroll nav */
+    (function(){
+      var track=document.querySelector('.yr-reviews__track');
+      var btns=document.querySelectorAll('.yr-reviews__nav button');
+      if(!track||!btns.length)return;
+      btns.forEach(function(b){
+        b.addEventListener('click',function(){
+          var dir=parseInt(this.getAttribute('data-dir'),10);
+          var card=track.querySelector('.yr-review-card');
+          var amt=card?card.offsetWidth+16:320;
+          track.scrollBy({left:dir*amt,behavior:'smooth'});
+        });
+      });
+    })();
+
+    /* FAQ Accordion */
+    (function(){
+      var items=document.querySelectorAll('.faq__item');
+      items.forEach(function(item){
+        item.querySelector('.faq__q').addEventListener('click',function(){
+          var open=item.classList.contains('is-open');
+          items.forEach(function(x){x.classList.remove('is-open')});
+          if(!open)item.classList.add('is-open');
+        });
+      });
+    })();
+
+    /* Scroll reveal */
+    (function(){
+      var els=document.querySelectorAll('.reveal');
+      if(!els.length||!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('is-visible')});return}
+      var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');obs.unobserve(e.target)}})},{threshold:.1});
+      els.forEach(function(e){obs.observe(e)});
+    })();
+  </script>
+</body>
+</html>
