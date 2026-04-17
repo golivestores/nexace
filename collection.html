@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>The Collection — Nexace</title>
+  <meta name="description" content="Shop Nexace studio-grade reformer pilates equipment and accessories. NX901 Classic, MI Mini, T Tower — engineered for home practice.">
+
+  <link rel="icon" type="image/png" href="images/nexace/logo.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — shared with index.html
+       ============================================================ */
+    :root {
+      --yr-font-body:    'Lato', system-ui, -apple-system, sans-serif;
+      --yr-font-heading: 'Lato', system-ui, -apple-system, sans-serif;
+      --yr-fw-light:     300;
+      --yr-fw-regular:   400;
+      --yr-fw-medium:    500;
+      --yr-fw-semibold:  600;
+      --yr-fw-bold:      700;
+
+      --yr-ink:          #25140c;
+      --yr-ink-soft:     #25140c;
+      --yr-ink-muted:    #744c32;
+      --yr-paper:        #ffffff;
+      --yr-cream:        #f7e7de;
+      --yr-cream-deep:   #f7e7de;
+      --yr-taupe:        #9f8d81;
+      --yr-off-white:    #faf6f2;
+      --yr-border:       rgba(37, 20, 12, 0.10);
+
+      --yr-page-max:     1600px;
+      --yr-ease:         cubic-bezier(0.4, 0, 0.2, 1);
+      --yr-transition:   0.3s var(--yr-ease);
+    }
+
+    /* ============================================================
+       RESET & GLOBAL
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; }
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0; padding: 0;
+      font-family: var(--yr-font-body);
+      font-weight: var(--yr-fw-regular);
+      font-size: 14px; line-height: 1.5;
+      color: var(--yr-ink);
+      background: var(--yr-paper);
+    }
+    img, video { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; background: none; border: none; cursor: pointer; color: inherit; }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--yr-font-heading);
+      font-weight: var(--yr-fw-medium);
+      margin: 0; line-height: 1.2;
+    }
+    p { margin: 0; }
+
+    /* ============================================================
+       TOPBAR — identical to index.html
+       ============================================================ */
+    .yr-topbar { position: sticky; top: 0; z-index: 100; width: 100%; }
+    .yr-announce {
+      background: #801010; color: var(--yr-cream);
+      padding: 10px 16px; text-align: center; position: relative;
+      overflow: hidden; min-height: 40px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .yr-announce__track { position: relative; width: 100%; max-width: 600px; height: 20px; }
+    .yr-announce__msg {
+      position: absolute; left: 0; right: 0; top: 0;
+      font-size: 14px; font-weight: var(--yr-fw-medium); letter-spacing: 0.02em;
+      color: var(--yr-cream); text-decoration: none;
+      opacity: 0; transition: opacity 0.5s var(--yr-ease);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .yr-announce__msg.is-active { opacity: 1; }
+    @media (max-width: 989px) {
+      .yr-announce { min-height: 32px; padding: 6px 12px; }
+      .yr-announce__msg { font-size: 11px; }
+    }
+
+    .yr-header { background: var(--yr-paper); border-bottom: 1px solid var(--yr-border); width: 100%; }
+    .yr-header__inner {
+      max-width: var(--yr-page-max); margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 32px; gap: 24px;
+    }
+    .yr-header__logo { display: flex; align-items: center; min-width: 140px; height: 100%; transition: opacity 0.4s; }
+    .yr-header__logo:hover { opacity: 0.75; }
+    .yr-header__logo img { display: block; height: 26px; width: auto; }
+    .yr-header__nav { display: flex; align-items: center; gap: 28px; flex: 1; justify-content: center; }
+    .yr-header__nav a {
+      color: var(--yr-ink); font-size: 14px; font-weight: var(--yr-fw-regular);
+      text-decoration: none; position: relative; padding: 6px 0;
+      transition: color var(--yr-transition);
+    }
+    .yr-header__nav a::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+      height: 1px; background: var(--yr-ink);
+      transform: scaleX(0); transform-origin: center;
+      transition: transform var(--yr-transition);
+    }
+    .yr-header__nav a:hover::after,
+    .yr-header__nav a.is-active::after { transform: scaleX(1); }
+    .yr-header__actions { display: flex; align-items: center; gap: 8px; }
+    .yr-header__icon-btn, .yr-header__burger {
+      background: none; border: none; padding: 6px; cursor: pointer;
+      color: var(--yr-ink); display: flex; align-items: center; justify-content: center;
+      transition: opacity var(--yr-transition);
+    }
+    .yr-header__icon-btn:hover { opacity: 0.65; }
+    .yr-header__icon-btn svg, .yr-header__burger svg { width: 22px; height: 22px; }
+    .yr-header__burger { display: none; }
+    @media (max-width: 989px) {
+      .yr-header__inner { padding: 14px 20px; }
+      .yr-header__nav { display: none; }
+      .yr-header__burger { display: flex; }
+      .yr-header__logo img { height: 20px; }
+    }
+
+    /* ============================================================
+       PAGE BANNER — short hero for collection
+       ============================================================ */
+    .yr-page-banner {
+      background: var(--yr-off-white);
+      padding: 80px 40px 72px;
+      text-align: center;
+    }
+    .yr-page-banner__eyebrow {
+      font-size: 11px; font-weight: var(--yr-fw-semibold);
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--yr-ink-muted); margin: 0 0 16px;
+    }
+    .yr-page-banner__title {
+      font-family: var(--yr-font-heading); font-weight: var(--yr-fw-regular);
+      font-size: clamp(36px, 5vw, 56px);
+      letter-spacing: -0.02em; color: var(--yr-ink); margin: 0 0 16px;
+    }
+    .yr-page-banner__sub {
+      font-weight: var(--yr-fw-light); font-size: 16px; line-height: 1.6;
+      color: var(--yr-ink-muted); margin: 0 auto; max-width: 560px;
+    }
+    @media (max-width: 767px) {
+      .yr-page-banner { padding: 56px 20px 48px; }
+      .yr-page-banner__sub { font-size: 14px; }
+    }
+
+    /* ============================================================
+       FILTER TABS
+       ============================================================ */
+    .yr-filters {
+      padding: 0 40px;
+      border-bottom: 1px solid var(--yr-border);
+    }
+    .yr-filters__inner {
+      max-width: var(--yr-page-max); margin: 0 auto;
+      display: flex; gap: 0; justify-content: center;
+    }
+    .yr-filters__tab {
+      background: none; border: none; border-bottom: 2px solid transparent;
+      padding: 16px 24px; cursor: pointer;
+      font-family: var(--yr-font-body); font-size: 13px; font-weight: var(--yr-fw-medium);
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--yr-ink-muted);
+      transition: color var(--yr-transition), border-color var(--yr-transition);
+    }
+    .yr-filters__tab:hover { color: var(--yr-ink); }
+    .yr-filters__tab.is-active {
+      color: var(--yr-ink);
+      border-bottom-color: var(--yr-ink);
+    }
+    @media (max-width: 767px) {
+      .yr-filters { padding: 0 20px; }
+      .yr-filters__tab { padding: 14px 16px; font-size: 11px; }
+    }
+
+    /* ============================================================
+       PRODUCT GRID — matches index.html .yr-product-card style
+       ============================================================ */
+    .yr-collection {
+      padding: 60px 40px 100px;
+    }
+    .yr-collection__grid {
+      max-width: var(--yr-page-max); margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    @media (max-width: 989px) {
+      .yr-collection { padding: 40px 20px 80px; }
+      .yr-collection__grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    }
+    @media (max-width: 560px) {
+      .yr-collection__grid { grid-template-columns: 1fr; gap: 24px; }
+    }
+
+    /* Product Card */
+    .yr-product-card {
+      display: block; text-decoration: none; color: inherit;
+      transition: transform var(--yr-transition);
+    }
+    .yr-product-card:hover { transform: translateY(-4px); }
+    .yr-product-card[hidden] { display: none; }
+
+    .yr-product-card__image-wrap {
+      position: relative; aspect-ratio: 1 / 1;
+      overflow: hidden; border-radius: 8px;
+      background: var(--yr-off-white);
+    }
+    .yr-product-card__image {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.5s var(--yr-ease);
+    }
+    .yr-product-card:hover .yr-product-card__image {
+      transform: scale(1.04);
+    }
+
+    /* Badge (e.g., "Save $600", "New") */
+    .yr-product-card__badge {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--yr-ink); color: var(--yr-cream);
+      font-size: 10px; font-weight: var(--yr-fw-bold);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 6px 12px; border-radius: 4px;
+    }
+
+    .yr-product-card__body { padding: 16px 0 0; }
+    .yr-product-card__title {
+      font-size: 15px; font-weight: var(--yr-fw-medium);
+      color: var(--yr-ink-soft); margin: 0 0 4px;
+    }
+    .yr-product-card__desc {
+      font-size: 13px; font-weight: var(--yr-fw-regular);
+      color: var(--yr-ink-muted); line-height: 1.5;
+      margin: 0 0 10px;
+    }
+    .yr-product-card__price {
+      display: flex; gap: 10px; align-items: baseline;
+      font-size: 14px; color: var(--yr-ink-soft); margin: 0 0 12px;
+    }
+    .yr-product-card__price-current { font-weight: var(--yr-fw-medium); }
+    .yr-product-card__price-original {
+      font-weight: var(--yr-fw-regular); color: var(--yr-ink-muted);
+      text-decoration: line-through; font-size: 13px;
+    }
+    .yr-product-card__cta {
+      font-size: 12px; font-weight: var(--yr-fw-medium);
+      color: var(--yr-ink-muted); text-decoration: underline;
+      text-underline-offset: 4px;
+      transition: color var(--yr-transition);
+    }
+    .yr-product-card:hover .yr-product-card__cta { color: var(--yr-ink); }
+
+    /* ============================================================
+       BRAND BAR — identical to index.html
+       ============================================================ */
+    .yr-brand-bar {
+      background: var(--yr-cream-deep); padding: 48px 20px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 24px;
+    }
+    .yr-brand-bar__logo { width: auto; height: 48px; display: block; }
+    .yr-brand-bar__motto {
+      font-family: var(--yr-font-body); font-weight: var(--yr-fw-regular);
+      font-size: 15px; line-height: 1.5; color: var(--yr-ink-soft);
+      margin: 0; text-align: center;
+    }
+
+    /* ============================================================
+       FOOTER — identical to index.html
+       ============================================================ */
+    .yr-footer {
+      background: #ffffff; color: #000000;
+      padding: 80px 40px 40px; border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    .yr-footer__inner {
+      max-width: var(--yr-page-max); margin: 0 auto;
+      display: grid; grid-template-columns: 1.1fr 0.9fr 1.1fr minmax(320px, 0.95fr);
+      gap: 48px; align-items: start;
+    }
+    .yr-footer__col h3 {
+      font-family: var(--yr-font-body); font-size: 13px; font-weight: var(--yr-fw-bold);
+      text-transform: uppercase; letter-spacing: 0.04em; color: #000000; margin: 0 0 22px;
+    }
+    .yr-footer__col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+    .yr-footer__col a {
+      color: #000000; font-size: 12px; letter-spacing: 0.04em;
+      text-transform: uppercase; text-decoration: none; transition: opacity var(--yr-transition);
+    }
+    .yr-footer__col a:hover { opacity: 0.65; }
+
+    .yr-footer__newsletter { background: #ebebeb; padding: 35px 40px; max-width: 475px; align-self: start; }
+    .yr-footer__newsletter h3 {
+      font-family: var(--yr-font-body); font-size: 14px; font-weight: var(--yr-fw-medium);
+      text-transform: uppercase; letter-spacing: 0.14em; color: #000000; margin: 0 0 18px;
+    }
+    .yr-footer__newsletter-subtitle { font-size: 13px; line-height: 1.6; color: #000000; margin: 0 0 22px; }
+    .yr-footer__newsletter-form {
+      display: flex; align-items: stretch; background: #ffffff; border: 1px solid #000000;
+    }
+    .yr-footer__newsletter-form input {
+      flex: 1; min-width: 0; background: transparent; border: none;
+      padding: 0 16px; height: 48px; font-family: inherit; font-size: 13px; color: #000000; outline: none;
+    }
+    .yr-footer__newsletter-form input::placeholder { color: rgba(0,0,0,0.45); }
+    .yr-footer__newsletter-form button {
+      background: #000000; color: #ffffff; border: none;
+      width: 56px; height: 48px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background var(--yr-transition);
+    }
+    .yr-footer__newsletter-form button:hover { background: #25140c; }
+    .yr-footer__newsletter-form button svg { width: 18px; height: 18px; }
+    .yr-footer__newsletter-success { margin: 12px 0 0; font-size: 12px; color: #25140c; font-weight: var(--yr-fw-medium); }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+    .yr-footer__meta {
+      grid-column: 1 / 4; margin-top: 40px;
+      display: flex; flex-direction: column; gap: 16px; align-items: flex-start;
+    }
+    .yr-footer__address { font-size: 12px; line-height: 1.6; color: #000000; margin: 0; }
+    .yr-footer__phone { display: inline-flex; align-items: center; gap: 10px; color: #000000; font-size: 13px; text-decoration: none; }
+    .yr-footer__phone-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px; border-radius: 4px; background: #000000; color: #ffffff;
+    }
+    .yr-footer__phone-icon svg { width: 12px; height: 12px; }
+    .yr-footer__socials { display: flex; gap: 16px; margin-top: 4px; }
+    .yr-footer__socials a { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; color: #000000; transition: opacity var(--yr-transition); }
+    .yr-footer__socials a:hover { opacity: 0.6; }
+    .yr-footer__socials svg { width: 18px; height: 18px; }
+    .yr-footer__payments { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 28px; }
+    .yr-footer__payments img { height: 24px; width: auto; display: block; }
+
+    .yr-footer__bottom {
+      max-width: var(--yr-page-max); margin: 40px auto 0;
+      padding-top: 24px; border-top: 1px solid rgba(0,0,0,0.08);
+      display: flex; justify-content: space-between; flex-wrap: wrap;
+      gap: 16px; font-size: 11px; color: rgba(0,0,0,0.55);
+    }
+    .yr-footer__legal a { color: rgba(0,0,0,0.55); text-decoration: none; margin-left: 20px; transition: color var(--yr-transition); }
+    .yr-footer__legal a:hover { color: #000000; }
+    @media (max-width: 989px) {
+      .yr-footer { padding: 60px 20px 30px; }
+      .yr-footer__inner { grid-template-columns: repeat(2, 1fr); gap: 40px 24px; }
+      .yr-footer__newsletter { max-width: 100%; }
+      .yr-footer__meta { grid-column: 1 / -1; }
+    }
+    @media (max-width: 560px) { .yr-footer__inner { grid-template-columns: 1fr; } }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       TOPBAR
+       ============================================================ -->
+  <div class="yr-topbar">
+    <div class="yr-announce" data-section="announce">
+      <div class="yr-announce__track">
+        <a class="yr-announce__msg" href="collection.html">Free Shipping on All Reformers →</a>
+        <a class="yr-announce__msg" href="collection.html">5-Year Warranty on NX901 Series →</a>
+        <a class="yr-announce__msg" href="collection.html">30-Day Home Trial →</a>
+      </div>
+    </div>
+
+    <header class="yr-header" data-section="header">
+      <div class="yr-header__inner">
+        <a class="yr-header__logo" href="index.html" aria-label="Nexace home">
+          <img src="images/nexace/logo.png" alt="Nexace">
+        </a>
+
+        <nav class="yr-header__nav" aria-label="Primary">
+          <a href="collection.html" class="is-active" aria-current="page">Reformers</a>
+          <a href="about.html">Our Story</a>
+          <a href="index.html#contact">Contact</a>
+        </nav>
+
+        <div class="yr-header__actions">
+          <button class="yr-header__icon-btn" aria-label="Cart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          </button>
+          <button class="yr-header__icon-btn" aria-label="Account">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </button>
+          <button class="yr-header__icon-btn" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
+          <button class="yr-header__burger" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <main>
+
+    <!-- ============================================================
+         PAGE BANNER
+         ============================================================ -->
+    <section class="yr-page-banner">
+      <p class="yr-page-banner__eyebrow">Nexace Collection</p>
+      <h1 class="yr-page-banner__title">The Collection</h1>
+      <p class="yr-page-banner__sub">Studio-grade reformers and accessories, engineered for home practice. Every piece is hand-finished in our Melbourne workshop.</p>
+    </section>
+
+    <!-- ============================================================
+         FILTER TABS
+         ============================================================ -->
+    <div class="yr-filters">
+      <div class="yr-filters__inner">
+        <button class="yr-filters__tab is-active" data-filter="all">All</button>
+        <button class="yr-filters__tab" data-filter="reformer">Reformers</button>
+        <button class="yr-filters__tab" data-filter="accessory">Accessories</button>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         PRODUCT GRID — 3 reformers + 3 accessories
+         ============================================================ -->
+    <section class="yr-collection">
+      <div class="yr-collection__grid">
+
+        <!-- REFORMER 1: NX901 Classic -->
+        <a class="yr-product-card" href="product-nx901.html" data-category="reformer">
+          <div class="yr-product-card__image-wrap">
+            <img class="yr-product-card__image" loading="lazy"
+                 src="images/nexace/product-classic.jpg"
+                 alt="NX901 Classic Reformer">
+            <span class="yr-product-card__badge">Save $600</span>
+          </div>
+          <div class="yr-product-card__body">
+            <p class="yr-product-card__title">NX901 Classic Reformer</p>
+            <p class="yr-product-card__desc">Our signature model — aircraft-grade aluminum rails, five color-coded springs, 200+ exercises.</p>
+            <p class="yr-product-card__price">
+              <span class="yr-product-card__price-current">$3,200</span>
+              <span class="yr-product-card__price-original">$3,800</span>
+            </p>
+            <span class="yr-product-card__cta">Shop Now</span>
+          </div>
+        </a>
+
+        <!-- REFORMER 2: NX901-MI Mini -->
+        <a class="yr-product-card" href="#" data-category="reformer">
+          <div class="yr-product-card__image-wrap">
+            <img class="yr-product-card__image" loading="lazy"
+                 src="images/nexace/product-mini.jpg"
+                 alt="NX901-MI Mini Reformer">
+            <span class="yr-product-card__badge">Save $600</span>
+          </div>
+          <div class="yr-product-card__body">
+            <p class="yr-product-card__title">NX901-MI Mini Reformer</p>
+            <p class="yr-product-card__desc">Compact footprint, full studio feel. Folds flat for apartments and small spaces.</p>
+            <p class="yr-product-card__price">
+              <span class="yr-product-card__price-current">$2,800</span>
+              <span class="yr-product-card__price-original">$3,400</span>
+            </p>
+            <span class="yr-product-card__cta">Shop Now</span>
+          </div>
+        </a>
+
+        <!-- REFORMER 3: NX901-T Tower -->
+        <a class="yr-product-card" href="#" data-category="reformer">
+          <div class="yr-product-card__image-wrap">
+            <img class="yr-product-card__image" loading="lazy"
+                 src="images/nexace/product-tower.jpg"
+                 alt="NX901-T Tower Reformer">
+            <span class="yr-product-card__badge">Save $600</span>
+          </div>
+          <div class="yr-product-card__body">
+            <p class="yr-product-card__title">NX901-T Tower Reformer</p>
+            <p class="yr-product-card__desc">Full tower integration — push-through bar, arm springs, and roll-down bar included.</p>
+            <p class="yr-product-card__price">
+              <span class="yr-product-card__price-current">$4,200</span>
+              <span class="yr-product-card__price-original">$4,800</span>
+            </p>
+            <span class="yr-product-card__cta">Shop Now</span>
+          </div>
+        </a>
+
+        <!-- ACCESSORY 1: Spring Resistance Kit -->
+        <a class="yr-product-card" href="#" data-category="accessory">
+          <div class="yr-product-card__image-wrap">
+            <img class="yr-product-card__image" loading="lazy"
+                 src="images/nexace/spring-detail.jpg"
+                 alt="Spring Resistance Kit — 5 color-coded springs">
+          </div>
+          <div class="yr-product-card__body">
+            <p class="yr-product-card__title">Spring Resistance Kit</p>
+            <p class="yr-product-card__desc">Five color-coded springs (extra-light to extra-heavy). Fits all NX901 models.</p>
+            <p class="yr-product-card__price">
+              <span class="yr-product-card__price-current">$149</span>
+            </p>
+            <span class="yr-product-card__cta">Shop Now</span>
+          </div>
+        </a>
+
+        <!-- ACCESSORY 2: Reformer Practice Mat -->
+        <a class="yr-product-card" href="#" data-category="accessory">
+          <div class="yr-product-card__image-wrap">
+            <img class="yr-product-card__image" loading="lazy"
+                 src="images/nexace/room-4.jpg"
+                 alt="Reformer Practice Mat">
+          </div>
+          <div class="yr-product-card__body">
+            <p class="yr-product-card__title">Reformer Practice Mat</p>
+            <p class="yr-product-card__desc">Non-slip, extra-dense cushion designed to sit under your reformer. Protects floors, dampens sound.</p>
+            <p class="yr-product-card__price">
+              <span class="yr-product-card__price-current">$89</span>
+            </p>
+            <span class="yr-product-card__cta">Shop Now</span>
+          </div>
+        </a>
+
+        <!-- ACCESSORY 3: Strap & Loop Set -->
+        <a class="yr-product-card" href="#" data-category="accessory">
+          <div class="yr-product-card__image-wrap">
+            <img class="yr-product-card__image" loading="lazy"
+                 src="images/nexace/room-5.jpg"
+                 alt="Strap & Loop Set">
+          </div>
+          <div class="yr-product-card__body">
+            <p class="yr-product-card__title">Strap & Loop Set</p>
+            <p class="yr-product-card__desc">Replacement hand straps and padded foot loops. Double-stitched reinforcement, quick-release buckle.</p>
+            <p class="yr-product-card__price">
+              <span class="yr-product-card__price-current">$69</span>
+            </p>
+            <span class="yr-product-card__cta">Shop Now</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BRAND BAR
+         ============================================================ -->
+    <section class="yr-brand-bar" data-section="brand-bar">
+      <img class="yr-brand-bar__logo" src="images/nexace/logo.png" alt="Nexace logo">
+      <p class="yr-brand-bar__motto">Move with precision. Train with confidence. Live with intention.</p>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="yr-footer">
+    <div class="yr-footer__inner">
+      <div class="yr-footer__col">
+        <h3>Customer Care</h3>
+        <ul>
+          <li><a href="https://support.nexace.com/hc/en-us/requests/new">Contact</a></li>
+          <li><a href="/pages/shipping-returns">Shipping &amp; Returns</a></li>
+          <li><a href="https://support.nexace.com/hc/en-us/">FAQ</a></li>
+          <li><a href="/pages/sizing-guide">Size Guide</a></li>
+          <li><a href="/products/gift-card">Gift Vouchers</a></li>
+          <li><a href="/pages/home-warranty">Warranty</a></li>
+          <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+          <li><a href="/policies/terms-of-service">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="yr-footer__col">
+        <h3>Our Brand</h3>
+        <ul>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="/pages/press">Press</a></li>
+          <li><a href="blog.html">Journal</a></li>
+          <li><a href="/pages/careers">Careers</a></li>
+        </ul>
+      </div>
+      <div class="yr-footer__col">
+        <h3>Commercial</h3>
+        <ul>
+          <li><a href="/pages/commercial-promo-t-cs">Promo Terms &amp; Conditions</a></li>
+          <li><a href="/pages/commercial-warranty">Warranty</a></li>
+          <li><a href="/pages/showroom-appointments">Showroom Appointments</a></li>
+        </ul>
+      </div>
+      <div class="yr-footer__newsletter">
+        <h3>Stay in Touch</h3>
+        <p class="yr-footer__newsletter-subtitle">Join the list for launch updates, studio content, and early access to new releases.</p>
+        <form class="yr-footer__newsletter-form" onsubmit="event.preventDefault(); this.reset(); this.querySelector('.yr-footer__newsletter-success').hidden = false;">
+          <label for="yr-newsletter-email" class="visually-hidden">Email address</label>
+          <input id="yr-newsletter-email" type="email" name="email" placeholder="Your email address" required autocomplete="email">
+          <button type="submit" aria-label="Subscribe">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </form>
+        <p class="yr-footer__newsletter-success" hidden>Thanks — you're on the list.</p>
+      </div>
+      <div class="yr-footer__meta">
+        <p class="yr-footer__address">Nexace Design Studio<br>168 Craft Lane, Suite 4A<br>Melbourne, VIC 3000, Australia</p>
+        <a class="yr-footer__phone" href="tel:+61390001234">
+          <span class="yr-footer__phone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          +61 (3) 9000 1234
+        </a>
+        <div class="yr-footer__socials">
+          <a href="https://www.instagram.com/nexace" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          <a href="https://www.facebook.com/nexace" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.5v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6V12h2.9l-.5 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg></a>
+          <a href="https://www.tiktok.com/@nexacepilates" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 6.2a6 6 0 0 1-3.6-1.2 6 6 0 0 1-2.3-4.1h-3.3v14.7a3 3 0 1 1-3-3v-3.3a6.3 6.3 0 1 0 6.3 6.3V9.9a9.2 9.2 0 0 0 5.9 2V8.5h-.1z"/></svg></a>
+          <a href="https://www.youtube.com/channel/nexace" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M18.16 5.87c.34 1.309.34 4.08.34 4.08s0 2.771-.34 4.08a2.125 2.125 0 0 1-1.53 1.53c-1.309.34-6.63.34-6.63.34s-5.321 0-6.63-.34a2.125 2.125 0 0 1-1.53-1.53c-.34-1.309-.34-4.08-.34-4.08s0-2.771.34-4.08a2.173 2.173 0 0 1 1.53-1.53C4.679 4 10 4 10 4s5.321 0 6.63.34a2.173 2.173 0 0 1 1.53 1.53ZM8.3 12.5l4.42-2.55L8.3 7.4v5.1Z"/></svg></a>
+          <a href="https://linkedin.com/company/nexace" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.35V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .78 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
+        </div>
+        <div class="yr-footer__payments">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/81bb8da86a7c0c2d5c3e.svg" alt="Amazon" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#111;font-weight:700;font-size:10px;border-radius:3px',textContent:'AMAZON'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.american_express-wwwwww.svg" alt="American Express" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#016fd0;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'AMEX'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.apple_pay-wwwwww.svg" alt="Apple Pay" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#000;font-weight:700;font-size:10px;border-radius:3px',textContent:'APPLE PAY'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.google_pay-wwwwww.svg" alt="Google Pay" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#5f6368;font-weight:700;font-size:10px;border-radius:3px',textContent:'G PAY'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.master-wwwwww.svg" alt="Mastercard" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#eb001b;font-weight:700;font-size:10px;border-radius:3px',textContent:'MC'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.paypal-wwwwww.svg" alt="PayPal" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#003087;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'PAYPAL'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.shopify_pay-wwwwww.svg" alt="Shop Pay" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#5a31f4;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'SHOP'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.visa-wwwwww.svg" alt="Visa" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#1a1f71;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'VISA'}))">
+        </div>
+      </div>
+    </div>
+    <div class="yr-footer__bottom">
+      <span>&copy; 2026 Nexace</span>
+      <div class="yr-footer__legal">
+        <a href="/policies/privacy-policy">Privacy Policy</a>
+        <a href="/policies/terms-of-service">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ============================================================
+       ANNOUNCEMENT BAR rotator
+       ============================================================ */
+    (function initAnnounce() {
+      var items = document.querySelectorAll('.yr-announce__msg');
+      if (!items.length) return;
+      items[0].classList.add('is-active');
+      if (items.length < 2) return;
+      var i = 0;
+      setInterval(function() {
+        items[i].classList.remove('is-active');
+        i = (i + 1) % items.length;
+        items[i].classList.add('is-active');
+      }, 3000);
+    })();
+
+    /* ============================================================
+       FILTER TABS — toggle data-category visibility
+       ============================================================ */
+    (function initFilters() {
+      var tabs  = document.querySelectorAll('.yr-filters__tab');
+      var cards = document.querySelectorAll('.yr-product-card[data-category]');
+      if (!tabs.length || !cards.length) return;
+
+      tabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          var filter = tab.getAttribute('data-filter');
+
+          tabs.forEach(function(t) { t.classList.remove('is-active'); });
+          tab.classList.add('is-active');
+
+          cards.forEach(function(card) {
+            if (filter === 'all' || card.getAttribute('data-category') === filter) {
+              card.hidden = false;
+            } else {
+              card.hidden = true;
+            }
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

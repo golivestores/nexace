@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Journal — Nexace</title>
+  <meta name="description" content="Stories, spaces, and inspiration for your home pilates practice. The Nexace Journal.">
+
+  <link rel="icon" type="image/png" href="images/nexace/logo.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — from index.html
+       ============================================================ */
+    :root {
+      --yr-font-body:    'Lato', system-ui, -apple-system, sans-serif;
+      --yr-font-heading: 'Lato', system-ui, -apple-system, sans-serif;
+      --yr-fw-light:     300;
+      --yr-fw-regular:   400;
+      --yr-fw-medium:    500;
+      --yr-fw-semibold:  600;
+      --yr-fw-bold:      700;
+
+      --yr-ink:          #25140c;
+      --yr-ink-soft:     #25140c;
+      --yr-ink-muted:    #744c32;
+      --yr-paper:        #ffffff;
+      --yr-cream:        #f7e7de;
+      --yr-cream-deep:   #f7e7de;
+      --yr-taupe:        #9f8d81;
+      --yr-off-white:    #faf6f2;
+      --yr-border:       rgba(37, 20, 12, 0.10);
+
+      --yr-page-max:     1600px;
+      --yr-gap:          8px;
+      --yr-r-none:       0;
+      --yr-r-sm:         6px;
+      --yr-r-pill:       100px;
+
+      --yr-ease:         cubic-bezier(0.4, 0, 0.2, 1);
+      --yr-transition:   0.3s var(--yr-ease);
+    }
+
+    /* ============================================================
+       RESET & GLOBAL BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; }
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--yr-font-body);
+      font-weight: var(--yr-fw-regular);
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--yr-ink);
+      background: var(--yr-paper);
+    }
+    img, video { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button {
+      font: inherit;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: inherit;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--yr-font-heading);
+      font-weight: var(--yr-fw-medium);
+      margin: 0;
+      line-height: 1.2;
+    }
+    p { margin: 0; }
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px; padding: 0;
+      margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
+    }
+
+    /* ============================================================
+       ANNOUNCEMENT BAR
+       ============================================================ */
+    .yr-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+    }
+    .yr-announce {
+      background: #801010;
+      color: var(--yr-cream);
+      padding: 10px 16px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .yr-announce__track {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      height: 20px;
+    }
+    .yr-announce__msg {
+      position: absolute;
+      left: 0; right: 0; top: 0;
+      font-size: 14px;
+      font-weight: var(--yr-fw-medium);
+      letter-spacing: 0.02em;
+      color: var(--yr-cream);
+      text-decoration: none;
+      opacity: 0;
+      transition: opacity 0.5s var(--yr-ease);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .yr-announce__msg.is-active { opacity: 1; }
+    @media (max-width: 989px) {
+      .yr-announce { min-height: 32px; padding: 6px 12px; }
+      .yr-announce__msg { font-size: 11px; }
+    }
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
+    .yr-header {
+      background: var(--yr-paper);
+      border-bottom: 1px solid var(--yr-border);
+      width: 100%;
+    }
+    .yr-header__inner {
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      gap: 24px;
+    }
+    .yr-header__logo {
+      display: flex;
+      align-items: center;
+      min-width: 140px;
+      height: 100%;
+      transition: opacity 0.4s;
+    }
+    .yr-header__logo:hover { opacity: 0.75; }
+    .yr-header__logo img { display: block; height: 26px; width: auto; }
+    .yr-header__nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex: 1;
+      justify-content: center;
+    }
+    .yr-header__nav a {
+      color: var(--yr-ink);
+      font-size: 14px;
+      font-weight: var(--yr-fw-regular);
+      text-decoration: none;
+      position: relative;
+      padding: 6px 0;
+      transition: color var(--yr-transition);
+    }
+    .yr-header__nav a::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 1px;
+      background: var(--yr-ink);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform var(--yr-transition);
+    }
+    .yr-header__nav a:hover::after { transform: scaleX(1); }
+    .yr-header__nav a.is-active::after { transform: scaleX(1); }
+    .yr-header__actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .yr-header__icon-btn,
+    .yr-header__burger {
+      background: none;
+      border: none;
+      padding: 6px;
+      cursor: pointer;
+      color: var(--yr-ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity var(--yr-transition);
+    }
+    .yr-header__icon-btn:hover { opacity: 0.65; }
+    .yr-header__icon-btn svg,
+    .yr-header__burger svg { width: 22px; height: 22px; }
+    .yr-header__burger { display: none; }
+    @media (max-width: 989px) {
+      .yr-header__inner { padding: 14px 20px; }
+      .yr-header__nav { display: none; }
+      .yr-header__burger { display: flex; }
+      .yr-header__logo img { height: 20px; }
+    }
+
+    /* ============================================================
+       BLOG PAGE HERO — featured article
+       ============================================================ */
+    .yr-blog-hero {
+      padding: 60px 40px 0;
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+    }
+    .yr-blog-hero__card {
+      display: block;
+      position: relative;
+      width: 100%;
+      aspect-ratio: 21 / 9;
+      border-radius: 8px;
+      overflow: hidden;
+      text-decoration: none;
+      color: #ffffff;
+    }
+    .yr-blog-hero__img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--yr-ease);
+    }
+    .yr-blog-hero__card:hover .yr-blog-hero__img {
+      transform: scale(1.03);
+    }
+    .yr-blog-hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 48px;
+    }
+    .yr-blog-hero__tag {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 11px;
+      font-weight: var(--yr-fw-medium);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 6px 16px;
+      border-radius: var(--yr-r-pill);
+      margin-bottom: 16px;
+      color: #ffffff;
+    }
+    .yr-blog-hero__title {
+      font-size: 36px;
+      font-weight: var(--yr-fw-medium);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin: 0 0 12px;
+      max-width: 640px;
+    }
+    .yr-blog-hero__excerpt {
+      font-size: 15px;
+      font-weight: var(--yr-fw-light);
+      line-height: 1.6;
+      max-width: 520px;
+      margin: 0 0 8px;
+      opacity: 0.9;
+    }
+    .yr-blog-hero__meta {
+      font-size: 12px;
+      font-weight: var(--yr-fw-regular);
+      opacity: 0.7;
+      margin-top: 12px;
+    }
+    @media (max-width: 989px) {
+      .yr-blog-hero { padding: 40px 20px 0; }
+      .yr-blog-hero__card { aspect-ratio: 16 / 10; }
+      .yr-blog-hero__overlay { padding: 32px; }
+      .yr-blog-hero__title { font-size: 28px; }
+    }
+    @media (max-width: 767px) {
+      .yr-blog-hero__card { aspect-ratio: 4 / 5; }
+      .yr-blog-hero__overlay { padding: 24px; }
+      .yr-blog-hero__title { font-size: 24px; }
+      .yr-blog-hero__excerpt { font-size: 14px; }
+    }
+
+    /* ============================================================
+       PAGE HEADING — "Journal"
+       ============================================================ */
+    .yr-blog-heading {
+      padding: 80px 40px 0;
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+    }
+    .yr-blog-heading__title {
+      font-size: 48px;
+      font-weight: var(--yr-fw-light);
+      letter-spacing: -0.02em;
+      color: var(--yr-ink);
+      margin: 0;
+    }
+    .yr-blog-heading__sub {
+      font-size: 15px;
+      font-weight: var(--yr-fw-light);
+      color: var(--yr-ink-muted);
+      margin: 16px 0 0;
+      max-width: 480px;
+      line-height: 1.6;
+    }
+    @media (max-width: 767px) {
+      .yr-blog-heading { padding: 50px 20px 0; }
+      .yr-blog-heading__title { font-size: 36px; }
+    }
+
+    /* ============================================================
+       FILTER TABS
+       ============================================================ */
+    .yr-blog-filters {
+      padding: 40px 40px 0;
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+    }
+    .yr-blog-filters__track {
+      display: flex;
+      gap: 24px;
+      border-bottom: 1px solid var(--yr-border);
+      padding-bottom: 12px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .yr-blog-filters__track::-webkit-scrollbar { display: none; }
+    .yr-blog-filters__btn {
+      background: none;
+      border: none;
+      border-bottom: 1px solid transparent;
+      padding: 0 0 6px;
+      cursor: pointer;
+      font-family: var(--yr-font-body);
+      font-size: 14px;
+      font-weight: var(--yr-fw-medium);
+      color: var(--yr-ink-muted);
+      white-space: nowrap;
+      transition: color var(--yr-transition), border-color var(--yr-transition);
+    }
+    .yr-blog-filters__btn.is-active {
+      color: var(--yr-ink-soft);
+      border-bottom-color: var(--yr-ink-soft);
+    }
+    .yr-blog-filters__btn:hover {
+      color: var(--yr-ink-soft);
+    }
+    @media (max-width: 767px) {
+      .yr-blog-filters { padding: 32px 20px 0; }
+    }
+
+    /* ============================================================
+       BLOG GRID — editorial 2-column layout
+       Row 1: 1 tall card (3:4) + 1 square card (1:1)
+       Row 2: 3 equal cards
+       ============================================================ */
+    .yr-blog-grid {
+      padding: 40px 40px 80px;
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 20px;
+    }
+    .yr-blog-grid__row-bottom {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    /* Card shared */
+    .yr-blog-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      transition: transform var(--yr-transition);
+    }
+    .yr-blog-card:hover {
+      transform: translateY(-4px);
+    }
+    .yr-blog-card__image-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      background: var(--yr-off-white);
+    }
+    .yr-blog-card__image-wrap--tall { aspect-ratio: 3 / 4; }
+    .yr-blog-card__image-wrap--square { aspect-ratio: 1 / 1; }
+    .yr-blog-card__image-wrap--wide { aspect-ratio: 16 / 10; }
+    .yr-blog-card__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s var(--yr-ease);
+    }
+    .yr-blog-card:hover .yr-blog-card__img {
+      transform: scale(1.04);
+    }
+    .yr-blog-card__tag {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      font-size: 10px;
+      font-weight: var(--yr-fw-medium);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 5px 12px;
+      border-radius: var(--yr-r-pill);
+      color: var(--yr-ink);
+    }
+    .yr-blog-card__body {
+      padding: 16px 0 0;
+    }
+    .yr-blog-card__title {
+      font-size: 18px;
+      font-weight: var(--yr-fw-medium);
+      color: var(--yr-ink);
+      line-height: 1.35;
+      margin: 0 0 8px;
+    }
+    .yr-blog-card__excerpt {
+      font-size: 14px;
+      font-weight: var(--yr-fw-light);
+      color: var(--yr-ink-muted);
+      line-height: 1.6;
+      margin: 0 0 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .yr-blog-card__meta {
+      font-size: 12px;
+      color: var(--yr-taupe);
+    }
+
+    /* Bottom row cards — smaller titles */
+    .yr-blog-grid__row-bottom .yr-blog-card__title {
+      font-size: 16px;
+    }
+
+    @media (max-width: 989px) {
+      .yr-blog-grid { padding: 32px 20px 60px; }
+      .yr-blog-grid__row-bottom {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 767px) {
+      .yr-blog-grid {
+        grid-template-columns: 1fr;
+      }
+      .yr-blog-card__image-wrap--tall { aspect-ratio: 16 / 10; }
+      .yr-blog-card__image-wrap--square { aspect-ratio: 16 / 10; }
+      .yr-blog-grid__row-bottom {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ============================================================
+       BRAND BAR
+       ============================================================ */
+    .yr-brand-bar {
+      background: var(--yr-cream-deep);
+      padding: 48px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+    .yr-brand-bar__logo { width: auto; height: 48px; display: block; }
+    .yr-brand-bar__motto {
+      font-family: var(--yr-font-body);
+      font-weight: var(--yr-fw-regular);
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--yr-ink-soft);
+      margin: 0;
+      text-align: center;
+    }
+
+    /* ============================================================
+       FOOTER — verbatim from index.html
+       ============================================================ */
+    .yr-footer {
+      background: #ffffff;
+      color: #000000;
+      padding: 80px 40px 40px;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .yr-footer__inner {
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr 1.1fr minmax(320px, 0.95fr);
+      gap: 48px;
+      align-items: start;
+    }
+    .yr-footer__col h3 {
+      font-family: var(--yr-font-body);
+      font-size: 13px;
+      font-weight: var(--yr-fw-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #000000;
+      margin: 0 0 22px;
+    }
+    .yr-footer__col ul {
+      list-style: none;
+      margin: 0; padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .yr-footer__col a {
+      color: #000000;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: opacity var(--yr-transition);
+    }
+    .yr-footer__col a:hover { opacity: 0.65; }
+    .yr-footer__newsletter {
+      background: #ebebeb;
+      padding: 35px 40px;
+      max-width: 475px;
+      align-self: start;
+    }
+    .yr-footer__newsletter h3 {
+      font-family: var(--yr-font-body);
+      font-size: 14px;
+      font-weight: var(--yr-fw-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #000000;
+      margin: 0 0 18px;
+    }
+    .yr-footer__newsletter-subtitle {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #000000;
+      margin: 0 0 22px;
+    }
+    .yr-footer__newsletter-form {
+      display: flex;
+      align-items: stretch;
+      background: #ffffff;
+      border: 1px solid #000000;
+    }
+    .yr-footer__newsletter-form input {
+      flex: 1; min-width: 0;
+      background: transparent; border: none;
+      padding: 0 16px; height: 48px;
+      font-family: inherit; font-size: 13px;
+      color: #000000; outline: none;
+    }
+    .yr-footer__newsletter-form input::placeholder { color: rgba(0,0,0,0.45); }
+    .yr-footer__newsletter-form button {
+      background: #000000; color: #ffffff;
+      border: none; width: 56px; height: 48px;
+      cursor: pointer; display: flex;
+      align-items: center; justify-content: center;
+      transition: background var(--yr-transition);
+    }
+    .yr-footer__newsletter-form button:hover { background: #25140c; }
+    .yr-footer__newsletter-form button svg { width: 18px; height: 18px; }
+    .yr-footer__newsletter-success {
+      margin: 12px 0 0; font-size: 12px;
+      color: #25140c; font-weight: var(--yr-fw-medium);
+    }
+    .yr-footer__meta {
+      grid-column: 1 / 4;
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .yr-footer__address { font-size: 12px; line-height: 1.6; color: #000000; margin: 0; }
+    .yr-footer__phone {
+      display: inline-flex; align-items: center; gap: 10px;
+      color: #000000; font-size: 13px; text-decoration: none;
+    }
+    .yr-footer__phone-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px; border-radius: 4px;
+      background: #000000; color: #ffffff;
+    }
+    .yr-footer__phone-icon svg { width: 12px; height: 12px; }
+    .yr-footer__socials { display: flex; gap: 16px; margin-top: 4px; }
+    .yr-footer__socials a {
+      width: 22px; height: 22px; display: flex;
+      align-items: center; justify-content: center;
+      color: #000000; transition: opacity var(--yr-transition);
+    }
+    .yr-footer__socials a:hover { opacity: 0.6; }
+    .yr-footer__socials svg { width: 18px; height: 18px; }
+    .yr-footer__payments {
+      display: flex; gap: 6px; align-items: center;
+      flex-wrap: wrap; margin-top: 28px;
+    }
+    .yr-footer__payments img { height: 24px; width: auto; display: block; }
+    .yr-footer__bottom {
+      max-width: var(--yr-page-max);
+      margin: 40px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+      font-size: 11px;
+      color: rgba(0,0,0,0.55);
+    }
+    .yr-footer__legal a {
+      color: rgba(0,0,0,0.55);
+      text-decoration: none;
+      margin-left: 20px;
+      transition: color var(--yr-transition);
+    }
+    .yr-footer__legal a:hover { color: #000000; }
+    @media (max-width: 989px) {
+      .yr-footer { padding: 60px 20px 30px; }
+      .yr-footer__inner {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px 24px;
+      }
+      .yr-footer__newsletter { max-width: 100%; }
+      .yr-footer__meta { grid-column: 1 / -1; }
+    }
+    @media (max-width: 560px) {
+      .yr-footer__inner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ============================================================
+       TOPBAR: ANNOUNCEMENT + HEADER
+       ============================================================ -->
+  <div class="yr-topbar">
+    <div class="yr-announce" data-section="announce">
+      <div class="yr-announce__track">
+        <a class="yr-announce__msg" href="index.html#products">Free Shipping on All Reformers &rarr;</a>
+        <a class="yr-announce__msg" href="index.html#products">5-Year Warranty on NX901 Series &rarr;</a>
+        <a class="yr-announce__msg" href="index.html#about">30-Day Home Trial &rarr;</a>
+      </div>
+    </div>
+
+    <header class="yr-header">
+      <div class="yr-header__inner">
+        <a class="yr-header__logo" href="index.html" aria-label="Nexace home">
+          <img src="images/nexace/logo.png" alt="Nexace">
+        </a>
+        <nav class="yr-header__nav" aria-label="Primary">
+          <a href="index.html#products">Reformers</a>
+          <a href="index.html#about">Our Story</a>
+          <a href="blog.html" class="is-active">Journal</a>
+          <a href="index.html#contact">Contact</a>
+        </nav>
+        <div class="yr-header__actions">
+          <button class="yr-header__icon-btn" aria-label="Cart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+          </button>
+          <button class="yr-header__burger" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <line x1="4" y1="7" x2="20" y2="7"/>
+              <line x1="4" y1="12" x2="20" y2="12"/>
+              <line x1="4" y1="17" x2="20" y2="17"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- ============================================================
+       PAGE HEADING
+       ============================================================ -->
+  <section class="yr-blog-heading">
+    <h1 class="yr-blog-heading__title">Journal</h1>
+    <p class="yr-blog-heading__sub">Stories, spaces, and inspiration for your home pilates practice.</p>
+  </section>
+
+  <!-- ============================================================
+       FILTER TABS
+       ============================================================ -->
+  <div class="yr-blog-filters">
+    <div class="yr-blog-filters__track">
+      <button class="yr-blog-filters__btn is-active" data-filter="all">All</button>
+      <button class="yr-blog-filters__btn" data-filter="home-design">Home Design</button>
+      <button class="yr-blog-filters__btn" data-filter="practice">Practice</button>
+      <button class="yr-blog-filters__btn" data-filter="lifestyle">Lifestyle</button>
+      <button class="yr-blog-filters__btn" data-filter="stories">Stories</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       FEATURED HERO ARTICLE
+       ============================================================ -->
+  <section class="yr-blog-hero">
+    <a class="yr-blog-hero__card" href="blog-post.html">
+      <img class="yr-blog-hero__img"
+           src="images/nexace/room-1.jpg"
+           alt="A reformer in a sunlit living room with floor-to-ceiling windows"
+           loading="eager">
+      <div class="yr-blog-hero__overlay">
+        <span class="yr-blog-hero__tag">Home Design</span>
+        <h2 class="yr-blog-hero__title">Living With a Reformer: How Five Homes Made It Work</h2>
+        <p class="yr-blog-hero__excerpt">From a compact Sydney apartment to a restored farmhouse in the Yarra Valley &mdash; real spaces where the NX901 lives alongside life, not apart from it.</p>
+        <p class="yr-blog-hero__meta">April 12, 2026 &middot; 8 min read</p>
+      </div>
+    </a>
+  </section>
+
+  <!-- ============================================================
+       ARTICLE GRID — 5 cards (2 top + 3 bottom)
+       ============================================================ -->
+  <div class="yr-blog-grid">
+    <!-- Row 1: tall + square -->
+    <a class="yr-blog-card" href="blog-post.html">
+      <div class="yr-blog-card__image-wrap yr-blog-card__image-wrap--tall">
+        <img class="yr-blog-card__img" src="images/nexace/lifestyle-1.jpg"
+             alt="Woman practicing pilates at sunrise" loading="lazy">
+        <span class="yr-blog-card__tag">Lifestyle</span>
+      </div>
+      <div class="yr-blog-card__body">
+        <h3 class="yr-blog-card__title">The 6 a.m. Practice: Why Morning Movement Changes Everything</h3>
+        <p class="yr-blog-card__excerpt">A gentle case for starting before the world wakes up &mdash; and why reformer pilates is the perfect early-morning companion.</p>
+        <p class="yr-blog-card__meta">April 8, 2026 &middot; 5 min read</p>
+      </div>
+    </a>
+
+    <a class="yr-blog-card" href="blog-post.html">
+      <div class="yr-blog-card__image-wrap yr-blog-card__image-wrap--square">
+        <img class="yr-blog-card__img" src="images/nexace/room-3.jpg"
+             alt="Minimalist home studio with reformer and wall mirror" loading="lazy">
+        <span class="yr-blog-card__tag">Home Design</span>
+      </div>
+      <div class="yr-blog-card__body">
+        <h3 class="yr-blog-card__title">Building a Home Studio Under 10 sqm</h3>
+        <p class="yr-blog-card__excerpt">You don't need a spare room. Here's how to carve out a dedicated practice space in even the smallest home.</p>
+        <p class="yr-blog-card__meta">March 30, 2026 &middot; 6 min read</p>
+      </div>
+    </a>
+
+    <!-- Row 2: 3 equal cards -->
+    <div class="yr-blog-grid__row-bottom">
+      <a class="yr-blog-card" href="blog-post.html">
+        <div class="yr-blog-card__image-wrap yr-blog-card__image-wrap--wide">
+          <img class="yr-blog-card__img" src="images/nexace/room-4.jpg"
+               alt="Reformer in a modern loft space" loading="lazy">
+          <span class="yr-blog-card__tag">Stories</span>
+        </div>
+        <div class="yr-blog-card__body">
+          <h3 class="yr-blog-card__title">From Studio Regular to Home Practitioner</h3>
+          <p class="yr-blog-card__excerpt">How three Nexace owners made the transition &mdash; and never looked back.</p>
+          <p class="yr-blog-card__meta">March 22, 2026</p>
+        </div>
+      </a>
+
+      <a class="yr-blog-card" href="blog-post.html">
+        <div class="yr-blog-card__image-wrap yr-blog-card__image-wrap--wide">
+          <img class="yr-blog-card__img" src="images/nexace/lifestyle-2.jpg"
+               alt="Close up of reformer springs and carriage" loading="lazy">
+          <span class="yr-blog-card__tag">Practice</span>
+        </div>
+        <div class="yr-blog-card__body">
+          <h3 class="yr-blog-card__title">Understanding Spring Tension: A Beginner's Guide</h3>
+          <p class="yr-blog-card__excerpt">Red, blue, yellow &mdash; what they mean and when to use each one.</p>
+          <p class="yr-blog-card__meta">March 15, 2026</p>
+        </div>
+      </a>
+
+      <a class="yr-blog-card" href="blog-post.html">
+        <div class="yr-blog-card__image-wrap yr-blog-card__image-wrap--wide">
+          <img class="yr-blog-card__img" src="images/nexace/room-5.jpg"
+               alt="Reformer beside a garden window" loading="lazy">
+          <span class="yr-blog-card__tag">Lifestyle</span>
+        </div>
+        <div class="yr-blog-card__body">
+          <h3 class="yr-blog-card__title">The Quiet Workout: Why Silence Matters</h3>
+          <p class="yr-blog-card__excerpt">No clanking, no grinding. How silent operation reshapes the way you practice at home.</p>
+          <p class="yr-blog-card__meta">March 6, 2026</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       BRAND BAR
+       ============================================================ -->
+  <section class="yr-brand-bar">
+    <img class="yr-brand-bar__logo" src="images/nexace/logo.png" alt="Nexace">
+    <p class="yr-brand-bar__motto">Studio-grade reformer pilates equipment, engineered for home.</p>
+  </section>
+
+  <!-- ============================================================
+       FOOTER — identical to index.html
+       ============================================================ -->
+  <footer class="yr-footer">
+    <div class="yr-footer__inner">
+      <div class="yr-footer__col">
+        <h3>Customer Care</h3>
+        <ul>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Shipping &amp; Returns</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Warranty</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="yr-footer__col">
+        <h3>Our Brand</h3>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="blog.html">Journal</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="yr-footer__col">
+        <h3>Commercial</h3>
+        <ul>
+          <li><a href="#">Promo Terms</a></li>
+          <li><a href="#">Warranty</a></li>
+          <li><a href="#">Showroom</a></li>
+        </ul>
+      </div>
+      <div class="yr-footer__newsletter">
+        <h3>Stay in Touch</h3>
+        <p class="yr-footer__newsletter-subtitle">Join the list for launch updates, studio content, and early access to new releases.</p>
+        <form class="yr-footer__newsletter-form"
+              onsubmit="event.preventDefault(); this.reset(); this.querySelector('.yr-footer__newsletter-success').hidden = false;">
+          <label for="yr-newsletter-email" class="visually-hidden">Email address</label>
+          <input id="yr-newsletter-email" type="email" name="email" placeholder="Your email address" required autocomplete="email">
+          <button type="submit" aria-label="Subscribe">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </form>
+        <p class="yr-footer__newsletter-success" hidden>Thanks — you're on the list.</p>
+      </div>
+      <div class="yr-footer__meta">
+        <p class="yr-footer__address">Nexace Design Studio<br>168 Craft Lane, Suite 4A<br>Melbourne, VIC 3000, Australia</p>
+        <a class="yr-footer__phone" href="tel:+61390001234">
+          <span class="yr-footer__phone-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </span>
+          +61 (3) 9000 1234
+        </a>
+        <div class="yr-footer__socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.5v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6V12h2.9l-.5 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 6.2a6 6 0 0 1-3.6-1.2 6 6 0 0 1-2.3-4.1h-3.3v14.7a3 3 0 1 1-3-3v-3.3a6.3 6.3 0 1 0 6.3 6.3V9.9a9.2 9.2 0 0 0 5.9 2V8.5h-.1z"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M18.16 5.87c.34 1.309.34 4.08.34 4.08s0 2.771-.34 4.08a2.125 2.125 0 0 1-1.53 1.53c-1.309.34-6.63.34-6.63.34s-5.321 0-6.63-.34a2.125 2.125 0 0 1-1.53-1.53c-.34-1.309-.34-4.08-.34-4.08s0-2.771.34-4.08a2.173 2.173 0 0 1 1.53-1.53C4.679 4 10 4 10 4s5.321 0 6.63.34a2.173 2.173 0 0 1 1.53 1.53ZM8.3 12.5l4.42-2.55L8.3 7.4v5.1Z"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="yr-footer__bottom">
+      <span>&copy; 2026 Nexace</span>
+      <div class="yr-footer__legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* Announcement bar rotator */
+    (function() {
+      var items = document.querySelectorAll('.yr-announce__msg');
+      if (!items.length) return;
+      items[0].classList.add('is-active');
+      if (items.length < 2) return;
+      var i = 0;
+      setInterval(function() {
+        items[i].classList.remove('is-active');
+        i = (i + 1) % items.length;
+        items[i].classList.add('is-active');
+      }, 3000);
+    })();
+
+    /* Filter tabs — visual toggle */
+    (function() {
+      var btns = document.querySelectorAll('.yr-blog-filters__btn');
+      btns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          btns.forEach(function(b) { b.classList.remove('is-active'); });
+          btn.classList.add('is-active');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
