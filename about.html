@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Our Story — Nexace</title>
+  <meta name="description" content="Nexace is a small team of artisans and instructors crafting studio-grade reformer pilates equipment for the home. This is our story — why we started, how we build, and who we build for.">
+
+  <!-- Favicon (reused from homepage) -->
+  <link rel="icon" type="image/png" href="images/nexace/logo.png">
+
+  <!-- Google Fonts: Lato (with italic 300/400 for pull quotes) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — shared with index.html
+       ============================================================ */
+    :root {
+      /* --- Fonts --- */
+      --yr-font-body:    'Lato', system-ui, -apple-system, sans-serif;
+      --yr-font-heading: 'Lato', system-ui, -apple-system, sans-serif;
+      --yr-fw-light:     300;
+      --yr-fw-regular:   400;
+      --yr-fw-medium:    500;
+      --yr-fw-semibold:  600;
+      --yr-fw-bold:      700;
+
+      /* --- Brand Colors --- */
+      --yr-ink:          #25140c;
+      --yr-ink-soft:     #25140c;
+      --yr-ink-muted:    #744c32;
+      --yr-paper:        #ffffff;
+      --yr-cream:        #f7e7de;
+      --yr-cream-deep:   #f7e7de;
+      --yr-taupe:        #9f8d81;
+      --yr-off-white:    #faf6f2;
+      --yr-border:       rgba(37, 20, 12, 0.10);
+
+      /* --- Layout --- */
+      --yr-page-max:     1600px;
+      --yr-gap:          8px;
+      --yr-gap-mobile:   4px;
+
+      /* --- Radii --- */
+      --yr-r-none:       0;
+      --yr-r-sm:         6px;
+      --yr-r-pill:       100px;
+
+      /* --- Motion --- */
+      --yr-ease:         cubic-bezier(0.4, 0, 0.2, 1);
+      --yr-transition:   0.3s var(--yr-ease);
+    }
+
+    /* ============================================================
+       RESET & GLOBAL BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; }
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--yr-font-body);
+      font-weight: var(--yr-fw-regular);
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--yr-ink);
+      background: var(--yr-paper);
+    }
+    img, video {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    a { color: inherit; text-decoration: none; }
+    button {
+      font: inherit;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: inherit;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--yr-font-heading);
+      font-weight: var(--yr-fw-medium);
+      margin: 0;
+      line-height: 1.2;
+    }
+    p { margin: 0; }
+
+    .yr-container {
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    @media (min-width: 750px) {
+      .yr-container { padding: 0 48px; }
+    }
+
+    /* ============================================================
+       TOPBAR — announcement + header (identical to index.html)
+       ============================================================ */
+    .yr-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+    }
+    .yr-announce {
+      background: #801010;
+      color: var(--yr-cream);
+      padding: 10px 16px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .yr-announce__track {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      height: 20px;
+    }
+    .yr-announce__msg {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      font-size: 14px;
+      font-weight: var(--yr-fw-medium);
+      letter-spacing: 0.02em;
+      color: var(--yr-cream);
+      text-decoration: none;
+      opacity: 0;
+      transition: opacity 0.5s var(--yr-ease);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .yr-announce__msg.is-active { opacity: 1; }
+    @media (max-width: 989px) {
+      .yr-announce { min-height: 32px; padding: 6px 12px; }
+      .yr-announce__msg { font-size: 11px; }
+    }
+
+    .yr-header {
+      background: var(--yr-paper);
+      border-bottom: 1px solid var(--yr-border);
+      width: 100%;
+    }
+    .yr-header__inner {
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      gap: 24px;
+    }
+    .yr-header__logo {
+      display: flex;
+      align-items: center;
+      min-width: 140px;
+      height: 100%;
+      transition: opacity 0.4s;
+    }
+    .yr-header__logo:hover { opacity: 0.75; }
+    .yr-header__logo img { display: block; height: 26px; width: auto; }
+    .yr-header__nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex: 1;
+      justify-content: center;
+    }
+    .yr-header__nav a {
+      color: var(--yr-ink);
+      font-size: 14px;
+      font-weight: var(--yr-fw-regular);
+      text-decoration: none;
+      position: relative;
+      padding: 6px 0;
+      transition: color var(--yr-transition);
+    }
+    .yr-header__nav a::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 1px;
+      background: var(--yr-ink);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform var(--yr-transition);
+    }
+    .yr-header__nav a:hover::after,
+    .yr-header__nav a.is-active::after { transform: scaleX(1); }
+    .yr-header__actions { display: flex; align-items: center; gap: 8px; }
+    .yr-header__icon-btn,
+    .yr-header__burger {
+      background: none;
+      border: none;
+      padding: 6px;
+      cursor: pointer;
+      color: var(--yr-ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity var(--yr-transition);
+    }
+    .yr-header__icon-btn:hover { opacity: 0.65; }
+    .yr-header__icon-btn svg,
+    .yr-header__burger svg { width: 22px; height: 22px; }
+    .yr-header__burger { display: none; }
+    @media (max-width: 989px) {
+      .yr-header__inner { padding: 14px 20px; }
+      .yr-header__nav { display: none; }
+      .yr-header__burger { display: flex; }
+      .yr-header__logo img { height: 20px; }
+    }
+
+    /* ============================================================
+       PAGE BANNER — full-bleed hero image + centered OUR STORY
+       ============================================================ */
+    .yr-page-banner {
+      position: relative;
+      width: 100%;
+      height: 520px;
+      overflow: hidden;
+    }
+    .yr-page-banner__image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .yr-page-banner__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(37,20,12,0.15) 0%, rgba(37,20,12,0.38) 100%);
+    }
+    .yr-page-banner__content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .yr-page-banner__title {
+      color: var(--yr-cream);
+      font-family: var(--yr-font-heading);
+      font-weight: var(--yr-fw-regular);
+      font-size: 44px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    @media (max-width: 767px) {
+      .yr-page-banner { height: 360px; }
+      .yr-page-banner__title { font-size: 24px; letter-spacing: 0.18em; }
+    }
+
+    /* ============================================================
+       MISSION — centered italic statement on warm off-white
+       ============================================================ */
+    .yr-mission {
+      padding: 120px 40px;
+      background: var(--yr-off-white);
+    }
+    .yr-mission__inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .yr-mission__text {
+      color: var(--yr-ink);
+      font-family: var(--yr-font-heading);
+      font-weight: var(--yr-fw-light);
+      font-style: italic;
+      font-size: 36px;
+      line-height: 1.38;
+      letter-spacing: -0.005em;
+      text-align: center;
+      text-wrap: balance;
+      margin: 0;
+    }
+    @media (max-width: 989px) {
+      .yr-mission { padding: 70px 24px; }
+      .yr-mission__text { font-size: 22px; line-height: 1.45; }
+    }
+    @media (max-width: 560px) {
+      .yr-mission__text { font-size: 19px; }
+    }
+
+    /* ============================================================
+       CINEMATIC VIDEO — 16:9 hero video w/ poster & play button
+       ============================================================ */
+    .yr-cinematic {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      max-height: 780px;
+      overflow: hidden;
+      background: #000;
+    }
+    .yr-cinematic__poster,
+    .yr-cinematic__media {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .yr-cinematic__poster {
+      transition: opacity 0.45s var(--yr-ease);
+    }
+    .yr-cinematic.is-playing .yr-cinematic__poster {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .yr-cinematic__media {
+      opacity: 0;
+      transition: opacity 0.45s var(--yr-ease);
+    }
+    .yr-cinematic.is-playing .yr-cinematic__media { opacity: 1; }
+    .yr-cinematic__play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1.5px solid rgba(255,255,255,0.65);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 2;
+      transition: background 0.25s var(--yr-ease),
+                  transform 0.25s var(--yr-ease),
+                  opacity 0.25s var(--yr-ease);
+    }
+    .yr-cinematic__play:hover {
+      background: rgba(255,255,255,0.34);
+      transform: translate(-50%, -50%) scale(1.06);
+    }
+    .yr-cinematic__play svg {
+      width: 28px;
+      height: 28px;
+      margin-left: 4px;
+      fill: currentColor;
+    }
+    .yr-cinematic.is-playing .yr-cinematic__play {
+      opacity: 0;
+      pointer-events: none;
+    }
+    @media (max-width: 767px) {
+      .yr-cinematic { aspect-ratio: 4 / 3; }
+      .yr-cinematic__play { width: 64px; height: 64px; }
+      .yr-cinematic__play svg { width: 20px; height: 20px; }
+    }
+
+    /* ============================================================
+       COUNTERS — 3 big stats animated on scroll into view
+       ============================================================ */
+    .yr-counters {
+      padding: 120px 40px;
+      background: var(--yr-paper);
+    }
+    .yr-counters__wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 100px;
+      flex-wrap: wrap;
+    }
+    .yr-counter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 300px;
+      gap: 18px;
+    }
+    .yr-counter__number {
+      color: var(--yr-ink);
+      font-family: var(--yr-font-heading);
+      font-weight: var(--yr-fw-light);
+      font-size: 68px;
+      line-height: 1;
+      letter-spacing: -0.015em;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+    .yr-counter__number-plus {
+      font-size: 38px;
+      font-weight: var(--yr-fw-light);
+      color: var(--yr-ink-muted);
+    }
+    .yr-counter__label {
+      color: var(--yr-ink-soft);
+      font-family: var(--yr-font-body);
+      font-weight: var(--yr-fw-regular);
+      font-size: 14px;
+      line-height: 1.55;
+      letter-spacing: 0.01em;
+      text-wrap: balance;
+      margin: 0;
+    }
+    @media (max-width: 989px) {
+      .yr-counters { padding: 60px 20px; }
+      .yr-counters__wrap { gap: 30px; }
+      .yr-counter { max-width: 180px; gap: 10px; }
+      .yr-counter__number { font-size: 34px; }
+      .yr-counter__number-plus { font-size: 20px; }
+      .yr-counter__label { font-size: 11px; line-height: 1.5; }
+    }
+
+    /* ============================================================
+       STORY — 2-column alternating grid (image | text)
+       4 rows, flips on mobile to single column
+       ============================================================ */
+    .yr-story {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+    }
+    .yr-story__cell {
+      min-height: 520px;
+    }
+    .yr-story__cell--image { overflow: hidden; }
+    .yr-story__cell--image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .yr-story__cell--text {
+      background: var(--yr-off-white);
+      padding: 80px 7vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 24px;
+    }
+    .yr-story__heading {
+      color: var(--yr-ink);
+      font-family: var(--yr-font-heading);
+      font-weight: var(--yr-fw-regular);
+      font-size: 34px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+    .yr-story__body {
+      color: var(--yr-ink);
+      font-family: var(--yr-font-body);
+      font-weight: var(--yr-fw-regular);
+      font-size: 16px;
+      line-height: 1.7;
+      margin: 0;
+    }
+    @media (max-width: 989px) {
+      .yr-story { grid-template-columns: 1fr; }
+      .yr-story__cell { min-height: 340px; }
+      .yr-story__cell--text { padding: 44px 8vw; gap: 16px; }
+      .yr-story__heading { font-size: 24px; }
+      .yr-story__body { font-size: 14px; line-height: 1.65; }
+
+      /* On mobile, flip row order so image comes before its paired text */
+      .yr-story__cell--image { order: var(--img-order, 0); }
+      .yr-story__cell--text  { order: var(--text-order, 0); }
+    }
+
+    /* ============================================================
+       CLOSING PULL QUOTE — centered italic on cream
+       ============================================================ */
+    .yr-pullquote {
+      padding: 110px 40px;
+      background: var(--yr-cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .yr-pullquote__text {
+      max-width: 900px;
+      color: var(--yr-ink);
+      font-family: var(--yr-font-heading);
+      font-weight: var(--yr-fw-light);
+      font-style: italic;
+      font-size: 22px;
+      line-height: 1.6;
+      letter-spacing: 0.005em;
+      text-align: center;
+      text-wrap: balance;
+      margin: 0;
+    }
+    @media (max-width: 767px) {
+      .yr-pullquote { padding: 60px 24px; }
+      .yr-pullquote__text { font-size: 15px; line-height: 1.65; }
+    }
+
+    /* ============================================================
+       BRAND BAR — identical to index.html
+       ============================================================ */
+    .yr-brand-bar {
+      background: var(--yr-cream-deep);
+      padding: 48px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+    .yr-brand-bar__logo {
+      width: auto;
+      height: 48px;
+      display: block;
+    }
+    .yr-brand-bar__motto {
+      font-family: var(--yr-font-body);
+      font-weight: var(--yr-fw-regular);
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--yr-ink-soft);
+      margin: 0;
+      text-align: center;
+    }
+
+    /* ============================================================
+       FOOTER — identical to index.html
+       ============================================================ */
+    .yr-footer {
+      background: #ffffff;
+      color: #000000;
+      padding: 80px 40px 40px;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .yr-footer__inner {
+      max-width: var(--yr-page-max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr 1.1fr minmax(320px, 0.95fr);
+      gap: 48px;
+      align-items: start;
+    }
+    .yr-footer__col h3 {
+      font-family: var(--yr-font-body);
+      font-size: 13px;
+      font-weight: var(--yr-fw-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #000000;
+      margin: 0 0 22px;
+    }
+    .yr-footer__col ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .yr-footer__col a {
+      color: #000000;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: opacity var(--yr-transition);
+    }
+    .yr-footer__col a:hover { opacity: 0.65; }
+
+    .yr-footer__newsletter {
+      background: #ebebeb;
+      padding: 35px 40px;
+      max-width: 475px;
+      align-self: start;
+    }
+    .yr-footer__newsletter h3 {
+      font-family: var(--yr-font-body);
+      font-size: 14px;
+      font-weight: var(--yr-fw-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #000000;
+      margin: 0 0 18px;
+    }
+    .yr-footer__newsletter-subtitle {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #000000;
+      margin: 0 0 22px;
+    }
+    .yr-footer__newsletter-form {
+      display: flex;
+      align-items: stretch;
+      background: #ffffff;
+      border: 1px solid #000000;
+    }
+    .yr-footer__newsletter-form input {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      border: none;
+      padding: 0 16px;
+      height: 48px;
+      font-family: inherit;
+      font-size: 13px;
+      color: #000000;
+      outline: none;
+    }
+    .yr-footer__newsletter-form input::placeholder { color: rgba(0, 0, 0, 0.45); }
+    .yr-footer__newsletter-form button {
+      background: #000000;
+      color: #ffffff;
+      border: none;
+      width: 56px;
+      height: 48px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--yr-transition);
+    }
+    .yr-footer__newsletter-form button:hover { background: #25140c; }
+    .yr-footer__newsletter-form button svg { width: 18px; height: 18px; }
+    .yr-footer__newsletter-success {
+      margin: 12px 0 0;
+      font-size: 12px;
+      color: #25140c;
+      font-weight: var(--yr-fw-medium);
+    }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+
+    .yr-footer__meta {
+      grid-column: 1 / 4;
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .yr-footer__address {
+      font-size: 12px;
+      line-height: 1.6;
+      color: #000000;
+      margin: 0;
+    }
+    .yr-footer__phone {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #000000;
+      font-size: 13px;
+      text-decoration: none;
+    }
+    .yr-footer__phone-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      background: #000000;
+      color: #ffffff;
+    }
+    .yr-footer__phone-icon svg { width: 12px; height: 12px; }
+    .yr-footer__socials {
+      display: flex;
+      gap: 16px;
+      margin-top: 4px;
+    }
+    .yr-footer__socials a {
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000000;
+      transition: opacity var(--yr-transition);
+    }
+    .yr-footer__socials a:hover { opacity: 0.6; }
+    .yr-footer__socials svg { width: 18px; height: 18px; }
+    .yr-footer__payments {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .yr-footer__payments img {
+      height: 24px;
+      width: auto;
+      display: block;
+    }
+
+    .yr-footer__bottom {
+      max-width: var(--yr-page-max);
+      margin: 40px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 11px;
+      color: rgba(0, 0, 0, 0.55);
+    }
+    .yr-footer__legal a {
+      color: rgba(0, 0, 0, 0.55);
+      text-decoration: none;
+      margin-left: 20px;
+      transition: color var(--yr-transition);
+    }
+    .yr-footer__legal a:hover { color: #000000; }
+
+    @media (max-width: 989px) {
+      .yr-footer { padding: 60px 20px 30px; }
+      .yr-footer__inner {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px 24px;
+      }
+      .yr-footer__newsletter { max-width: 100%; }
+      .yr-footer__meta { grid-column: 1 / -1; }
+    }
+    @media (max-width: 560px) {
+      .yr-footer__inner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ============================================================
+       TOPBAR (announcement + header) — mirrors index.html
+       ============================================================ -->
+  <div class="yr-topbar">
+    <div class="yr-announce" data-section="announce">
+      <div class="yr-announce__track">
+        <a class="yr-announce__msg" href="index.html#products">Free Shipping on All Reformers →</a>
+        <a class="yr-announce__msg" href="index.html#products">5-Year Warranty on NX901 Series →</a>
+        <a class="yr-announce__msg" href="about.html">30-Day Home Trial →</a>
+      </div>
+    </div>
+
+    <header class="yr-header" data-section="header">
+      <div class="yr-header__inner">
+        <a class="yr-header__logo" href="index.html" aria-label="Nexace home">
+          <img src="images/nexace/logo.png" alt="Nexace">
+        </a>
+
+        <nav class="yr-header__nav" aria-label="Primary">
+          <a href="index.html#products">Reformers</a>
+          <a href="about.html" class="is-active" aria-current="page">Our Story</a>
+          <a href="index.html#contact">Contact</a>
+        </nav>
+
+        <div class="yr-header__actions">
+          <button class="yr-header__icon-btn" aria-label="Cart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+          </button>
+          <button class="yr-header__icon-btn" aria-label="Account">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </button>
+          <button class="yr-header__icon-btn" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+          <button class="yr-header__burger" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <line x1="3" y1="7" x2="21" y2="7"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="17" x2="21" y2="17"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <main>
+
+    <!-- ============================================================
+         SECTION 1: PAGE BANNER
+         Full-bleed hero image with centered OUR STORY title.
+         ============================================================ -->
+    <section class="yr-page-banner" data-section="banner">
+      <img class="yr-page-banner__image"
+           src="hero 3.jpg"
+           alt="A Nexace reformer inside a sunlit home studio">
+      <div class="yr-page-banner__overlay"></div>
+      <div class="yr-page-banner__content">
+        <h1 class="yr-page-banner__title">OUR STORY</h1>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 2: MISSION
+         Italic statement in warm off-white.
+         ============================================================ -->
+    <section class="yr-mission" data-section="mission">
+      <div class="yr-mission__inner">
+        <p class="yr-mission__text">
+          "Our mission is simple — to make studio-grade reformer pilates a daily practice, inside the home. To build equipment quiet enough for a morning routine, crafted enough to last decades, and honest enough to serve generations of practitioners."
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 3: CINEMATIC VIDEO
+         16:9 hero video with poster + centered play button.
+         Click plays the local hero.mp4 with sound.
+         ============================================================ -->
+    <section class="yr-cinematic" data-section="video">
+      <img class="yr-cinematic__poster"
+           src="images/nexace/lifestyle-1.jpg"
+           alt="Morning practice on a Nexace reformer at home">
+      <video class="yr-cinematic__media" playsinline preload="none" controls>
+        <source src="hero.mp4" type="video/mp4">
+      </video>
+      <button class="yr-cinematic__play" type="button" aria-label="Play our story video">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+    </section>
+
+    <!-- ============================================================
+         SECTION 4: COUNTERS
+         3 large stats animated on scroll-into-view.
+         ============================================================ -->
+    <section class="yr-counters" data-section="counters">
+      <div class="yr-counters__wrap">
+        <div class="yr-counter">
+          <div class="yr-counter__number">
+            <span data-count="10000">0</span><span class="yr-counter__number-plus">+</span>
+          </div>
+          <p class="yr-counter__label">Reformers hand-finished in our Melbourne workshop</p>
+        </div>
+        <div class="yr-counter">
+          <div class="yr-counter__number">
+            <span data-count="35">0</span>
+          </div>
+          <p class="yr-counter__label">Countries where Nexace practitioners train daily</p>
+        </div>
+        <div class="yr-counter">
+          <div class="yr-counter__number">
+            <span data-count="200">0</span><span class="yr-counter__number-plus">+</span>
+          </div>
+          <p class="yr-counter__label">Hours of studio-grade classes in the Nexace library</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 5: STORY GRID
+         2-col alternating image/text — 4 rows.
+         Row 1: image | text (Where It All Began)
+         Row 2: text  | image
+         Row 3: image | text
+         Row 4: text  | image
+         On mobile, collapses to single column.
+         ============================================================ -->
+    <section class="yr-story" data-section="story" aria-label="Where it all began">
+
+      <!-- Row 1 -->
+      <div class="yr-story__cell yr-story__cell--image" style="--img-order:1; --text-order:2;">
+        <img src="images/nexace/room-1.jpg"
+             alt="Nexace reformer in a quiet home studio">
+      </div>
+      <div class="yr-story__cell yr-story__cell--text" style="--text-order:2;">
+        <h2 class="yr-story__heading">Where It All Began</h2>
+        <p class="yr-story__body">Nexace started in a small woodworking studio outside Melbourne. Our founder — a former dancer and studio owner — had spent years teaching reformer pilates on equipment built for clinics: loud, imposing, and far too heavy to live in a home. She wanted to change that.</p>
+        <p class="yr-story__body">She wanted a reformer quiet enough for an apartment, warm enough for a living room, and exacting enough to stand in for the studio she had trained in for two decades.</p>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="yr-story__cell yr-story__cell--text" style="--text-order:3;">
+        <p class="yr-story__body">The brief, from first sketch to final prototype, was strict. Every spring had to register the same four resistance tiers she had learned on. Every rail had to glide in silence. Every frame — laminated from quarter-sawn maple and brushed aircraft-grade aluminum — had to earn its place in a room, not dominate it.</p>
+        <p class="yr-story__body">The first NX901 took nine months and thirty-four revisions.</p>
+      </div>
+      <div class="yr-story__cell yr-story__cell--image" style="--img-order:4;">
+        <img src="images/nexace/lifestyle-1.jpg"
+             alt="A morning reformer practice bathed in natural light">
+      </div>
+
+      <!-- Row 3 -->
+      <div class="yr-story__cell yr-story__cell--image" style="--img-order:5;">
+        <img src="images/nexace/room-3.jpg"
+             alt="A Nexace reformer folded and tucked alongside a living space">
+      </div>
+      <div class="yr-story__cell yr-story__cell--text" style="--text-order:6;">
+        <p class="yr-story__body">The turning point came in 2021, when the studios she had trained in shut their doors for the last time. Our earliest customers — instructors, new mothers, physiotherapists — began writing to say the reformer had carried them through the hardest months of their lives.</p>
+        <p class="yr-story__body">We realized what we were really making wasn't equipment. It was a doorway — a way back to one's own body, on one's own hours.</p>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="yr-story__cell yr-story__cell--text" style="--text-order:7;">
+        <p class="yr-story__body">Today, each Nexace reformer is still finished by hand in our original workshop. The Classic, the MI, and the Tower are each tested against a studio-grade checklist — spring calibration, rail glide, headrest pitch, strap tension — before any one of them leaves our doors.</p>
+        <p class="yr-story__body">We ship to thirty-five countries. We answer every email ourselves. And we're still making them the way we started — slowly, carefully, one at a time.</p>
+      </div>
+      <div class="yr-story__cell yr-story__cell--image" style="--img-order:8;">
+        <img src="images/nexace/spring-detail.jpg"
+             alt="Close-up of a Nexace spring calibration">
+      </div>
+
+    </section>
+
+    <!-- ============================================================
+         SECTION 6: CLOSING PULL QUOTE
+         ============================================================ -->
+    <section class="yr-pullquote" data-section="quote">
+      <p class="yr-pullquote__text">
+        "We believe movement is a daily practice — something that should fit inside your home as naturally as morning light through a window. Every Nexace reformer is built to make that practice possible, decade after decade."
+      </p>
+    </section>
+
+    <!-- ============================================================
+         SECTION 7: BRAND BAR — shared with index.html
+         ============================================================ -->
+    <section class="yr-brand-bar" data-section="brand-bar">
+      <img class="yr-brand-bar__logo"
+           src="images/nexace/logo.png"
+           alt="Nexace logo">
+      <p class="yr-brand-bar__motto">Move with precision. Train with confidence. Live with intention.</p>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       SITE FOOTER — shared with index.html
+       ============================================================ -->
+  <footer class="yr-footer">
+    <div class="yr-footer__inner">
+
+      <div class="yr-footer__col">
+        <h3>Customer Care</h3>
+        <ul>
+          <li><a href="https://support.nexace.com/hc/en-us/requests/new">Contact</a></li>
+          <li><a href="/pages/shipping-returns">Shipping &amp; Returns</a></li>
+          <li><a href="https://support.nexace.com/hc/en-us/">FAQ</a></li>
+          <li><a href="/pages/sizing-guide">Size Guide</a></li>
+          <li><a href="/products/gift-card">Gift Vouchers</a></li>
+          <li><a href="/pages/home-warranty">Warranty</a></li>
+          <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+          <li><a href="/policies/terms-of-service">Terms of Service</a></li>
+          <li><a href="/pages/accessibility-statement">Accessibility Statement</a></li>
+          <li><a href="/pages/terms-and-conditions">Terms &amp; Conditions</a></li>
+          <li><a href="/pages/showroom-appointments">Showroom Appointments</a></li>
+          <li><a href="/pages/reformerpro-account-deletion">ReformerPro Account Deletion</a></li>
+        </ul>
+      </div>
+
+      <div class="yr-footer__col">
+        <h3>Our Brand</h3>
+        <ul>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="/pages/press">Press</a></li>
+          <li><a href="blog.html">Journal</a></li>
+          <li><a href="/pages/careers">Careers</a></li>
+        </ul>
+      </div>
+
+      <div class="yr-footer__col">
+        <h3>Commercial</h3>
+        <ul>
+          <li><a href="/pages/commercial-promo-t-cs">Promo Terms &amp; Conditions</a></li>
+          <li><a href="/pages/commercial-warranty">Warranty</a></li>
+          <li><a href="/pages/showroom-appointments">Showroom Appointments</a></li>
+        </ul>
+      </div>
+
+      <div class="yr-footer__newsletter">
+        <h3>Stay in Touch</h3>
+        <p class="yr-footer__newsletter-subtitle">Join the list for launch updates, studio content, and early access to new releases.</p>
+        <form class="yr-footer__newsletter-form"
+              onsubmit="event.preventDefault(); this.reset(); this.querySelector('.yr-footer__newsletter-success').hidden = false;">
+          <label for="yr-newsletter-email" class="visually-hidden">Email address</label>
+          <input id="yr-newsletter-email" type="email" name="email" placeholder="Your email address" required autocomplete="email">
+          <button type="submit" aria-label="Subscribe">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </form>
+        <p class="yr-footer__newsletter-success" hidden>Thanks — you're on the list.</p>
+      </div>
+
+      <div class="yr-footer__meta">
+        <p class="yr-footer__address">Nexace Design Studio<br>168 Craft Lane, Suite 4A<br>Melbourne, VIC 3000, Australia</p>
+
+        <a class="yr-footer__phone" href="tel:+61390001234">
+          <span class="yr-footer__phone-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </span>
+          +61 (3) 9000 1234
+        </a>
+
+        <div class="yr-footer__socials">
+          <a href="https://www.instagram.com/nexace" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="https://www.facebook.com/nexace" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.5v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6V12h2.9l-.5 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@nexacepilates" target="_blank" rel="noopener" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 6.2a6 6 0 0 1-3.6-1.2 6 6 0 0 1-2.3-4.1h-3.3v14.7a3 3 0 1 1-3-3v-3.3a6.3 6.3 0 1 0 6.3 6.3V9.9a9.2 9.2 0 0 0 5.9 2V8.5h-.1z"/></svg>
+          </a>
+          <a href="https://www.pinterest.com/nexace" target="_blank" rel="noopener" aria-label="Pinterest">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0a12 12 0 0 0-4.4 23.2c-.1-1-.2-2.4 0-3.5l1.5-6.4s-.4-.8-.4-1.9c0-1.8 1-3.2 2.4-3.2 1.1 0 1.6.8 1.6 1.8 0 1.1-.7 2.8-1.1 4.3-.3 1.3.6 2.3 1.9 2.3 2.3 0 4.1-2.4 4.1-5.9 0-3.1-2.2-5.3-5.4-5.3-3.7 0-5.8 2.8-5.8 5.6 0 1.1.4 2.3 1 3-.1.1-.1.2-.2.5l-.3 1.3c0 .2-.2.3-.4.2-1.4-.7-2.3-2.7-2.3-4.4 0-3.6 2.6-6.9 7.5-6.9 3.9 0 7 2.8 7 6.6 0 3.9-2.5 7.1-5.9 7.1-1.2 0-2.3-.6-2.6-1.3l-.7 2.7c-.3 1-1 2.3-1.4 3.1A12 12 0 1 0 12 0z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/channel/nexace" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M18.16 5.87c.34 1.309.34 4.08.34 4.08s0 2.771-.34 4.08a2.125 2.125 0 0 1-1.53 1.53c-1.309.34-6.63.34-6.63.34s-5.321 0-6.63-.34a2.125 2.125 0 0 1-1.53-1.53c-.34-1.309-.34-4.08-.34-4.08s0-2.771.34-4.08a2.173 2.173 0 0 1 1.53-1.53C4.679 4 10 4 10 4s5.321 0 6.63.34a2.173 2.173 0 0 1 1.53 1.53ZM8.3 12.5l4.42-2.55L8.3 7.4v5.1Z"/></svg>
+          </a>
+          <a href="https://linkedin.com/company/nexace" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.35V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .78 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+
+        <div class="yr-footer__payments">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/81bb8da86a7c0c2d5c3e.svg" alt="Amazon"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#111;font-weight:700;font-size:10px;border-radius:3px',textContent:'AMAZON'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.american_express-wwwwww.svg" alt="American Express"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#016fd0;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'AMEX'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.apple_pay-wwwwww.svg" alt="Apple Pay"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#000;font-weight:700;font-size:10px;border-radius:3px',textContent:'APPLE PAY'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.google_pay-wwwwww.svg" alt="Google Pay"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#5f6368;font-weight:700;font-size:10px;border-radius:3px',textContent:'G PAY'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.master-wwwwww.svg" alt="Mastercard"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#eb001b;font-weight:700;font-size:10px;border-radius:3px',textContent:'MC'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.paypal-wwwwww.svg" alt="PayPal"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#003087;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'PAYPAL'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.shopify_pay-wwwwww.svg" alt="Shop Pay"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#5a31f4;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'SHOP'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.visa-wwwwww.svg" alt="Visa"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#1a1f71;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'VISA'}))">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="yr-footer__bottom">
+      <span>&copy; 2026 Nexace</span>
+      <div class="yr-footer__legal">
+        <a href="/policies/privacy-policy">Privacy Policy</a>
+        <a href="/policies/terms-of-service">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ============================================================
+       ANNOUNCEMENT BAR — fade rotator (same behavior as index.html)
+       ============================================================ */
+    (function initAnnounce() {
+      var items = document.querySelectorAll('.yr-announce__msg');
+      if (!items.length) return;
+      items[0].classList.add('is-active');
+      if (items.length < 2) return;
+      var i = 0;
+      setInterval(function() {
+        items[i].classList.remove('is-active');
+        i = (i + 1) % items.length;
+        items[i].classList.add('is-active');
+      }, 3000);
+    })();
+
+    /* ============================================================
+       COUNTERS — ease-out count-up when each number enters view
+       ============================================================ */
+    (function initCounters() {
+      var nums = document.querySelectorAll('.yr-counter__number [data-count]');
+      if (!nums.length) return;
+
+      function format(n, target) {
+        return (target >= 10000) ? n.toLocaleString('en-US') : String(n);
+      }
+
+      function countUp(el) {
+        if (el.dataset.done) return;
+        el.dataset.done = '1';
+        var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+        var duration = 1600;
+        var start = performance.now();
+        function frame(now) {
+          var t = Math.min(1, (now - start) / duration);
+          var eased = 1 - Math.pow(1 - t, 3);
+          var val = Math.round(target * eased);
+          el.textContent = format(val, target);
+          if (t < 1) requestAnimationFrame(frame);
+          else el.textContent = format(target, target);
+        }
+        requestAnimationFrame(frame);
+      }
+
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) countUp(entry.target);
+          });
+        }, { threshold: 0.4 });
+        nums.forEach(function(el) { io.observe(el); });
+      } else {
+        nums.forEach(countUp);
+      }
+    })();
+
+    /* ============================================================
+       CINEMATIC VIDEO — click play button to play hero.mp4
+       ============================================================ */
+    (function initVideo() {
+      var wrap = document.querySelector('.yr-cinematic');
+      if (!wrap) return;
+      var btn = wrap.querySelector('.yr-cinematic__play');
+      var vid = wrap.querySelector('.yr-cinematic__media');
+      if (!btn || !vid) return;
+      btn.addEventListener('click', function() {
+        wrap.classList.add('is-playing');
+        var playPromise = vid.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(function() {
+            // Autoplay blocked — video controls stay visible for manual play
+          });
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

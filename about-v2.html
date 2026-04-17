@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Our Story — Nexace</title>
+  <meta name="description" content="How we design, craft and test every Nexace reformer — in our Melbourne workshop, one at a time.">
+
+  <link rel="icon" type="image/png" href="images/nexace/logo.png">
+
+  <!-- Google Fonts: Lato (full weights + italics for editorial emphasis) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
+
+  <!-- GSAP + ScrollTrigger (required for about-v2 animations) -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — Nexace warm-white palette (shared w/ index)
+       ============================================================ */
+    :root {
+      /* Fonts */
+      --yr-font-body:    'Lato', system-ui, -apple-system, sans-serif;
+      --yr-font-heading: 'Lato', system-ui, -apple-system, sans-serif;
+      --yr-fw-light:     300;
+      --yr-fw-regular:   400;
+      --yr-fw-medium:    500;
+      --yr-fw-semibold:  600;
+      --yr-fw-bold:      700;
+
+      /* Brand Colors */
+      --yr-ink:          #25140c;
+      --yr-ink-soft:     #25140c;
+      --yr-ink-muted:    #744c32;   /* replaces VKGold "gold" accent */
+      --yr-ink-light:    #9c8570;   /* replaces VKGold "gold-light" hover */
+      --yr-paper:        #ffffff;
+      --yr-cream:        #f7e7de;
+      --yr-cream-deep:   #f7e7de;
+      --yr-taupe:        #9f8d81;
+      --yr-off-white:    #faf6f2;
+      --yr-border:       rgba(37, 20, 12, 0.10);
+
+      /* Layout */
+      --yr-page-max:     1600px;
+
+      /* Motion */
+      --yr-ease:           cubic-bezier(0.4, 0, 0.2, 1);
+      --yr-ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+      --yr-transition:     0.3s var(--yr-ease);
+    }
+
+    /* ============================================================
+       RESET & GLOBAL
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; }
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--yr-font-body);
+      font-weight: var(--yr-fw-regular);
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--yr-ink);
+      background: var(--yr-paper);
+    }
+    img, video {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; background: none; border: none; cursor: pointer; color: inherit; }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--yr-font-heading);
+      font-weight: var(--yr-fw-medium);
+      margin: 0;
+      line-height: 1.2;
+    }
+    p { margin: 0; }
+
+    /* ============================================================
+       TOPBAR — identical to index.html
+       ============================================================ */
+    .yr-topbar { position: sticky; top: 0; z-index: 100; width: 100%; }
+    .yr-announce {
+      background: #801010; color: var(--yr-cream);
+      padding: 10px 16px; text-align: center; position: relative;
+      overflow: hidden; min-height: 40px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .yr-announce__track { position: relative; width: 100%; max-width: 600px; height: 20px; }
+    .yr-announce__msg {
+      position: absolute; left: 0; right: 0; top: 0;
+      font-size: 14px; font-weight: var(--yr-fw-medium); letter-spacing: 0.02em;
+      color: var(--yr-cream); text-decoration: none;
+      opacity: 0; transition: opacity 0.5s var(--yr-ease);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .yr-announce__msg.is-active { opacity: 1; }
+    @media (max-width: 989px) {
+      .yr-announce { min-height: 32px; padding: 6px 12px; }
+      .yr-announce__msg { font-size: 11px; }
+    }
+
+    .yr-header { background: var(--yr-paper); border-bottom: 1px solid var(--yr-border); width: 100%; }
+    .yr-header__inner {
+      max-width: var(--yr-page-max); margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 32px; gap: 24px;
+    }
+    .yr-header__logo {
+      display: flex; align-items: center; min-width: 140px; height: 100%;
+      transition: opacity 0.4s;
+    }
+    .yr-header__logo:hover { opacity: 0.75; }
+    .yr-header__logo img { display: block; height: 26px; width: auto; }
+    .yr-header__nav { display: flex; align-items: center; gap: 28px; flex: 1; justify-content: center; }
+    .yr-header__nav a {
+      color: var(--yr-ink); font-size: 14px; font-weight: var(--yr-fw-regular);
+      text-decoration: none; position: relative; padding: 6px 0;
+      transition: color var(--yr-transition);
+    }
+    .yr-header__nav a::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+      height: 1px; background: var(--yr-ink);
+      transform: scaleX(0); transform-origin: center;
+      transition: transform var(--yr-transition);
+    }
+    .yr-header__nav a:hover::after,
+    .yr-header__nav a.is-active::after { transform: scaleX(1); }
+    .yr-header__actions { display: flex; align-items: center; gap: 8px; }
+    .yr-header__icon-btn, .yr-header__burger {
+      background: none; border: none; padding: 6px; cursor: pointer;
+      color: var(--yr-ink); display: flex; align-items: center; justify-content: center;
+      transition: opacity var(--yr-transition);
+    }
+    .yr-header__icon-btn:hover { opacity: 0.65; }
+    .yr-header__icon-btn svg, .yr-header__burger svg { width: 22px; height: 22px; }
+    .yr-header__burger { display: none; }
+    @media (max-width: 989px) {
+      .yr-header__inner { padding: 14px 20px; }
+      .yr-header__nav { display: none; }
+      .yr-header__burger { display: flex; }
+      .yr-header__logo img { height: 20px; }
+    }
+
+    /* ============================================================
+       SECTION 0 — HERO (full-bleed image + centered title)
+       Nexace editorial: dark overlay on warm image, cream text,
+       scroll-pulse hint at bottom. GSAP entrance on load.
+       ============================================================ */
+    .ah-hero {
+      position: relative; width: 100%;
+      height: 88vh; min-height: 560px;
+      background: var(--yr-ink); overflow: hidden;
+    }
+    .ah-hero-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      will-change: transform;
+    }
+    .ah-hero-overlay {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: linear-gradient(180deg,
+        rgba(37,20,12,0.22) 0%,
+        rgba(37,20,12,0.10) 35%,
+        rgba(37,20,12,0.30) 100%);
+    }
+    .ah-hero-center {
+      position: absolute; inset: 0; z-index: 10;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 80px 32px;
+    }
+    .ah-hero-eyebrow {
+      font-family: var(--yr-font-body);
+      font-size: 11px; font-weight: var(--yr-fw-semibold);
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--yr-cream);
+      margin: 0 0 28px;
+      display: inline-flex; align-items: center; gap: 12px;
+      opacity: 0.92;
+    }
+    .ah-hero-eyebrow::before, .ah-hero-eyebrow::after {
+      content: ""; width: 28px; height: 1px;
+      background: color-mix(in srgb, var(--yr-cream) 70%, transparent);
+    }
+    .ah-hero-title {
+      font-family: var(--yr-font-heading); font-weight: var(--yr-fw-regular);
+      font-size: clamp(56px, 9vw, 128px);
+      line-height: 0.95; letter-spacing: -0.035em;
+      color: var(--yr-cream);
+      margin: 0;
+    }
+    .ah-hero-sub {
+      font-family: var(--yr-font-body); font-weight: var(--yr-fw-light);
+      font-size: clamp(15px, 1.4vw, 18px);
+      line-height: 1.55;
+      color: color-mix(in srgb, var(--yr-cream) 78%, transparent);
+      margin: 30px auto 0;
+      max-width: 560px;
+      text-wrap: balance;
+    }
+
+    .ah-hero-scroll-hint {
+      position: absolute; bottom: 40px; left: 50%;
+      transform: translateX(-50%); z-index: 10;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 14px;
+      color: color-mix(in srgb, var(--yr-cream) 55%, transparent);
+      font-family: var(--yr-font-body);
+      font-size: 10px; font-weight: var(--yr-fw-semibold);
+      letter-spacing: 0.28em; text-transform: uppercase;
+    }
+    .ah-hero-scroll-line {
+      width: 1px; height: 42px;
+      background: linear-gradient(180deg, var(--yr-cream), transparent);
+      animation: ah-hero-scroll-pulse 2s ease-in-out infinite;
+    }
+    @keyframes ah-hero-scroll-pulse {
+      0%, 100% { opacity: 0.35; transform: scaleY(0.6); transform-origin: top; }
+      50%      { opacity: 1;    transform: scaleY(1);   transform-origin: top; }
+    }
+
+    @media (max-width: 900px) {
+      .ah-hero { height: 80vh; min-height: 480px; }
+      .ah-hero-center { padding: 60px 24px; }
+      .ah-hero-eyebrow { font-size: 10px; letter-spacing: 0.24em; margin-bottom: 20px; }
+      .ah-hero-eyebrow::before, .ah-hero-eyebrow::after { width: 20px; }
+      .ah-hero-sub { font-size: 14px; margin-top: 22px; }
+      .ah-hero-scroll-hint { bottom: 28px; font-size: 9px; }
+      .ah-hero-scroll-line { height: 32px; }
+    }
+
+    /* ============================================================
+       SECTION 1 — THE CRAFT (3-col numbered steps)
+       Adapted from VKGold `.ah-craft` (black bg → off-white)
+       ============================================================ */
+    .ah-craft {
+      position: relative; width: 100%;
+      background: var(--yr-off-white);
+      padding: 12rem 0 14rem; overflow: hidden;
+    }
+    .ah-craft-inner { max-width: 1500px; margin: 0 auto; padding: 0 60px; }
+    @media (max-width: 900px) {
+      .ah-craft { padding: 80px 0 96px; }
+      .ah-craft-inner { padding: 0 24px; }
+    }
+
+    .ah-craft-head { text-align: center; margin-bottom: 96px; }
+    @media (max-width: 900px) { .ah-craft-head { margin-bottom: 56px; } }
+
+    .ah-craft-eyebrow {
+      font-family: var(--yr-font-body);
+      font-size: 11px; font-weight: var(--yr-fw-semibold);
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--yr-ink-muted);
+      margin: 0 0 24px;
+      display: inline-flex; align-items: center; gap: 12px;
+    }
+    .ah-craft-eyebrow::before, .ah-craft-eyebrow::after {
+      content: ""; width: 28px; height: 1px;
+      background: color-mix(in srgb, var(--yr-ink-muted) 60%, transparent);
+    }
+    .ah-craft-title {
+      font-family: var(--yr-font-heading);
+      font-weight: var(--yr-fw-regular);
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1; letter-spacing: -0.03em;
+      color: var(--yr-ink); margin: 0;
+    }
+
+    .ah-craft-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 80px; }
+    @media (max-width: 900px) { .ah-craft-grid { grid-template-columns: 1fr; gap: 56px; } }
+
+    .ah-craft-col {
+      text-align: center; display: flex; flex-direction: column; align-items: center;
+      max-width: 360px; margin: 0 auto;
+    }
+    .ah-craft-num {
+      font-family: var(--yr-font-heading); font-weight: var(--yr-fw-light);
+      font-size: clamp(64px, 7vw, 100px);
+      line-height: 1; letter-spacing: -0.04em;
+      color: var(--yr-ink); margin: 0 0 16px;
+      position: relative; display: inline-block;
+    }
+    .ah-craft-num::before {
+      content: ""; position: absolute; left: 50%; bottom: -16px;
+      width: 36px; height: 1px; background: var(--yr-ink-muted);
+      transform: translateX(-50%) scaleX(0); transform-origin: center;
+      transition: transform 0.8s var(--yr-ease-out-quart);
+      opacity: 0.8;
+    }
+    .ah-craft-col.is-in .ah-craft-num::before { transform: translateX(-50%) scaleX(1); }
+
+    .ah-craft-label {
+      font-family: var(--yr-font-body);
+      font-size: 11px; font-weight: var(--yr-fw-semibold);
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--yr-ink-muted);
+      margin: 0 0 28px; padding-top: 20px;
+    }
+    @media (max-width: 900px) { .ah-craft-label { margin-bottom: 20px; } }
+
+    .ah-craft-body {
+      font-family: var(--yr-font-body); font-weight: var(--yr-fw-regular);
+      font-size: 16px; line-height: 1.65;
+      color: color-mix(in srgb, var(--yr-ink) 75%, transparent);
+      margin: 0;
+    }
+    @media (max-width: 900px) { .ah-craft-body { font-size: 14px; } }
+
+    /* ============================================================
+       SECTION 2 — FULL-SCREEN VIDEO (autoplay loop + mute)
+       Adapted from VKGold `.ah-video`
+       ============================================================ */
+    .ah-video {
+      position: relative; width: 100%; height: 100vh; min-height: 520px;
+      background: var(--yr-ink); overflow: hidden;
+    }
+    .ah-video video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+    }
+    .ah-video::before {
+      content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: linear-gradient(180deg,
+        rgba(37,20,12,0.30) 0%,
+        rgba(37,20,12,0.12) 22%,
+        rgba(37,20,12,0) 55%,
+        rgba(37,20,12,0.45) 100%);
+    }
+    .ah-video-cap {
+      position: absolute; left: 0; right: 0; bottom: 48px; z-index: 2;
+      text-align: center; color: var(--yr-cream);
+      font-family: var(--yr-font-body);
+      font-size: clamp(14px, 1.4vw, 17px);
+      line-height: 1.5; letter-spacing: -0.005em;
+      padding: 0 40px; max-width: 720px; margin: 0 auto; opacity: 0.94;
+    }
+    .ah-video-cap em {
+      font-style: normal; color: var(--yr-cream);
+      font-family: var(--yr-font-body);
+      font-size: 0.7em; letter-spacing: 0.22em; text-transform: uppercase;
+      display: block; margin-bottom: 14px; font-weight: var(--yr-fw-semibold);
+    }
+    @media (max-width: 900px) { .ah-video-cap { bottom: 30px; padding: 0 24px; } }
+
+    .ah-video-mute {
+      position: absolute; right: 32px; bottom: 32px; z-index: 3;
+      width: 48px; height: 48px; border-radius: 999px;
+      background: rgba(37,20,12,0.45);
+      -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+      border: 1px solid rgba(247,231,222,0.22);
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--yr-cream);
+      transition: color 0.3s, background 0.3s, border-color 0.3s, transform 0.35s;
+    }
+    .ah-video-mute:hover {
+      color: var(--yr-paper);
+      border-color: rgba(247,231,222,0.55);
+      background: rgba(37,20,12,0.7);
+      transform: scale(1.08);
+    }
+    .ah-video-mute svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+    .ah-video-mute .on { display: none; }
+    .ah-video.is-unmuted .ah-video-mute .on { display: block; }
+    .ah-video.is-unmuted .ah-video-mute .off { display: none; }
+    @media (max-width: 900px) {
+      .ah-video-mute { right: 20px; bottom: 20px; width: 42px; height: 42px; }
+    }
+
+    /* ============================================================
+       SECTION 3 — SPLIT MASTERS (image | text)
+       Adapted from VKGold `.ah-split`
+       ============================================================ */
+    .ah-split {
+      position: relative; width: 100%; min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      background: var(--yr-paper);
+    }
+    @media (max-width: 900px) { .ah-split { grid-template-columns: 1fr; min-height: auto; } }
+
+    .ah-split-left {
+      position: relative; overflow: hidden; min-height: 100vh;
+      background: var(--yr-off-white);
+    }
+    @media (max-width: 900px) { .ah-split-left { min-height: 70vh; } }
+    .ah-split-left img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+      display: block;
+    }
+    .ah-split-left::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(90deg, transparent 0%, transparent 72%, rgba(37,20,12,0.10) 100%);
+    }
+
+    .ah-split-right {
+      position: relative; background: var(--yr-paper);
+      display: flex; align-items: center; justify-content: center;
+      padding: 100px 48px;
+    }
+    @media (max-width: 900px) { .ah-split-right { padding: 80px 32px; text-align: center; } }
+
+    .ah-split-body { max-width: 540px; color: var(--yr-ink); text-align: center; }
+    @media (max-width: 900px) { .ah-split-body { max-width: none; } }
+
+    .ah-split-eyebrow {
+      font-family: var(--yr-font-body);
+      font-size: 11px; font-weight: var(--yr-fw-semibold);
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--yr-ink-muted);
+      margin: 0 0 24px;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .ah-split-eyebrow::before, .ah-split-eyebrow::after {
+      content: ""; width: 22px; height: 1px;
+      background: color-mix(in srgb, var(--yr-ink-muted) 60%, transparent);
+    }
+    .ah-split-title {
+      font-family: var(--yr-font-heading); font-weight: var(--yr-fw-regular);
+      font-size: clamp(38px, 5.2vw, 66px);
+      line-height: 1.05; letter-spacing: -0.03em;
+      color: var(--yr-ink); margin: 0 0 30px;
+    }
+    .ah-split-text {
+      font-family: var(--yr-font-body); font-weight: var(--yr-fw-regular);
+      font-size: clamp(15px, 1.5vw, 18px);
+      line-height: 1.65;
+      color: color-mix(in srgb, var(--yr-ink) 78%, transparent);
+      margin: 0 0 36px;
+    }
+
+    .ah-split-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--yr-font-body);
+      font-size: 12px; font-weight: var(--yr-fw-semibold);
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--yr-ink-muted); text-decoration: none;
+      padding-bottom: 8px;
+      border-bottom: 1px solid color-mix(in srgb, var(--yr-ink-muted) 40%, transparent);
+      transition: gap 0.4s, color 0.35s, border-color 0.35s;
+    }
+    .ah-split-cta:hover {
+      gap: 16px; color: var(--yr-ink);
+      border-bottom-color: var(--yr-ink);
+    }
+    .ah-split-cta svg {
+      width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.6;
+      transition: transform 0.4s;
+    }
+    .ah-split-cta:hover svg { transform: translate(3px, -3px); }
+
+    /* ============================================================
+       SECTION 4 — STACKING CARDS (sticky stack: 4 reasons)
+       Adapted from VKGold `.ah-stack`
+       ============================================================ */
+    .ah-stack {
+      position: relative; width: 100%;
+      background: var(--yr-off-white);
+      padding: 120px 0 0; overflow: visible;
+    }
+    @media (max-width: 900px) { .ah-stack { padding: 80px 0 0; } }
+
+    .ah-stack-head {
+      text-align: center; max-width: 900px; margin: 0 auto 96px; padding: 0 40px;
+    }
+    @media (max-width: 900px) { .ah-stack-head { margin-bottom: 56px; padding: 0 24px; } }
+
+    .ah-stack-eyebrow {
+      font-family: var(--yr-font-body);
+      font-size: 11px; font-weight: var(--yr-fw-semibold);
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--yr-ink-muted); margin: 0 0 24px;
+    }
+    .ah-stack-title {
+      font-family: var(--yr-font-heading); font-weight: var(--yr-fw-regular);
+      font-size: clamp(36px, 5vw, 60px);
+      line-height: 1.08; letter-spacing: -0.03em;
+      color: var(--yr-ink); margin: 0;
+    }
+
+    .ah-stack-list {
+      max-width: 1300px; margin: 0 auto;
+      padding: 0 40px;
+      background: var(--yr-off-white);
+    }
+    /* Runway for the last card's sticky hold.
+       NOTE: padding-bottom does NOT extend sticky's constraint — Chrome
+       measures sticky containment against the content-box, not padding-box.
+       We need REAL flow content. ::after fakes a 100vh spacer child,
+       which genuinely extends the content-box. */
+    .ah-stack-list::after {
+      content: "";
+      display: block;
+      height: 100vh;
+    }
+    @media (max-width: 900px) {
+      .ah-stack-list { padding: 0 24px; }
+      .ah-stack-list::after { display: none; }
+    }
+
+    .ah-stack-card {
+      position: sticky; top: 100px;
+      background: var(--yr-paper);
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      height: 78vh; min-height: 560px; overflow: hidden;
+      margin-bottom: 50vh;
+      /* NOTE: will-change:transform and backface-visibility:hidden removed
+         because GSAP's residual identity matrix breaks position:sticky in Chrome. */
+    }
+    /* Last card's margin-bottom would collapse out of the sticky parent
+       (see .ah-stack-list padding-bottom above for the actual runway). */
+    .ah-stack-card:last-child { margin-bottom: 0; }
+    @media (max-width: 900px) {
+      .ah-stack-card {
+        position: relative; top: auto !important;
+        grid-template-columns: 1fr; height: auto; min-height: auto;
+        margin-bottom: 24px;
+      }
+      .ah-stack-card:last-child { margin-bottom: 0; }
+    }
+
+    .ah-stack-media { position: relative; overflow: hidden; }
+    @media (max-width: 900px) { .ah-stack-media { aspect-ratio: 4/3; } }
+    .ah-stack-media img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+      display: block;
+    }
+
+    .ah-stack-body {
+      position: relative; padding: 48px 48px 48px 44px;
+      display: flex; flex-direction: column; justify-content: space-between; gap: 28px;
+    }
+    @media (max-width: 900px) { .ah-stack-body { padding: 36px 28px; } }
+
+    .ah-stack-label {
+      font-family: var(--yr-font-body);
+      font-size: 10px; font-weight: var(--yr-fw-semibold);
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--yr-ink-muted);
+    }
+    .ah-stack-heading {
+      font-family: var(--yr-font-heading); font-weight: var(--yr-fw-regular);
+      font-size: clamp(24px, 2.8vw, 36px);
+      line-height: 1.15; letter-spacing: -0.02em;
+      color: var(--yr-ink); margin: 0 0 18px;
+    }
+    .ah-stack-text {
+      font-family: var(--yr-font-body); font-weight: var(--yr-fw-regular);
+      font-size: clamp(14px, 1.3vw, 16px);
+      line-height: 1.6;
+      color: color-mix(in srgb, var(--yr-ink) 72%, transparent);
+      margin: 0;
+    }
+
+    /* Chop stamp — rubber-stamp accent in top-right corner */
+    .ah-stack-chop {
+      position: absolute; top: 36px; right: 40px;
+      font-family: var(--yr-font-body);
+      font-size: 10px; font-weight: var(--yr-fw-bold);
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--yr-ink-muted);
+      padding: 10px 16px;
+      border: 2px solid var(--yr-ink-muted);
+      transform: rotate(-8deg);
+      white-space: nowrap; line-height: 1.2;
+    }
+    .ah-stack-chop::before, .ah-stack-chop::after {
+      content: ""; position: absolute; top: 50%;
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--yr-ink-muted);
+      transform: translateY(-50%);
+    }
+    .ah-stack-chop::before { left: -14px; }
+    .ah-stack-chop::after  { right: -14px; }
+    @media (max-width: 900px) {
+      .ah-stack-chop { top: 20px; right: 20px; font-size: 9px; padding: 8px 12px; }
+    }
+
+    /* ============================================================
+       BRAND BAR — identical to index.html
+       ============================================================ */
+    .yr-brand-bar {
+      background: var(--yr-cream-deep);
+      padding: 48px 20px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 24px;
+    }
+    .yr-brand-bar__logo { width: auto; height: 48px; display: block; }
+    .yr-brand-bar__motto {
+      font-family: var(--yr-font-body); font-weight: var(--yr-fw-regular);
+      font-size: 15px; line-height: 1.5; color: var(--yr-ink-soft);
+      margin: 0; text-align: center;
+    }
+
+    /* ============================================================
+       FOOTER — identical to index.html
+       ============================================================ */
+    .yr-footer {
+      background: #ffffff; color: #000000;
+      padding: 80px 40px 40px;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .yr-footer__inner {
+      max-width: var(--yr-page-max); margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr 1.1fr minmax(320px, 0.95fr);
+      gap: 48px; align-items: start;
+    }
+    .yr-footer__col h3 {
+      font-family: var(--yr-font-body);
+      font-size: 13px; font-weight: var(--yr-fw-bold);
+      text-transform: uppercase; letter-spacing: 0.04em;
+      color: #000000; margin: 0 0 22px;
+    }
+    .yr-footer__col ul {
+      list-style: none; margin: 0; padding: 0;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .yr-footer__col a {
+      color: #000000; font-size: 12px; letter-spacing: 0.04em;
+      text-transform: uppercase; text-decoration: none;
+      transition: opacity var(--yr-transition);
+    }
+    .yr-footer__col a:hover { opacity: 0.65; }
+
+    .yr-footer__newsletter {
+      background: #ebebeb; padding: 35px 40px;
+      max-width: 475px; align-self: start;
+    }
+    .yr-footer__newsletter h3 {
+      font-family: var(--yr-font-body);
+      font-size: 14px; font-weight: var(--yr-fw-medium);
+      text-transform: uppercase; letter-spacing: 0.14em;
+      color: #000000; margin: 0 0 18px;
+    }
+    .yr-footer__newsletter-subtitle {
+      font-size: 13px; line-height: 1.6; color: #000000; margin: 0 0 22px;
+    }
+    .yr-footer__newsletter-form {
+      display: flex; align-items: stretch;
+      background: #ffffff; border: 1px solid #000000;
+    }
+    .yr-footer__newsletter-form input {
+      flex: 1; min-width: 0; background: transparent; border: none;
+      padding: 0 16px; height: 48px; font-family: inherit; font-size: 13px;
+      color: #000000; outline: none;
+    }
+    .yr-footer__newsletter-form input::placeholder { color: rgba(0,0,0,0.45); }
+    .yr-footer__newsletter-form button {
+      background: #000000; color: #ffffff; border: none;
+      width: 56px; height: 48px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background var(--yr-transition);
+    }
+    .yr-footer__newsletter-form button:hover { background: #25140c; }
+    .yr-footer__newsletter-form button svg { width: 18px; height: 18px; }
+    .yr-footer__newsletter-success {
+      margin: 12px 0 0; font-size: 12px; color: #25140c; font-weight: var(--yr-fw-medium);
+    }
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); border: 0;
+    }
+
+    .yr-footer__meta {
+      grid-column: 1 / 4; margin-top: 40px;
+      display: flex; flex-direction: column; gap: 16px; align-items: flex-start;
+    }
+    .yr-footer__address { font-size: 12px; line-height: 1.6; color: #000000; margin: 0; }
+    .yr-footer__phone {
+      display: inline-flex; align-items: center; gap: 10px;
+      color: #000000; font-size: 13px; text-decoration: none;
+    }
+    .yr-footer__phone-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px; border-radius: 4px;
+      background: #000000; color: #ffffff;
+    }
+    .yr-footer__phone-icon svg { width: 12px; height: 12px; }
+    .yr-footer__socials { display: flex; gap: 16px; margin-top: 4px; }
+    .yr-footer__socials a {
+      width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      color: #000000; transition: opacity var(--yr-transition);
+    }
+    .yr-footer__socials a:hover { opacity: 0.6; }
+    .yr-footer__socials svg { width: 18px; height: 18px; }
+    .yr-footer__payments {
+      display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 28px;
+    }
+    .yr-footer__payments img { height: 24px; width: auto; display: block; }
+
+    .yr-footer__bottom {
+      max-width: var(--yr-page-max); margin: 40px auto 0;
+      padding-top: 24px; border-top: 1px solid rgba(0,0,0,0.08);
+      display: flex; justify-content: space-between; flex-wrap: wrap;
+      gap: 16px; font-size: 11px; color: rgba(0,0,0,0.55);
+    }
+    .yr-footer__legal a {
+      color: rgba(0,0,0,0.55); text-decoration: none; margin-left: 20px;
+      transition: color var(--yr-transition);
+    }
+    .yr-footer__legal a:hover { color: #000000; }
+    @media (max-width: 989px) {
+      .yr-footer { padding: 60px 20px 30px; }
+      .yr-footer__inner { grid-template-columns: repeat(2, 1fr); gap: 40px 24px; }
+      .yr-footer__newsletter { max-width: 100%; }
+      .yr-footer__meta { grid-column: 1 / -1; }
+    }
+    @media (max-width: 560px) {
+      .yr-footer__inner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       TOPBAR — from index.html (Our Story highlighted)
+       ============================================================ -->
+  <div class="yr-topbar">
+    <div class="yr-announce" data-section="announce">
+      <div class="yr-announce__track">
+        <a class="yr-announce__msg" href="index.html#products">Free Shipping on All Reformers →</a>
+        <a class="yr-announce__msg" href="index.html#products">5-Year Warranty on NX901 Series →</a>
+        <a class="yr-announce__msg" href="about-v2.html">30-Day Home Trial →</a>
+      </div>
+    </div>
+
+    <header class="yr-header" data-section="header">
+      <div class="yr-header__inner">
+        <a class="yr-header__logo" href="index.html" aria-label="Nexace home">
+          <img src="images/nexace/logo.png" alt="Nexace">
+        </a>
+
+        <nav class="yr-header__nav" aria-label="Primary">
+          <a href="index.html#products">Reformers</a>
+          <a href="about-v2.html" class="is-active" aria-current="page">Our Story</a>
+          <a href="index.html#contact">Contact</a>
+        </nav>
+
+        <div class="yr-header__actions">
+          <button class="yr-header__icon-btn" aria-label="Cart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          </button>
+          <button class="yr-header__icon-btn" aria-label="Account">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </button>
+          <button class="yr-header__icon-btn" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
+          <button class="yr-header__burger" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <main>
+
+    <!-- ============================================================
+         SECTION 0 — HERO: full-bleed image + "OUR STORY" title
+         GSAP: title + subtitle + scroll hint fade-up on load;
+         image slow-zoom Ken Burns on scroll.
+         ============================================================ -->
+    <section class="ah-hero" id="aboutHero">
+      <img class="ah-hero-img" src="hero 3.jpg" alt="A Nexace reformer inside a sunlit home studio">
+      <div class="ah-hero-overlay"></div>
+
+      <div class="ah-hero-center">
+        <div class="ah-hero-eyebrow">Nexace · Since 2012</div>
+        <h1 class="ah-hero-title">Our Story</h1>
+        <p class="ah-hero-sub">A small workshop outside Melbourne, building studio-grade reformers for the home — one at a time.</p>
+      </div>
+
+      <div class="ah-hero-scroll-hint" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="ah-hero-scroll-line"></div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION 1 — THE CRAFT: 3 steps
+         Eyebrow + title above a 3-col grid of numbered steps.
+         GSAP: header fade-up + each col stagger (gold underline draw-in).
+         ============================================================ -->
+    <section class="ah-craft" id="aboutCraft">
+      <div class="ah-craft-inner">
+
+        <div class="ah-craft-head">
+          <div class="ah-craft-eyebrow">Our Story · Since 2012</div>
+          <h2 class="ah-craft-title">The Craft</h2>
+        </div>
+
+        <div class="ah-craft-grid">
+
+          <div class="ah-craft-col">
+            <div class="ah-craft-num">01</div>
+            <div class="ah-craft-label">Design</div>
+            <p class="ah-craft-body">Every reformer begins as a sketch in our Melbourne studio. Instructors, engineers and physio consultants refine each curve, joint and pressure point before a single piece is cut.</p>
+          </div>
+
+          <div class="ah-craft-col">
+            <div class="ah-craft-num">02</div>
+            <div class="ah-craft-label">Craft</div>
+            <p class="ah-craft-body">Frames are laminated from quarter-sawn maple and brushed aircraft-grade aluminum. Rails are honed to glide in silence. Each spring is hand-tensioned, color-coded and logged to a serial number.</p>
+          </div>
+
+          <div class="ah-craft-col">
+            <div class="ah-craft-num">03</div>
+            <div class="ah-craft-label">Test</div>
+            <p class="ah-craft-body">Before any reformer leaves our workshop, it passes a studio-grade checklist — spring calibration, rail glide, headrest pitch, strap tension — inspected and signed by the lead craftsman.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION 2 — FULL-SCREEN VIDEO
+         Autoplay muted loop; auto play/pause on viewport; mute toggle.
+         ============================================================ -->
+    <section class="ah-video" id="aboutVideo">
+      <video autoplay muted loop playsinline preload="metadata" poster="images/nexace/lifestyle-2.jpg">
+        <source src="hero.mp4" type="video/mp4">
+      </video>
+
+      <p class="ah-video-cap">
+        <em>Melbourne Workshop · Australia</em>
+        Our team hand-finishes every Nexace reformer — nine artisans, one bench, twelve years of practice.
+      </p>
+
+      <button class="ah-video-mute" type="button" aria-label="Toggle sound">
+        <svg class="off" viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+        <svg class="on"  viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14"/></svg>
+      </button>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION 3 — SPLIT: Built where we train
+         Left: full-bleed workshop/brand image. Right: founder story.
+         GSAP: image Ken-Burns parallax + staggered text reveal.
+         ============================================================ -->
+    <section class="ah-split" id="aboutMasters">
+
+      <div class="ah-split-left">
+        <img src="images/nexace/about-desktop.jpg"
+             alt="Nexace workshop — Melbourne, Australia"
+             loading="lazy">
+      </div>
+
+      <div class="ah-split-right">
+        <div class="ah-split-body">
+          <div class="ah-split-eyebrow">Melbourne · Australia</div>
+          <h2 class="ah-split-title">Built where we train.</h2>
+          <p class="ah-split-text">Nexace is built out of a single workshop outside Melbourne by a team of <strong style="color:var(--yr-ink);font-weight:500">nine artisans</strong> — cabinet-makers, upholsterers, and reformer instructors who've spent decades on the equipment they now build. Every frame, spring, rail and strap passes through our own hands. The first NX901 took <strong style="color:var(--yr-ink);font-weight:500">nine months and thirty-four revisions</strong>. Twelve years on, we still build them the same way: slowly, carefully, one reformer at a time.</p>
+          <a class="ah-split-cta" href="index.html#products">
+            Explore the Reformers
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 10 L10 2 M4 2 H10 V8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ============================================================
+         SECTION 4 — STACKING CARDS: Why Nexace
+         4 cards that stick and stack on scroll (desktop).
+         On mobile: natural vertical stack.
+         ============================================================ -->
+    <section class="ah-stack" id="aboutStack">
+
+      <div class="ah-stack-head">
+        <div class="ah-stack-eyebrow">Why Nexace</div>
+        <h2 class="ah-stack-title">Studio-grade quality. Built for the home.</h2>
+      </div>
+
+      <div class="ah-stack-list">
+
+        <!-- Card 1: Studio-grade quality -->
+        <article class="ah-stack-card">
+          <div class="ah-stack-media">
+            <img src="images/nexace/spring-detail.jpg" alt="Hand-calibrated Nexace springs" loading="lazy">
+          </div>
+          <div class="ah-stack-body">
+            <span class="ah-stack-chop">Studio-Grade</span>
+            <div class="ah-stack-label">01 · Verified Quality</div>
+            <div>
+              <h3 class="ah-stack-heading">Every spring calibrated. Every rail tested.</h3>
+              <p class="ah-stack-text">Each reformer is inspected and signed off against a 34-point studio checklist — spring tension logged to the newton, rail glide measured in milliseconds, strap length cross-verified. A calibration certificate ships with every unit.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: Whisper-quiet -->
+        <article class="ah-stack-card">
+          <div class="ah-stack-media">
+            <img src="images/nexace/room-2.jpg" alt="A Nexace reformer in a quiet home" loading="lazy">
+          </div>
+          <div class="ah-stack-body">
+            <span class="ah-stack-chop">Whisper-Quiet</span>
+            <div class="ah-stack-label">02 · Engineered Silence</div>
+            <div>
+              <h3 class="ah-stack-heading">Quiet enough for a sleeping household.</h3>
+              <p class="ah-stack-text">Felt-lined carriage runners, machined aluminum rails and dampened springs mean no clunks, no whirs, no announcement to the rest of the house. Train at dawn, train at midnight — nobody else has to know.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3: Lifetime warranty -->
+        <article class="ah-stack-card">
+          <div class="ah-stack-media">
+            <img src="images/nexace/product-classic.jpg" alt="NX901 Classic reformer" loading="lazy">
+          </div>
+          <div class="ah-stack-body">
+            <span class="ah-stack-chop">Lifetime-Backed</span>
+            <div class="ah-stack-label">03 · Built to Outlast</div>
+            <div>
+              <h3 class="ah-stack-heading">Five years on the frame. Lifetime on the springs.</h3>
+              <p class="ah-stack-text">We guarantee the frame for five years and the springs forever. One email replaces any worn part at cost — because a reformer should outlast the room it sits in, not the trend that bought it.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4: Home trial -->
+        <article class="ah-stack-card">
+          <div class="ah-stack-media">
+            <img src="images/nexace/lifestyle-1.jpg" alt="Morning Pilates practice at home" loading="lazy">
+          </div>
+          <div class="ah-stack-body">
+            <span class="ah-stack-chop">Risk-Free · 30 Days</span>
+            <div class="ah-stack-label">04 · Home Trial</div>
+            <div>
+              <h3 class="ah-stack-heading">Thirty days in your living room. On us.</h3>
+              <p class="ah-stack-text">Train on your reformer for a full month. If it's not the right fit, we pick it up — no restocking fee, no return shipping, no questions. Because the only way to know a reformer is yours is to live with it.</p>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         BRAND BAR — from index.html
+         ============================================================ -->
+    <section class="yr-brand-bar" data-section="brand-bar">
+      <img class="yr-brand-bar__logo" src="images/nexace/logo.png" alt="Nexace logo">
+      <p class="yr-brand-bar__motto">Move with precision. Train with confidence. Live with intention.</p>
+    </section>
+
+  </main>
+
+
+  <!-- ============================================================
+       SITE FOOTER — from index.html
+       ============================================================ -->
+  <footer class="yr-footer">
+    <div class="yr-footer__inner">
+
+      <div class="yr-footer__col">
+        <h3>Customer Care</h3>
+        <ul>
+          <li><a href="https://support.nexace.com/hc/en-us/requests/new">Contact</a></li>
+          <li><a href="/pages/shipping-returns">Shipping &amp; Returns</a></li>
+          <li><a href="https://support.nexace.com/hc/en-us/">FAQ</a></li>
+          <li><a href="/pages/sizing-guide">Size Guide</a></li>
+          <li><a href="/products/gift-card">Gift Vouchers</a></li>
+          <li><a href="/pages/home-warranty">Warranty</a></li>
+          <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+          <li><a href="/policies/terms-of-service">Terms of Service</a></li>
+          <li><a href="/pages/accessibility-statement">Accessibility Statement</a></li>
+          <li><a href="/pages/terms-and-conditions">Terms &amp; Conditions</a></li>
+          <li><a href="/pages/showroom-appointments">Showroom Appointments</a></li>
+          <li><a href="/pages/reformerpro-account-deletion">ReformerPro Account Deletion</a></li>
+        </ul>
+      </div>
+
+      <div class="yr-footer__col">
+        <h3>Our Brand</h3>
+        <ul>
+          <li><a href="about-v2.html">Our Story</a></li>
+          <li><a href="/pages/press">Press</a></li>
+          <li><a href="blog.html">Journal</a></li>
+          <li><a href="/pages/careers">Careers</a></li>
+        </ul>
+      </div>
+
+      <div class="yr-footer__col">
+        <h3>Commercial</h3>
+        <ul>
+          <li><a href="/pages/commercial-promo-t-cs">Promo Terms &amp; Conditions</a></li>
+          <li><a href="/pages/commercial-warranty">Warranty</a></li>
+          <li><a href="/pages/showroom-appointments">Showroom Appointments</a></li>
+        </ul>
+      </div>
+
+      <div class="yr-footer__newsletter">
+        <h3>Stay in Touch</h3>
+        <p class="yr-footer__newsletter-subtitle">Join the list for launch updates, studio content, and early access to new releases.</p>
+        <form class="yr-footer__newsletter-form"
+              onsubmit="event.preventDefault(); this.reset(); this.querySelector('.yr-footer__newsletter-success').hidden = false;">
+          <label for="yr-newsletter-email" class="visually-hidden">Email address</label>
+          <input id="yr-newsletter-email" type="email" name="email" placeholder="Your email address" required autocomplete="email">
+          <button type="submit" aria-label="Subscribe">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </form>
+        <p class="yr-footer__newsletter-success" hidden>Thanks — you're on the list.</p>
+      </div>
+
+      <div class="yr-footer__meta">
+        <p class="yr-footer__address">Nexace Design Studio<br>168 Craft Lane, Suite 4A<br>Melbourne, VIC 3000, Australia</p>
+
+        <a class="yr-footer__phone" href="tel:+61390001234">
+          <span class="yr-footer__phone-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </span>
+          +61 (3) 9000 1234
+        </a>
+
+        <div class="yr-footer__socials">
+          <a href="https://www.instagram.com/nexace" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          <a href="https://www.facebook.com/nexace" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.5v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6V12h2.9l-.5 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg></a>
+          <a href="https://www.tiktok.com/@nexacepilates" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 6.2a6 6 0 0 1-3.6-1.2 6 6 0 0 1-2.3-4.1h-3.3v14.7a3 3 0 1 1-3-3v-3.3a6.3 6.3 0 1 0 6.3 6.3V9.9a9.2 9.2 0 0 0 5.9 2V8.5h-.1z"/></svg></a>
+          <a href="https://www.pinterest.com/nexace" target="_blank" rel="noopener" aria-label="Pinterest"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0a12 12 0 0 0-4.4 23.2c-.1-1-.2-2.4 0-3.5l1.5-6.4s-.4-.8-.4-1.9c0-1.8 1-3.2 2.4-3.2 1.1 0 1.6.8 1.6 1.8 0 1.1-.7 2.8-1.1 4.3-.3 1.3.6 2.3 1.9 2.3 2.3 0 4.1-2.4 4.1-5.9 0-3.1-2.2-5.3-5.4-5.3-3.7 0-5.8 2.8-5.8 5.6 0 1.1.4 2.3 1 3-.1.1-.1.2-.2.5l-.3 1.3c0 .2-.2.3-.4.2-1.4-.7-2.3-2.7-2.3-4.4 0-3.6 2.6-6.9 7.5-6.9 3.9 0 7 2.8 7 6.6 0 3.9-2.5 7.1-5.9 7.1-1.2 0-2.3-.6-2.6-1.3l-.7 2.7c-.3 1-1 2.3-1.4 3.1A12 12 0 1 0 12 0z"/></svg></a>
+          <a href="https://www.youtube.com/channel/nexace" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M18.16 5.87c.34 1.309.34 4.08.34 4.08s0 2.771-.34 4.08a2.125 2.125 0 0 1-1.53 1.53c-1.309.34-6.63.34-6.63.34s-5.321 0-6.63-.34a2.125 2.125 0 0 1-1.53-1.53c-.34-1.309-.34-4.08-.34-4.08s0-2.771.34-4.08a2.173 2.173 0 0 1 1.53-1.53C4.679 4 10 4 10 4s5.321 0 6.63.34a2.173 2.173 0 0 1 1.53 1.53ZM8.3 12.5l4.42-2.55L8.3 7.4v5.1Z"/></svg></a>
+          <a href="https://linkedin.com/company/nexace" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.35V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .78 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45C23.2 24 24 23.22 24 22.27V1.73C24 .78 23.2 0 22.22 0z"/></svg></a>
+        </div>
+
+        <div class="yr-footer__payments">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/81bb8da86a7c0c2d5c3e.svg" alt="Amazon" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#111;font-weight:700;font-size:10px;border-radius:3px',textContent:'AMAZON'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.american_express-wwwwww.svg" alt="American Express" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#016fd0;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'AMEX'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.apple_pay-wwwwww.svg" alt="Apple Pay" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#000;font-weight:700;font-size:10px;border-radius:3px',textContent:'APPLE PAY'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.google_pay-wwwwww.svg" alt="Google Pay" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#5f6368;font-weight:700;font-size:10px;border-radius:3px',textContent:'G PAY'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.master-wwwwww.svg" alt="Mastercard" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e5e5e5;color:#eb001b;font-weight:700;font-size:10px;border-radius:3px',textContent:'MC'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.paypal-wwwwww.svg" alt="PayPal" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#003087;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'PAYPAL'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.shopify_pay-wwwwww.svg" alt="Shop Pay" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#5a31f4;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'SHOP'}))">
+          <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/c1.visa-wwwwww.svg" alt="Visa" onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'display:inline-block;padding:4px 10px;background:#1a1f71;color:#fff;font-weight:700;font-size:10px;border-radius:3px',textContent:'VISA'}))">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="yr-footer__bottom">
+      <span>&copy; 2026 Nexace</span>
+      <div class="yr-footer__legal">
+        <a href="/policies/privacy-policy">Privacy Policy</a>
+        <a href="/policies/terms-of-service">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    /* ============================================================
+       ANNOUNCEMENT BAR rotator (same as index.html)
+       ============================================================ */
+    (function initAnnounce() {
+      var items = document.querySelectorAll('.yr-announce__msg');
+      if (!items.length) return;
+      items[0].classList.add('is-active');
+      if (items.length < 2) return;
+      var i = 0;
+      setInterval(function() {
+        items[i].classList.remove('is-active');
+        i = (i + 1) % items.length;
+        items[i].classList.add('is-active');
+      }, 3000);
+    })();
+  </script>
+
+  <script>
+    /* ============================================================
+       GSAP — Section animations
+       Adapted verbatim from about 2.html (VKGold), minus hero + banks.
+       Uses window as the ScrollTrigger scroller (no Lenis).
+       ============================================================ */
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+
+      /* ─── SECTION 0: Hero — entrance on load + Ken-Burns on scroll ─── */
+      (function initHero() {
+        var hero    = document.getElementById('aboutHero');
+        if (!hero) return;
+        var img     = hero.querySelector('.ah-hero-img');
+        var eyebrow = hero.querySelector('.ah-hero-eyebrow');
+        var title   = hero.querySelector('.ah-hero-title');
+        var sub     = hero.querySelector('.ah-hero-sub');
+        var hint    = hero.querySelector('.ah-hero-scroll-hint');
+
+        /* Entrance timeline on page load */
+        var tl = gsap.timeline({ delay: 0.2 });
+        tl.from(img,     { scale: 1.08, duration: 1.6, ease: 'power3.out' })
+          .from(eyebrow, { opacity: 0, y: 20, duration: 0.8, ease: 'power3.out' }, '-=1.2')
+          .from(title,   { opacity: 0, y: 50, duration: 1.2, ease: 'power4.out' }, '-=0.7')
+          .from(sub,     { opacity: 0, y: 24, duration: 0.9, ease: 'power3.out' }, '-=0.85')
+          .from(hint,    { opacity: 0, y: 16, duration: 0.8, ease: 'power2.out' }, '-=0.5');
+
+        /* Subtle Ken-Burns on scroll */
+        gsap.to(img, {
+          yPercent: 8, scale: 1.04, ease: 'none',
+          scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: 1 }
+        });
+      })();
+
+      /* ─── SECTION 1: The Craft — header fade + col stagger ─── */
+      (function initCraft() {
+        var craft = document.getElementById('aboutCraft');
+        if (!craft) return;
+        var eyebrow = craft.querySelector('.ah-craft-eyebrow');
+        var title   = craft.querySelector('.ah-craft-title');
+        var cols    = craft.querySelectorAll('.ah-craft-col');
+
+        gsap.from([eyebrow, title], {
+          opacity: 0, y: 40, duration: 1, stagger: 0.15, ease: 'power3.out',
+          scrollTrigger: { trigger: craft, start: 'top 75%', once: true }
+        });
+
+        cols.forEach(function(col) {
+          var num   = col.querySelector('.ah-craft-num');
+          var label = col.querySelector('.ah-craft-label');
+          var body  = col.querySelector('.ah-craft-body');
+
+          var tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: col, start: 'top 82%', once: true,
+              onEnter: function() { col.classList.add('is-in'); }
+            }
+          });
+          tl.from(num,   { opacity: 0, y: 50, duration: 1,  ease: 'power3.out' })
+            .from(label, { opacity: 0, y: 20, duration: 0.7, ease: 'power3.out' }, '-=0.55')
+            .from(body,  { opacity: 0, y: 20, duration: 0.8, ease: 'power3.out' }, '-=0.4');
+        });
+      })();
+
+      /* ─── SECTION 2: Video — mute toggle + play/pause on viewport ─── */
+      (function initVideo() {
+        var section = document.getElementById('aboutVideo');
+        if (!section) return;
+        var video = section.querySelector('video');
+        var muteBtn = section.querySelector('.ah-video-mute');
+        if (!video || !muteBtn) return;
+
+        muteBtn.addEventListener('click', function() {
+          video.muted = !video.muted;
+          section.classList.toggle('is-unmuted', !video.muted);
+        });
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top bottom', end: 'bottom top',
+          onEnter:     function() { video.play().catch(function(){}); },
+          onEnterBack: function() { video.play().catch(function(){}); },
+          onLeave:     function() { video.pause(); },
+          onLeaveBack: function() { video.pause(); }
+        });
+      })();
+
+      /* ─── SECTION 3: Split Masters — image Ken-Burns + text reveal ─── */
+      (function initSplit() {
+        var split = document.getElementById('aboutMasters');
+        if (!split) return;
+        var leftImg = split.querySelector('.ah-split-left img');
+        var eyebrow = split.querySelector('.ah-split-eyebrow');
+        var title   = split.querySelector('.ah-split-title');
+        var text    = split.querySelector('.ah-split-text');
+        var cta     = split.querySelector('.ah-split-cta');
+
+        var tl = gsap.timeline({
+          scrollTrigger: { trigger: split, start: 'top 70%', once: true }
+        });
+        tl.from(leftImg, { opacity: 0, scale: 1.08, duration: 1.5, ease: 'power3.out' })
+          .from(eyebrow, { opacity: 0, y: 24, duration: 0.8, ease: 'power3.out' }, '-=1.1')
+          .from(title,   { opacity: 0, y: 40, duration: 1,   ease: 'power3.out' }, '-=0.7')
+          .from(text,    { opacity: 0, y: 24, duration: 0.9, ease: 'power3.out' }, '-=0.6')
+          .from(cta,     { opacity: 0, y: 20, duration: 0.7, ease: 'power3.out' }, '-=0.5');
+
+        /* Subtle Ken-Burns parallax on the image */
+        gsap.to(leftImg, {
+          yPercent: -6, scale: 1.04, ease: 'none',
+          scrollTrigger: { trigger: split, start: 'top bottom', end: 'bottom top', scrub: 1 }
+        });
+      })();
+
+      /* ─── SECTION 4: Stack — header reveal + subtle card entrance ─── */
+      (function initStack() {
+        var stack = document.getElementById('aboutStack');
+        if (!stack) return;
+
+        var eyebrow = stack.querySelector('.ah-stack-eyebrow');
+        var title   = stack.querySelector('.ah-stack-title');
+        gsap.from([eyebrow, title], {
+          opacity: 0, y: 40, duration: 1, stagger: 0.15, ease: 'power3.out',
+          scrollTrigger: { trigger: stack, start: 'top 70%', once: true }
+        });
+
+        /* Skip card y-in animations on mobile (cards stack naturally) */
+        if (window.matchMedia('(max-width: 900px)').matches) return;
+
+        var cards = stack.querySelectorAll('.ah-stack-card');
+        cards.forEach(function(card) {
+          gsap.from(card, {
+            y: 60, duration: 1, ease: 'power3.out',
+            scrollTrigger: { trigger: card, start: 'top 90%', once: true },
+            onComplete: function() {
+              /* Critical: clear the identity matrix GSAP leaves behind —
+                 transform:matrix(1,0,0,1,0,0) prevents position:sticky
+                 from working in Chrome. */
+              gsap.set(card, { clearProps: 'transform' });
+            }
+          });
+        });
+      })();
+    }
+  </script>
+</body>
+</html>
